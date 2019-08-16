@@ -42,16 +42,16 @@ public class UserController {
     //异步验证
     @RequestMapping(value = "/verification",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> verification(@RequestParam(required=false) String val,
+    public Map<String, String> verification(@RequestParam(required=false) String email,
                                             @RequestParam(required=false) String name){
 
         Map<String,String> map = new HashMap<>();
 
-        if(val.equals("666")){
-            map.put("msg", "1");
+        if(email.equals("666")){
+            map.put("email", "1");
             return map;
         }
-        map.put("msg", "0");
+        map.put("email", "0");
         return map;
     }
 
