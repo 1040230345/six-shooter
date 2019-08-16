@@ -42,33 +42,25 @@
                 $("#signin").fadeIn();
                 $("#signup").hide();
             });
+
+            var suc="";
+
             $("#signupEmail").click(function(){
 
-                Verification(this);
-
-            });
-            $("#signupUsername").click(function(){
-
-                Verification(this);
-
-            });
-            var suc="";
-            function Verification(obj){
-
-                $(obj).keyup(function(event) {
-                    var text=$(obj).val();
+                $(this).keyup(function(event) {
+                    var text=$(this).val();
                     console.log(text);
                     $.ajax({
                         url: '/verification',
                         type: 'post',
                         dataType: 'JSON',
-                        data: {val: text},
+                        data: {email: text},
                     })
                         .done(function(data) {
                             console.log(data);
 
-                            if(data.msg=="1"){
-                                suc=suc+data.msg;
+                            if(data.email=="1"){
+                                suc=suc+data.email;
                                 console.log(suc);
                             }
                             if(suc=="11"){
@@ -76,6 +68,7 @@
                                 $("#signupSub").attr('disabled',false);
                                 suc="";
                             }
+
                         })
                         .fail(function() {
                             console.log("error");
@@ -86,7 +79,45 @@
 
                 });
 
-            }
+            });
+            $("#signupUsername").click(function(){
+
+                $(this).keyup(function(event) {
+                    var text=$(this).val();
+                    console.log(text);
+                    $.ajax({
+                        url: '/verification',
+                        type: 'post',
+                        dataType: 'JSON',
+                        data: {name: text},
+                    })
+                        .done(function(data) {
+                            console.log(data);
+
+                            if(data.name=="1"){
+                                suc=suc+data.name;
+                                console.log(suc);
+                            }
+                            if(suc=="11"){
+                                console.log("成功");
+                                $("#signupSub").attr('disabled',false);
+                                suc="";
+                            }
+
+                        })
+                        .fail(function() {
+                            console.log("error");
+                        })
+                        .always(function() {
+                            console.log("complete");
+                        });
+
+                });
+
+            });
+
+
+
 
 
 
