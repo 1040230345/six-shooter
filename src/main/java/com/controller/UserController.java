@@ -20,35 +20,35 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(UserDto userDto){
+    public String login(UserDto userDto) {
         return "login";
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(UserDto userDto){
+    public String register(UserDto userDto) {
         return "redirect:/";
     }
 
     //异步验证
-    @RequestMapping(value = "/verification",method = RequestMethod.POST)
+    @RequestMapping(value = "/verification", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> verification(@RequestParam(required=false) String email,
-                                            @RequestParam(required=false) String name){
+    public Map<String, String> verification(@RequestParam(required = false) String email,
+                                            @RequestParam(required = false) String name) {
 
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        if(email!=null){
-            if(email.equals("666")){
+        if (email != null) {
+            if (email.equals("666")) {
                 map.put("email", "1");
                 return map;
             }
@@ -56,8 +56,8 @@ public class UserController {
             return map;
         }
 
-        if(name!=null){
-            if(name.equals("666")){
+        if (name != null) {
+            if (name.equals("666")) {
                 map.put("name", "1");
                 return map;
             }
@@ -65,12 +65,7 @@ public class UserController {
             return map;
 
         }
-
-
-
-
+        return map;
     }
-
-
-
 }
+
