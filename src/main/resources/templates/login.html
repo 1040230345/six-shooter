@@ -34,7 +34,6 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-
             $("#signupbtn").click(function(){
                 $("#signin").fadeOut(300);
                 $("#signup").fadeIn();
@@ -53,18 +52,30 @@
                 Verification(this);
 
             });
+            var suc="";
             function Verification(obj){
+
                 $(obj).keyup(function(event) {
                     var text=$(obj).val();
                     console.log(text);
                     $.ajax({
                         url: '/verification',
                         type: 'post',
-                        dataType: 'text',
+                        dataType: 'JSON',
                         data: {val: text},
                     })
                         .done(function(data) {
                             console.log(data);
+
+                            if(data.msg=="1"){
+                                suc=suc+data.msg;
+                                console.log(suc);
+                            }
+                            if(suc=="11"){
+                                console.log("成功");
+                                $("#signupSub").attr('disabled',false);
+                                suc="";
+                            }
                         })
                         .fail(function() {
                             console.log("error");
@@ -113,7 +124,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="text" id="signupPassword" class="form-control" placeholder="Password" required="">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="disabled" id="signupSub">提交</button>
         <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
     </form>
 
