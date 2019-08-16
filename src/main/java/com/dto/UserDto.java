@@ -7,21 +7,21 @@ import java.util.Date;
  */
 public class UserDto {
 
-    private Long id;  //用户id，唯一
+    private int id;  //用户id，唯一
     private String email;  // 用户邮箱，唯一
     private String name;  //用户名字
-    private String user_password; //密码
+    private String password; //密码
     private String avatar_url;  //用户头像链接，有默认
     private String bio;  //用户简介
     private Date created_at; //创建时间
     private Date updated_at; //修改时间
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,13 +41,6 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getUser_password() {
-        return user_password;
-    }
-
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
-    }
 
     public String getAvatar_url() {
         return avatar_url;
@@ -79,5 +72,13 @@ public class UserDto {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
