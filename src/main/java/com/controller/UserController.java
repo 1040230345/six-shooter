@@ -2,9 +2,10 @@ package com.controller;
 
 import com.dto.UserDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户控制器
@@ -34,11 +35,19 @@ public class UserController {
     }
 
     //异步验证
-    @RequestMapping("/verification")
-    public String verification(String val){
-        if(val=="666"){
-        return "1";}
-        return "0";
+    @RequestMapping(value = "/verification",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> verification(String val){
+
+        Map<String,String> map = new HashMap<String,String>();
+        System.out.println(val);
+
+        if(val.equals("666")){
+            map.put("msg", "1");
+            return map;
+        }
+        map.put("msg", "0");
+        return map;
     }
 
 }
