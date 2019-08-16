@@ -35,9 +35,10 @@ public class UserController {
 
     //异步验证
     @RequestMapping("/verification")
-    public String verification(){
-
-        return null;
+    public String verification(String val){
+        if(val=="666"){
+        return "1";}
+        return "0";
     }
 
 }
