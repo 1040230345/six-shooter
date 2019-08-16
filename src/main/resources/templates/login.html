@@ -59,20 +59,20 @@
                     console.log(text);
                     $.ajax({
                         url: '/verification',
-                        type: 'POST',
-                        async: false,
-                        dataType:"text",
-                        data: {val:text}
+                        type: 'GET',
+                        dataType: 'text',
+                        data: {val: text},
                     })
                         .done(function(data) {
                             console.log(data);
                         })
                         .fail(function() {
-                            console.log("templates.error");
+                            console.log("error");
                         })
                         .always(function() {
                             console.log("complete");
                         });
+
                 });
 
             }
