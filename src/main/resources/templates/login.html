@@ -72,8 +72,8 @@
         /*}*/
     </style>
     <script type="text/javascript">
-
-        $(document).ready(function() {
+    $(document).ready(function() {
+            
             $("#signupbtn").click(function(){
                 $("#signin").fadeOut(300);
                 $("#signup").fadeIn();
@@ -87,40 +87,48 @@
 
             var flag1;
             var flag2;
-
+            var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/;
             $("#signupEmail").focus(function(){
 
                 $(this).keyup(function(event) {
                     flag1=null;
                     var text=$(this).val();
-                    console.log(text);
-                    $.ajax({
-                        url: '/verification',
-                        type: 'post',
-                        dataType: 'JSON',
-                        data: {email: text},
-                    })
-                        .done(function(data) {
-                            console.log(data);
-                            if(data.email=="0"){
-                                $("#signupSub").attr('disabled',true);
-                                flag1=false;
-                                $("#icon1").attr('class', 'glyphicon glyphicon-remove');
-                            }else{
-                                flag1=true;
-                                $("#icon1").attr('class', 'glyphicon glyphicon-ok');
-                            }
-                            if(flag1&&flag2){
-                                $("#signupSub").attr('disabled',false);
-                            }
+                    if(!checkemail.test(text)){
+                        console.log("邮箱格式错误");
+                        flag1=false;
+                        $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
+                    }else{
+                        $.ajax({
+                            url: '/verification',
+                            type: 'post',
+                            dataType: 'JSON',
+                            data: {email: text},
                         })
-                        .fail(function() {
-                            console.log("error");
-                        })
-                        .always(function() {
-                            console.log("complete");
-                        });
+                            .done(function(data) {
+                                console.log(data);
+                                if(data.email=="0"){
+                                    $("#signupSub").attr('disabled',true);
+                                    flag1=false;
+                                    $("#icon1").attr('class', 'glyphicon glyphicon-remove');
+                                }else{
+                                    flag1=true;
+                                    $("#icon1").attr('class', 'glyphicon glyphicon-ok');
+                                }
+                                if(flag1&&flag2){
+                                    $("#signupSub").attr('disabled',false);
+                                }
+
+                            })
+                            .fail(function() {
+                                console.log("error");
+                            })
+                            .always(function() {
+                                console.log("complete");
+                            });
+                    }
+
 
                 });
 
@@ -130,83 +138,92 @@
                 $(this).keyup(function(event) {
                     flag2=null;
                     var text=$(this).val();
-                    console.log(text);
-                    $.ajax({
-                        url: '/verification',
-                        type: 'post',
-                        dataType: 'JSON',
-                        data: {name: text},
-                    })
-                        .done(function(data) {
-                            console.log(data);
+                    if(!checkname.test(text)){
+                        console.log("用户名格式错误");
+                        $("#icon2").attr('class', 'glyphicon glyphicon-remove');
 
-                            if(data.name=="0"){
-                                $("#signupSub").attr('disabled',true);
-                                flag2=false;
-                                $("#icon2").attr('class', 'glyphicon glyphicon-remove');
-                            }else{
-                                flag2=true;
-                                $("#icon2").attr('class', 'glyphicon glyphicon-ok');
-                            }
-                            if(flag1&&flag2){
-                                $("#signupSub").attr('disabled',false);
+                        flag2=false;
+                    }else{
+                        $.ajax({
+                            url: '/verification',
+                            type: 'post',
+                            dataType: 'JSON',
+                            data: {name: text},
+                        })
+                            .done(function(data) {
+                                console.log(data);
 
-                            }
-                        })
-                        .fail(function() {
-                            console.log("error");
-                        })
-                        .always(function() {
-                            console.log("complete");
-                        });
+                                if(data.name=="0"){
+                                    $("#signupSub").attr('disabled',true);
+                                    flag2=false;
+                                    $("#icon2").attr('class', 'glyphicon glyphicon-remove');
+                                }else{
+                                    flag2=true;
+                                    $("#icon2").attr('class', 'glyphicon glyphicon-ok');
+                                }
+                                if(flag1&&flag2){
+                                    $("#signupSub").attr('disabled',false);
+
+                                }
+                            })
+                            .fail(function() {
+                                console.log("error");
+                            })
+                            .always(function() {
+                                console.log("complete");
+                            });
+                    }
 
                 });
 
 
             })
-
         });
     </script>
 </head>
 <body>
-<div class="container" id="signin">
+    <div class="container" id="signin">
 
-    <form class="form-signin" id="signinform" action="/login" method="post">
-        <h2 class="form-signin-heading">请登录</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me">Remember me</label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
-    </form>
-
-</div>
-
-<div class="myhide" id="signup">
-    <div class="container">
-        <form class="form-signin" id="signupform" action="/register" method="post">
-            <h2 class="form-signin-heading">请注册</h2>
+        <form class="form-signin" id="signinform" action="/login" method="post">
+            <h2 class="form-signin-heading">请登录</h2>
             <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <div id="ok"><span class="glyphicon glyphicon-remove" id="icon1"></span></div>
-            <label for="inputPassword" class="sr-only">Username</label>
-            <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
-
-            <div id="fxck"><span class="glyphicon glyphicon-remove" id="icon2"></span></div>
-
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
-
-            <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me">Remember me</label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+            <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
         </form>
+
     </div>
-</div>
+
+    <div class="myhide" id="signup">
+        <div class="container">
+            <form class="form-signin" id="signupform" action="/register" method="post">
+                <h2 class="form-signin-heading">请注册</h2>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <div id="ok">
+                    <span class="glyphicon glyphicon-remove" id="icon1"></span>
+                </div>
+                <label for="inputPassword" class="sr-only">Username</label>
+                <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
+
+                <div id="fxck">
+                    <span class="glyphicon glyphicon-remove" id="icon2"></span>
+                </div>
+
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+                <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
