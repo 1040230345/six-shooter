@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,11 +11,11 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper {
 
-    @Select("select * from user_table where emain=#{email}")
-    int findByEmail(@Param("email") String email);
+    @Select("select * from user_table where email=#{email}")
+    UserDto findByEmail(@Param("email") String email);
 
     @Select("select * from user_table where name=#{name}")
-    int findByName(@Param("name") String name);
+    UserDto findByName(@Param("name") String name);
 
 
 }

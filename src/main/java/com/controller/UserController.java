@@ -2,6 +2,7 @@ package com.controller;
 
 import com.dto.UserDto;
 import com.mapper.UserMapper;
+import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/login")
     public String login() {
@@ -48,20 +49,24 @@ public class UserController {
         Map<String, String> map = new HashMap<>();
 
         if (email != null) {
-            if (email.equals("666")) {
-                map.put("email", "1");
+            int num = userService.findByEmail(email);
+
+            if (num>0) {
+                map.put("email", "0");
                 return map;
             }
-            map.put("email", "0");
+            map.put("email", "1");
             return map;
         }
 
         if (name != null) {
-            if (name.equals("666")) {
-                map.put("name", "1");
+            int num = userService.findByName(name);
+
+            if (num>0) {
+                map.put("name", "0");
                 return map;
             }
-            map.put("name", "0");
+            map.put("name", "1");
             return map;
 
         }
