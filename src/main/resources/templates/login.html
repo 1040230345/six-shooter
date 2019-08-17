@@ -219,6 +219,7 @@
 
         <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
             <h2 class="form-signin-heading">请登录</h2>
+            <span th:txet>${login_error}</span>
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
             <label for="inputPassword" class="sr-only">Password</label>
