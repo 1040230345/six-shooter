@@ -45,9 +45,13 @@
 
             var suc="";
 
+            var flag1;
+            var flag2;
+
             $("#signupEmail").click(function(){
 
                 $(this).keyup(function(event) {
+                    flag1=null;
                     var text=$(this).val();
                     console.log(text);
                     $.ajax({
@@ -58,15 +62,14 @@
                     })
                         .done(function(data) {
                             console.log(data);
-
-                            if(data.email=="1"){
-                                suc=suc+data.email;
-                                console.log(suc);
+                            if(data.email=="0"){
+                                $("#signupSub").attr('disabled',"disabled");
+                                flag1=false;
+                            }else{
+                                flag1=true;
                             }
-                            if(suc=="11"){
-                                console.log("成功");
+                            if(flag1&&flag2){
                                 $("#signupSub").attr('disabled',false);
-                                suc="";
                             }
 
                         })
@@ -83,6 +86,7 @@
             $("#signupUsername").click(function(){
 
                 $(this).keyup(function(event) {
+                    flag2=null;
                     var text=$(this).val();
                     console.log(text);
                     $.ajax({
@@ -94,16 +98,16 @@
                         .done(function(data) {
                             console.log(data);
 
-                            if(data.name=="1"){
-                                suc=suc+data.name;
-                                console.log(suc);
+                            if(data.name=="0"){
+                                $("#signupSub").attr('disabled',"disabled");
+                                flag2=false;
+                            }else{
+                                flag2=true;
                             }
-                            if(suc=="11"){
-                                console.log("成功");
+                            if(flag1&&flag2){
                                 $("#signupSub").attr('disabled',false);
-                                suc="";
-                            }
 
+                            }
                         })
                         .fail(function() {
                             console.log("error");
@@ -155,7 +159,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="text" id="signupPassword" class="form-control" placeholder="Password" required="">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="disabled" id="signupSub">提交</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"  id="signupSub">提交</button>
         <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
     </form>
 
