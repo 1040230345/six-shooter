@@ -37,4 +37,11 @@ public interface UserMapper {
     @Insert("INSERT INTO cookie_table (user_id,cookie, created_at, updated_at ) VALUES ( #{user_id}, #{cookie}, #{created_at}, #{updated_at} )")
     int insertCookie(CookieDto cookieDto);
 
+    /**
+     * 登陆
+     * 时间：2019年8月17日21:12:03
+     */
+    @Select("select * from user_table where password=#{password} and email=#{email_or_name} or name = #{emali_or_name}")
+    UserDto findUser_login(@Param("email_or_name") String email_or_name,@Param("password") String password);
+
 }

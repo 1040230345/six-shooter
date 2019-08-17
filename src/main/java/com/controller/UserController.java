@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(UserDto userDto) {
+    public String login(String email_or_name ,String password) {
+
+        //如果页面存在cookie，而且用户一定要登陆的话
+
+        UserDto userDto = userService.findUser_login(email_or_name,password);
+
+        if(userDto!=null){
+
+        }
         return "login";
     }
 
@@ -43,8 +50,16 @@ public class UserController {
         return "register";
     }
 
+
+    /**
+     * 注册逻辑
+     * @param userDto
+     * @param model
+     * @param httpServletResponse
+     * @return
+     */
     @PostMapping("/register")
-    public String register(UserDto userDto, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String register(UserDto userDto, Model model, HttpServletResponse httpServletResponse) {
 
         // 赋值创建时间和修改时间
         userDto.setCreated_at(getTime_util.GetNowTime_util());

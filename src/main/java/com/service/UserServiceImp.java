@@ -58,5 +58,17 @@ public class UserServiceImp implements UserService {
         return 0;
     }
 
+    @Override
+    public UserDto findUser_login(String email_or_name,String password) {
+
+        UserDto userDto = userMapper.findUser_login(email_or_name,password);
+
+        if(userDto!=null){
+            return userDto;
+        }
+
+        return null;
+    }
+
 
 }
