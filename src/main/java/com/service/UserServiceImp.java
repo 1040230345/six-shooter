@@ -75,6 +75,11 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
+    /**
+     * 更新cookie
+     * @param cookieDto
+     * @return
+     */
     @Override
     public int updateCookie(CookieDto cookieDto) {
         cookieDto.setUpdated_at(getTime_util.GetNowTime_util());

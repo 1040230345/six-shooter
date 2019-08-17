@@ -59,6 +59,7 @@ public class UserController {
             cookieDto.setUser_id(userDto.getId());
             //更新cookie
             int num = userService.updateCookie(cookieDto);
+
             if(num>0){
                 System.out.println("有没有进来呀");
                 model.addAttribute("USER",userDto);
