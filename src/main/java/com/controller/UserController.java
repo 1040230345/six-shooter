@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,20 +29,47 @@ public class UserController {
     private GetTime_util getTime_util;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpServletRequest request) {
+        //如果页面存在cookie，而且用户一定要登陆的话,只能让他滚了
+        Cookie[] cookies = request.getCookies();
+        //防止空指针异常
+        if(cookies!=null){
+            for(Cookie cookie:cookies){
+                //假如用户的状态还是登陆着的
+                if(cookie.getName().equals("TOKEN")){
+                    //请回主页谢谢
+                    return "redirect:/";
+                }
+            }
+        }
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(String email_or_name ,String password) {
+    public String login(String email_or_name ,String password,Model model,HttpServletResponse response) {
 
-        //如果页面存在cookie，而且用户一定要登陆的话
-
+        //查询数据库
         UserDto userDto = userService.findUser_login(email_or_name,password);
-
-        if(userDto!=null){
-
+        //System.out.println(userDto.getName());
+        if(userDto != null){
+            CookieDto cookieDto = new CookieDto();
+            //获取UUID
+            String token = UUID.randomUUID().toString();
+            cookieDto.setCookie(token);
+            cookieDto.setUser_id(userDto.getId());
+            //更新cookie
+            int num = userService.updateCookie(cookieDto);
+            if(num>0){
+                System.out.println("有没有进来呀");
+                model.addAttribute("USER",userDto);
+                //创建新cookie
+                Cookie cookie = new Cookie("TOKEN",token);
+                //发送给浏览器
+                response.addCookie(cookie);
+                return "redirect:/";
+            }
         }
+        model.addAttribute("login_error","账号或密码错误");
         return "login";
     }
 

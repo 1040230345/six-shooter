@@ -13,5 +13,6 @@ public interface UserService {
     int insertUser(UserDto userDto);
     int inserCookie(CookieDto cookieDto);
     UserDto findUser_login(String email_or_name,String password);
+    int updateCookie(CookieDto cookieDto);
 
 }

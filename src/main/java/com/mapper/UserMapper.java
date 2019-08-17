@@ -2,10 +2,7 @@ package com.mapper;
 
 import com.dto.CookieDto;
 import com.dto.UserDto;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * 时间：2019年8月16日16:43:59
@@ -41,7 +38,13 @@ public interface UserMapper {
      * 登陆
      * 时间：2019年8月17日21:12:03
      */
-    @Select("select * from user_table where password=#{password} and email=#{email_or_name} or name = #{emali_or_name}")
-    UserDto findUser_login(@Param("email_or_name") String email_or_name,@Param("password") String password);
+    @Select("select * from user_table where password=#{password} and ( email=#{email_or_name} or name = #{email_or_name} )")
+    UserDto findUser_login(@Param("email_or_name") String email_or_name, @Param("password") String password);
+
+    /**
+     * 修改cookie表的cookie
+     */
+    @Update("UPDATE cookie_table SET cookie=#{cookie}, updated_at=#{updated_at} where user_id = #{user_id}")
+    int updateCookie(CookieDto cookieDto);
 
 }

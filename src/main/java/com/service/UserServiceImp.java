@@ -3,8 +3,11 @@ package com.service;
 import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.UserMapper;
+import com.my_util.GetTime_util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
@@ -12,6 +15,8 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private GetTime_util getTime_util;
 
     @Override
     public UserDto findByEmail(String email) {
@@ -68,6 +73,18 @@ public class UserServiceImp implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public int updateCookie(CookieDto cookieDto) {
+        cookieDto.setUpdated_at(getTime_util.GetNowTime_util());
+
+        int num = userMapper.updateCookie(cookieDto);
+
+        if(num>0){
+            return 1;
+        }
+        return 0;
     }
 
 
