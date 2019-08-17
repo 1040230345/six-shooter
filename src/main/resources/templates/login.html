@@ -18,6 +18,7 @@
             padding-top: 40px;
             padding-bottom: 40px;
             background-color: #eee;
+            position: relative;
         }
 
         .form-signin {
@@ -60,7 +61,7 @@
         .myhide{
             display: none;
             /*position: absolute;*/
-            /*top: 0;*/
+            /*top: 40px;*/
             /*left: 183px;*/
         }
         .form-control{
@@ -87,7 +88,7 @@
             var flag1;
             var flag2;
 
-            $("#signupEmail").click(function(){
+            $("#signupEmail").focus(function(){
 
                 $(this).keyup(function(event) {
                     flag1=null;
@@ -104,8 +105,10 @@
                             if(data.email=="0"){
                                 $("#signupSub").attr('disabled',true);
                                 flag1=false;
+                                $("#icon1").attr('class', 'glyphicon glyphicon-remove');
                             }else{
                                 flag1=true;
+                                $("#icon1").attr('class', 'glyphicon glyphicon-ok');
                             }
                             if(flag1&&flag2){
                                 $("#signupSub").attr('disabled',false);
@@ -122,7 +125,7 @@
                 });
 
             });
-            $("#signupUsername").click(function(){
+            $("#signupUsername").focus(function(){
 
                 $(this).keyup(function(event) {
                     flag2=null;
@@ -140,8 +143,10 @@
                             if(data.name=="0"){
                                 $("#signupSub").attr('disabled',true);
                                 flag2=false;
+                                $("#icon2").attr('class', 'glyphicon glyphicon-remove');
                             }else{
                                 flag2=true;
+                                $("#icon2").attr('class', 'glyphicon glyphicon-ok');
                             }
                             if(flag1&&flag2){
                                 $("#signupSub").attr('disabled',false);
@@ -157,13 +162,8 @@
 
                 });
 
-            });
 
-
-
-
-
-
+            })
 
         });
     </script>
@@ -193,12 +193,11 @@
             <h2 class="form-signin-heading">请注册</h2>
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="email" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <div id="ok"><span class="glyphicon glyphicon-ok"></span></div>
-
+            <div id="ok"><span class="glyphicon glyphicon-remove" id="icon1"></span></div>
             <label for="inputPassword" class="sr-only">Username</label>
             <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
 
-            <div id="fxck"><span class="glyphicon glyphicon-remove"></span></div>
+            <div id="fxck"><span class="glyphicon glyphicon-remove" id="icon2"></span></div>
 
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
