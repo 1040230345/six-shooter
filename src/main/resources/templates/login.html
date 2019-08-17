@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>六发左轮-面向小型开发团队的项目协作开发系统</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/signin.css">
+
+
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- 触屏缩放 -->
@@ -13,23 +16,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     -->
     <style type="text/css">
-        .form-signin{
-            max-width: 330px;
-            padding: 15px;
-            padding-top: 150px;
-            margin: 0 auto;
-        }
-
         .myhide{
             display: none;
-            position: absolute;
-            top: 0;
-            left: 183px;
+            /*position: absolute;*/
+            /*top: 0;*/
+            /*left: 183px;*/
 
         }
         .form-control{
             margin: 5px 0;
         }
+        /*#ok{*/
+        /*    position: absolute;*/
+        /*}*/
     </style>
     <script type="text/javascript">
 
@@ -63,7 +62,7 @@
                         .done(function(data) {
                             console.log(data);
                             if(data.email=="0"){
-                                $("#signupSub").attr('disabled',"disabled");
+                                $("#signupSub").attr('disabled',true);
                                 flag1=false;
                             }else{
                                 flag1=true;
@@ -99,7 +98,7 @@
                             console.log(data);
 
                             if(data.name=="0"){
-                                $("#signupSub").attr('disabled',"disabled");
+                                $("#signupSub").attr('disabled',true);
                                 flag2=false;
                             }else{
                                 flag2=true;
@@ -148,21 +147,27 @@
 
 </div>
 
-<div class="container myhide" id="signup">
+<div class="myhide" id="signup">
+    <div class="container">
+        <form class="form-signin" id="signupform">
+            <h2 class="form-signin-heading">请注册</h2>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+            <div id="ok"><span class="glyphicon glyphicon-ok"></span></div>
 
-    <form class="form-signin" id="signupform">
-        <h2 class="form-signin-heading">请注册</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Username</label>
-        <input type="text" id="signupUsername" class="form-control" placeholder="Username" required="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="text" id="signupPassword" class="form-control" placeholder="Password" required="">
+            <label for="inputPassword" class="sr-only">Username</label>
+            <input type="text" id="signupUsername" class="form-control" placeholder="Username" required="">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit"  id="signupSub">提交</button>
-        <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
-    </form>
+            <div id="fxck"><span class="glyphicon glyphicon-remove"></span></div>
 
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="text" id="signupPassword" class="form-control" placeholder="Password" required="">
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+            <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
