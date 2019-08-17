@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.dto.CookieDto;
 import com.dto.UserDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,5 +29,12 @@ public interface UserMapper {
      */
     @Insert("INSERT INTO user_table (email, name, password, created_at, updated_at ) VALUES ( #{email}, #{name}, #{password}, #{created_at}, #{updated_at} )")
     int insertUser(UserDto userDto);
+
+    /**
+     * 插入cookies
+     * 时间：2019年8月17日16:35:12
+     */
+    @Insert("INSERT INTO cookie_table (user_id,cookie, created_at, updated_at ) VALUES ( #{user_id}, #{cookie}, #{created_at}, #{updated_at} )")
+    int insertCookie(CookieDto cookieDto);
 
 }

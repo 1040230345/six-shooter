@@ -1,7 +1,7 @@
 package com.controller;
 
+import com.dto.CookieDto;
 import com.dto.UserDto;
-import com.mapper.UserMapper;
 import com.my_util.GetTime_util;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 用户控制器
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(UserDto userDto, Model model) {
+    public String register(UserDto userDto, Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         // 赋值创建时间和修改时间
         userDto.setCreated_at(getTime_util.GetNowTime_util());
@@ -51,8 +53,30 @@ public class UserController {
         //插入数据库
         int num = userService.insertUser(userDto);
 
+        //插入成功
         if(num>0){
-            return "redirect:/";
+            //获取用户信息
+            userDto = userService.findByName(userDto.getName());
+            model.addAttribute("USER",userDto);
+            //获取UUID
+            String token = UUID.randomUUID().toString();
+            //插入cookies数据库
+            CookieDto cookieDto = new CookieDto();
+            cookieDto.setCookie(token);
+            cookieDto.setUser_id(userDto.getId());
+            cookieDto.setCreated_at(getTime_util.GetNowTime_util());
+            cookieDto.setUpdated_at(getTime_util.GetNowTime_util());
+            int inser = userService.inserCookie(cookieDto);
+            if(inser>0){
+                //创建新cookie
+                Cookie cookie = new Cookie("TOKEN",token);
+                //发送给浏览器
+                httpServletResponse.addCookie(cookie);
+                return "redirect:/";
+            }
+
+            return  "register";
+
         }
 
         model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
@@ -71,9 +95,9 @@ public class UserController {
         Map<String, String> map = new HashMap<>();
 
         if (email != null) {
-            int num = userService.findByEmail(email);
+            UserDto userDto = userService.findByEmail(email);
 
-            if (num>0) {
+            if (userDto!=null) {
                 map.put("email", "0");
                 return map;
             }
@@ -82,9 +106,9 @@ public class UserController {
         }
 
         if (name != null) {
-            int num = userService.findByName(name);
+            UserDto userDto = userService.findByName(name);
 
-            if (num>0) {
+            if (userDto!=null) {
                 map.put("name", "0");
                 return map;
             }

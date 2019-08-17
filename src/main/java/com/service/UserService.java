@@ -1,5 +1,6 @@
 package com.service;
 
+import com.dto.CookieDto;
 import com.dto.UserDto;
 
 /**
@@ -7,7 +8,8 @@ import com.dto.UserDto;
  */
 public interface UserService {
 
-    int findByEmail(String email);
-    int findByName(String name );
+    UserDto findByEmail(String email);
+    UserDto findByName(String name);
     int insertUser(UserDto userDto);
+    int inserCookie(CookieDto cookieDto);
 }
