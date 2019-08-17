@@ -18,7 +18,6 @@
             padding-top: 40px;
             padding-bottom: 40px;
             background-color: #eee;
-            position: relative;
         }
 
         .form-signin {
@@ -67,12 +66,15 @@
         .form-control{
             margin: 5px 0;
         }
-        /*#emailmsg{
-           
+        #ok,#fxck,#pass{
             position: relative;
-            left: 0;
-            right: 0;
-        }*/
+        }
+        #emailmsg,#namemsg,#passmsg{
+            position: absolute;
+            left: 304px;
+            top: -41px;
+            width: 180px;
+        }
         /*#ok{*/
         /*    position: absolute;*/
         /*}*/
@@ -89,22 +91,22 @@
                 $("#signup").hide();
             });
 
-            var suc="";
 
             var flag1;
             var flag2;
-            var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-            var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/;
+            var flag3;
+            var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/||/\s/;
+            var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
             $("#signupEmail").focus(function(){
 
                 $(this).keyup(function(event) {
                     flag1=null;
                     var text=$(this).val();
-                    if(!checkemail.test(text)){
+                    if(!checkemail.test(text)||text==null){
                         $("#emailmsg").html("邮箱格式错误"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
                         flag1=false;
-                                     $("#emailmsg").css('color', 'red');
-
+                         $("#emailmsg").css('color', 'red');
+                        $("#signupSub").attr('disabled',true);
                         $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
                     }else{
@@ -115,7 +117,6 @@
                             data: {email: text},
                         })
                             .done(function(data) {
-                                console.log(data);
                                 if(data.email=="0"){
                                     $("#signupSub").attr('disabled',true);
                                     $("#emailmsg").html("此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
@@ -129,10 +130,8 @@
                                      $("#emailmsg").css('color', 'green');
                                     $("#icon1").attr('class', 'glyphicon glyphicon-ok');
                                 }
-                                if(flag1&&flag2){
-                                    $("#signupSub").attr('disabled',false);
-                                }
-
+                                if(flag1&&flag2&&flag3){
+                                $("#signupSub").attr('disabled',false);}
                             })
                             .fail(function() {
                                 console.log("error");
@@ -140,23 +139,22 @@
                             .always(function() {
                                 console.log("complete");
                             });
+                            
                     }
-
-
+                        
                 });
 
             });
             $("#signupUsername").focus(function(){
-
                 $(this).keyup(function(event) {
                     flag2=null;
                     var text=$(this).val();
-                    if(!checkname.test(text)){
+                    if(!checkname.test(text)||text==null||text==""){
                         console.log("用户名格式错误");
                          $("#namemsg").html("用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
                          $("#namemsg").css('color', 'red');
-
                         flag2=false;
+                        $("#signupSub").attr('disabled',true);
                     }else{
                         $.ajax({
                             url: '/verification',
@@ -165,7 +163,6 @@
                             data: {name: text},
                         })
                             .done(function(data) {
-                                console.log(data);
                                 if(data.name=="0"){
                                     $("#signupSub").attr('disabled',true);
                                      $("#namemsg").html("此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
@@ -179,10 +176,8 @@
                                     $("#namemsg").css('color', 'green');
                                     $("#icon2").attr('class', 'glyphicon glyphicon-ok');
                                 }
-                                if(flag1&&flag2){
-                                    $("#signupSub").attr('disabled',false);
-
-                                }
+                                if(flag1&&flag2&&flag3){
+                                $("#signupSub").attr('disabled',false);}
                             })
                             .fail(function() {
                                 console.log("error");
@@ -190,12 +185,32 @@
                             .always(function() {
                                 console.log("complete");
                             });
-                    }
 
+                    }
+                        
                 });
 
-
-            })
+            });
+            $("#signupPassword").focus(function(){
+                $(this).keyup(function(event) {
+                    flag3=null;
+                    var text=$(this).val();
+                    if (text=="") {
+                        $("#passmsg").html("<span class='glyphicon glyphicon-remove' id='icon3'></span>");
+                        $("#passmsg").css('color', 'red');
+                        flag3=false;
+                        $("#signupSub").attr('disabled',true);
+                    }else{
+                        flag3=true;
+                        $("#passmsg").html("<span class='glyphicon glyphicon-remove' id='icon3'></span>");
+                        $("#passmsg").css('color', 'green');
+                        $("#icon3").attr('class', 'glyphicon glyphicon-ok');
+                    };
+                    if(flag1&&flag2&&flag3){
+                    $("#signupSub").attr('disabled',false);}
+                });
+            });
+           
         });
     </script>
 </head>
@@ -236,6 +251,9 @@
 
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                <div id="pass">
+                    <h6 id="passmsg"></h6>
+                </div>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
 
