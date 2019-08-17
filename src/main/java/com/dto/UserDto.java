@@ -13,8 +13,8 @@ public class UserDto {
     private String password; //密码
     private String avatar_url;  //用户头像链接，有默认
     private String bio;  //用户简介
-    private Date created_at; //创建时间
-    private Date updated_at; //修改时间
+    private String created_at; //创建时间
+    private String updated_at; //修改时间
 
 
     public int getId() {
@@ -58,21 +58,6 @@ public class UserDto {
         this.bio = bio;
     }
 
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
-    }
 
     public String getPassword() {
         return password;
@@ -80,5 +65,21 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

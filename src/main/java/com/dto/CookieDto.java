@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -11,8 +12,8 @@ public class CookieDto {
 
     private long user_id; //用户id
     private String cookie;  //cookie 由uuid产生，为唯一
-    private Date created_at; //创建时间
-    private Date updated_at; //修改时间
+    private String created_at; //创建时间
+    private String updated_at; //修改时间
 
     public long getUser_id() {
         return user_id;
@@ -30,19 +31,19 @@ public class CookieDto {
         this.cookie = cookie;
     }
 
-    public Date getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public Date getUpdated_at() {
+    public String getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 }

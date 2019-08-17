@@ -36,5 +36,15 @@ public class UserServiceImp implements UserService {
         }
     }
 
+    @Override
+    public int insertUser(UserDto userDto) {
+
+        int num = userMapper.insertUser(userDto);
+        if(num>0){
+            return 1;
+        }
+        return 0;
+    }
+
 
 }
