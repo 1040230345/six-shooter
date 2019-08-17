@@ -67,9 +67,12 @@
         .form-control{
             margin: 5px 0;
         }
-        #emailmsg,#namemsg{
-            color:red !important;
-        }
+        /*#emailmsg{
+           
+            position: relative;
+            left: 0;
+            right: 0;
+        }*/
         /*#ok{*/
         /*    position: absolute;*/
         /*}*/
@@ -100,6 +103,8 @@
                     if(!checkemail.test(text)){
                         $("#emailmsg").html("邮箱格式错误"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
                         flag1=false;
+                                     $("#emailmsg").css('color', 'red');
+
                         $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
                     }else{
@@ -114,11 +119,14 @@
                                 if(data.email=="0"){
                                     $("#signupSub").attr('disabled',true);
                                     $("#emailmsg").html("此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                     $("#emailmsg").css('color', 'red');
+
                                     flag1=false;
                                     $("#icon1").attr('class', 'glyphicon glyphicon-remove');
                                 }else{
                                     flag1=true;
                                     $("#emailmsg").html("<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                     $("#emailmsg").css('color', 'green');
                                     $("#icon1").attr('class', 'glyphicon glyphicon-ok');
                                 }
                                 if(flag1&&flag2){
@@ -146,6 +154,8 @@
                     if(!checkname.test(text)){
                         console.log("用户名格式错误");
                          $("#namemsg").html("用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                         $("#namemsg").css('color', 'red');
+
                         flag2=false;
                     }else{
                         $.ajax({
@@ -159,11 +169,14 @@
                                 if(data.name=="0"){
                                     $("#signupSub").attr('disabled',true);
                                      $("#namemsg").html("此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                    $("#namemsg").css('color', 'red');
+
                                     flag2=false;
                                     $("#icon2").attr('class', 'glyphicon glyphicon-remove');
                                 }else{
                                     flag2=true;
                                     $("#namemsg").html("<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                    $("#namemsg").css('color', 'green');
                                     $("#icon2").attr('class', 'glyphicon glyphicon-ok');
                                 }
                                 if(flag1&&flag2){
