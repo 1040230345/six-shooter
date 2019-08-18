@@ -80,8 +80,8 @@
         /*}*/
     </style>
     <script type="text/javascript">
-    $(document).ready(function() {
-            
+        $(document).ready(function() {
+
             $("#signupbtn").click(function(){
                 $("#signin").fadeOut(0);
                 $("#signup").fadeIn();
@@ -105,7 +105,7 @@
                     if(!checkemail.test(text)||text==null){
                         $("#emailmsg").html("邮箱格式错误"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
                         flag1=false;
-                         $("#emailmsg").css('color', 'red');
+                        $("#emailmsg").css('color', 'red');
                         $("#signupSub").attr('disabled',true);
                         $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
@@ -120,18 +120,18 @@
                                 if(data.email=="0"){
                                     $("#signupSub").attr('disabled',true);
                                     $("#emailmsg").html("此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
-                                     $("#emailmsg").css('color', 'red');
+                                    $("#emailmsg").css('color', 'red');
 
                                     flag1=false;
                                     $("#icon1").attr('class', 'glyphicon glyphicon-remove');
                                 }else{
                                     flag1=true;
                                     $("#emailmsg").html("<span class='glyphicon glyphicon-remove' id='icon1'></span>");
-                                     $("#emailmsg").css('color', 'green');
+                                    $("#emailmsg").css('color', 'green');
                                     $("#icon1").attr('class', 'glyphicon glyphicon-ok');
                                 }
                                 if(flag1&&flag2&&flag3){
-                                $("#signupSub").attr('disabled',false);}
+                                    $("#signupSub").attr('disabled',false);}
                             })
                             .fail(function() {
                                 console.log("error");
@@ -139,9 +139,9 @@
                             .always(function() {
                                 console.log("complete");
                             });
-                            
+
                     }
-                        
+
                 });
 
             });
@@ -151,8 +151,8 @@
                     var text=$(this).val();
                     if(!checkname.test(text)||text==null||text==""){
                         console.log("用户名格式错误");
-                         $("#namemsg").html("用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
-                         $("#namemsg").css('color', 'red');
+                        $("#namemsg").html("用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                        $("#namemsg").css('color', 'red');
                         flag2=false;
                         $("#signupSub").attr('disabled',true);
                     }else{
@@ -165,7 +165,7 @@
                             .done(function(data) {
                                 if(data.name=="0"){
                                     $("#signupSub").attr('disabled',true);
-                                     $("#namemsg").html("此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                    $("#namemsg").html("此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
                                     $("#namemsg").css('color', 'red');
 
                                     flag2=false;
@@ -177,7 +177,7 @@
                                     $("#icon2").attr('class', 'glyphicon glyphicon-ok');
                                 }
                                 if(flag1&&flag2&&flag3){
-                                $("#signupSub").attr('disabled',false);}
+                                    $("#signupSub").attr('disabled',false);}
                             })
                             .fail(function() {
                                 console.log("error");
@@ -187,7 +187,7 @@
                             });
 
                     }
-                        
+
                 });
 
             });
@@ -207,60 +207,60 @@
                         $("#icon3").attr('class', 'glyphicon glyphicon-ok');
                     };
                     if(flag1&&flag2&&flag3){
-                    $("#signupSub").attr('disabled',false);}
+                        $("#signupSub").attr('disabled',false);}
                 });
             });
-           
+
         });
     </script>
 </head>
 <body>
-    <div class="container" id="signin">
+<div class="container" id="signin">
 
-        <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-            <h2 class="form-signin-heading">请登录</h2>
-            <span th:text="${login_error}" style="color:red"></span>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me">Remember me</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-            <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
-        </form>
-
-    </div>
-
-    <div class="myhide" id="signup">
-        <div class="container">
-            <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-                <h2 class="form-signin-heading">请注册</h2>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                <div id="ok">
-                    <h6 id="emailmsg"></h6>
-                </div>
-                <label for="inputPassword" class="sr-only">Username</label>
-                <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
-
-                <div id="fxck">
-                    <h6 id="namemsg"></h6>
-                </div>
-
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
-                <div id="pass">
-                    <h6 id="passmsg"></h6>
-                </div>
-
-                <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
-
-                <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
-            </form>
+    <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+        <h2 class="form-signin-heading">请登录</h2>
+        <span th:text="${login_error}" style="color:red"></span>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me">Remember me</label>
         </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
+    </form>
+
+</div>
+
+<div class="myhide" id="signup">
+    <div class="container">
+        <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+            <h2 class="form-signin-heading">请注册</h2>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+            <div id="ok">
+                <h6 id="emailmsg"></h6>
+            </div>
+            <label for="inputPassword" class="sr-only">Username</label>
+            <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
+
+            <div id="fxck">
+                <h6 id="namemsg"></h6>
+            </div>
+
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+            <div id="pass">
+                <h6 id="passmsg"></h6>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+            <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+        </form>
     </div>
+</div>
 </body>
 </html>
