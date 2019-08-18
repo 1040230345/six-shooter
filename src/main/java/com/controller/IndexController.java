@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
+
     @GetMapping("/index")
     public String index(){
         return "index";

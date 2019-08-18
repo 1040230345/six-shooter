@@ -61,7 +61,6 @@ public class UserController {
             int num = userService.updateCookie(cookieDto);
 
             if(num>0){
-                System.out.println("有没有进来呀");
                 model.addAttribute("USER",userDto);
                 //创建新cookie
                 Cookie cookie = new Cookie("TOKEN",token);

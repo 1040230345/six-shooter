@@ -7,8 +7,6 @@ import com.my_util.GetTime_util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 
 @Service
 public class UserServiceImp implements UserService {
