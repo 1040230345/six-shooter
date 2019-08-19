@@ -152,19 +152,20 @@
             font-size: 21px;
         }
         .mycenter2{
-            margin: 50px auto;
-            max-width: 600px;
+            margin: 90px auto;
+            max-width: 1400px;
             text-align: center;
             padding: 0 24px;
             height: 800px;
         }
-        .mycenter2 ul{
-            list-style: none;
-            clear: both;
-        }
-        .mycenter li{
-            float: left;
-        }
+       .mycenter2 .col-md-3{
+            height: 500px;
+            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            background-color: white;
+       }
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -457,19 +458,30 @@
 </div>
 
 <div class="container mycenter">
-    <img src="/images/ima1.jpg" alt="图片" width="300" height="300">
-
-</div>
+    <img src="/images/ima1.jpg" alt="图片" width="600" height="370"></div>
 
 <div class="container mycenter2">
     <h1>这是四个有梦想的青年</h1>
-    <ul>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-    </ul>
-    
+    <div class="col-md-3">
+        <img src="/images/superengineer.jpg" alt="" width="470" height="470">
+        <h2>Jack</h2>
+        <p>全栈工程师</p>
+    </div>
+    <div class="col-md-3">
+        <img src="/images/superengineer.jpg" alt="" width="470" height="470">
+        <h2>明哥</h2>
+        <p>前端工程师</p>
+    </div>
+    <div class="col-md-3">
+        <img src="/images/superengineer.jpg" alt="" width="470" height="470">
+        <h2>林锴</h2>
+        <p>系统架构师</p>
+    </div>
+    <div class="col-md-3">
+        <img src="/images/superengineer.jpg" alt="" width="470" height="470">
+        <h2>小涛</h2>
+        <p>开发工程师</p>
+    </div>
 </div>
 </body>
 </html>
