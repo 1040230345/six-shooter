@@ -32,10 +32,47 @@
         .container .row{
             width: 100%;
         }
+        .nav li .open>a,.nav li .open>a:focus,.nav li .open>a:hover{
+           background-color: #080808;
+        }
        /* @media (width: 1200px){
         .container {
             width: 1519px;
         }}*/
+/*小三角*/
+.dropdown-menu-sw:after {
+    left: auto;
+    right: 10px;
+    top: -14px;
+}
+
+.dropdown-menu:after {
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+}
+.dropdown-menu:after, .dropdown-menu:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+}
+.navbar-nav>li>.dropdown-menu{
+    border-radius: 4px!important;
+}
+.col-md-3 .box1{
+    width: 100%;
+    overflow: hidden;
+    border-right: 1px solid black;
+    padding: 0 15px;
+    height: 573px;
+}
+
+
+
+/*底部*/
+footer p{
+    text-align: center;
+}
+
     </style>
 </head>
 
@@ -80,14 +117,15 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">通知</a>
+                        <a href="#"><i class="glyphicon glyphicon-bell"></i></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <!-- <i class="glyphicon glyphicon-plus"></i> -->
                             +
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-sw">
                             <li>
                                 <a href="#">Action</a>
                             </li>
@@ -99,16 +137,17 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="#">Separated link</a>
+                                <a href="#">Something else here</a>
                             </li>
+                            
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            我
+                            <i class="glyphicon glyphicon-user"></i>
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-sw">
                             <li>
                                 <a href="#">Action</a>
                             </li>
@@ -135,6 +174,7 @@
         <!-- Example row of columns -->
         <div class="row">
             <div class="col-md-3">
+                <div class="box1">
                 <h2>Heading</h2>
                 <p>
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
@@ -142,7 +182,9 @@
                 <p>
                     <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
                 </p>
+                </div>
             </div>
+
             <div class="col-md-6">
                 <h2>Heading</h2>
                 <p>

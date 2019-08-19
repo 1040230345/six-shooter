@@ -4,85 +4,419 @@
 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>六发左轮-面向小型开发团队的项目协作开发系统</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- 触屏缩放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 禁止缩放
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    -->
     <style type="text/css">
+        /*signin样式*/
         body {
-            padding-top: 50px;
-            padding-bottom: 20px;
+            padding-bottom: 40px;
+            background-color: #eee;
         }
+        #lgcontainer-fluid{
+            padding:0px;
+            background: url(/images/bg.svg) center 10%;
+            background-color: #2b3137;
+
+        }
+        .form-signin {
+            max-width: 330px;
+            padding: 45px 15px;
+            margin: 0 auto;
+            margin-top: 75px;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .form-signin h2{
+            margin-top: 10px;
+        }
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        /*分割*/
+
+
+        .myhide{
+            display: none;
+            /*position: absolute;*/
+            /*top: 40px;*/
+            /*left: 183px;*/
+        }
+        .form-control{
+            margin: 5px 0;
+        }
+        #ok,#fxck,#pass{
+            position: relative;
+        }
+        #emailmsg,#namemsg,#passmsg{
+            position: absolute;
+            left: 304px;
+            top: -41px;
+            width: 180px;
+        }
+        /*#ok{*/
+        /*    position: absolute;*/
+        /*}*/
+
+        /*nav*/
+        .header{
+        background-color: #24292e;
+        color: hsla(0,0%,100%,.7);
+        font-size: 14px;
+        z-index: 32;
+        }
+        .navbar{
+            margin-bottom: 0px;
+            border: 0px;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: #fff;
+        }
+        .navbar-default .navbar-nav>li>a:hover {
+            color: hsla(0,0%,100%,.7);
+        }
+        .container .row{
+            width: 100%;
+        }
+        .nav li .open>a,.nav li .open>a:focus,.nav li .open>a:hover{
+           background-color: #080808;
+        }
+       /* @media (width: 1200px){
+        .container {
+            width: 1519px;
+        }}*/
+/*小三角*/
+.dropdown-menu-sw:after {
+    left: auto;
+    right: 10px;
+    top: -14px;
+}
+
+.dropdown-menu:after {
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+}
+.dropdown-menu:after, .dropdown-menu:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+}
+.navbar-nav>li>.dropdown-menu{
+    border-radius: 4px!important;
+}
+        /*navend*/
     </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#signupbtn").click(function(){
+                $("#signin").fadeOut(0);
+                $("#signup").fadeIn();
+            });
+            $("#returnbtn").click(function(){
+                $("#signin").fadeIn();
+                $("#signup").hide();
+            });
+
+
+            var flag1;
+            var flag2;
+            var flag3;
+            var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/||/\s/;
+            var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
+            $("#signupEmail").focus(function(){
+
+                $(this).keyup(function(event) {
+                    flag1=null;
+                    var text=$(this).val();
+                    if(!checkemail.test(text)||text==null){
+                        $("#emailmsg").html("邮箱格式错误"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                        flag1=false;
+                        $("#emailmsg").css('color', 'red');
+                        $("#signupSub").attr('disabled',true);
+                        $("#icon1").attr('class', 'glyphicon glyphicon-remove');
+
+                    }else{
+                        $.ajax({
+                            url: '/verification',
+                            type: 'post',
+                            dataType: 'JSON',
+                            data: {email: text},
+                        })
+                            .done(function(data) {
+                                if(data.email=="0"){
+                                    $("#signupSub").attr('disabled',true);
+                                    $("#emailmsg").html("此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                    $("#emailmsg").css('color', 'red');
+
+                                    flag1=false;
+                                    $("#icon1").attr('class', 'glyphicon glyphicon-remove');
+                                }else{
+                                    flag1=true;
+                                    $("#emailmsg").html("<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                    $("#emailmsg").css('color', 'green');
+                                    $("#icon1").attr('class', 'glyphicon glyphicon-ok');
+                                }
+                                if(flag1&&flag2&&flag3){
+                                    $("#signupSub").attr('disabled',false);}
+                            })
+                            .fail(function() {
+                                console.log("error");
+                            })
+                            .always(function() {
+                                console.log("complete");
+                            });
+
+                    }
+
+                });
+
+            });
+            $("#signupUsername").focus(function(){
+                $(this).keyup(function(event) {
+                    flag2=null;
+                    var text=$(this).val();
+                    if(!checkname.test(text)||text==null||text==""){
+                        console.log("用户名格式错误");
+                        $("#namemsg").html("用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                        $("#namemsg").css('color', 'red');
+                        flag2=false;
+                        $("#signupSub").attr('disabled',true);
+                    }else{
+                        $.ajax({
+                            url: '/verification',
+                            type: 'post',
+                            dataType: 'JSON',
+                            data: {name: text},
+                        })
+                            .done(function(data) {
+                                if(data.name=="0"){
+                                    $("#signupSub").attr('disabled',true);
+                                    $("#namemsg").html("此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                    $("#namemsg").css('color', 'red');
+
+                                    flag2=false;
+                                    $("#icon2").attr('class', 'glyphicon glyphicon-remove');
+                                }else{
+                                    flag2=true;
+                                    $("#namemsg").html("<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                    $("#namemsg").css('color', 'green');
+                                    $("#icon2").attr('class', 'glyphicon glyphicon-ok');
+                                }
+                                if(flag1&&flag2&&flag3){
+                                    $("#signupSub").attr('disabled',false);}
+                            })
+                            .fail(function() {
+                                console.log("error");
+                            })
+                            .always(function() {
+                                console.log("complete");
+                            });
+
+                    }
+
+                });
+
+            });
+            $("#signupPassword").focus(function(){
+                $(this).keyup(function(event) {
+                    flag3=null;
+                    var text=$(this).val();
+                    if (text=="") {
+                        $("#passmsg").html("<span class='glyphicon glyphicon-remove' id='icon3'></span>");
+                        $("#passmsg").css('color', 'red');
+                        flag3=false;
+                        $("#signupSub").attr('disabled',true);
+                    }else{
+                        flag3=true;
+                        $("#passmsg").html("<span class='glyphicon glyphicon-remove' id='icon3'></span>");
+                        $("#passmsg").css('color', 'green');
+                        $("#icon3").attr('class', 'glyphicon glyphicon-ok');
+                    };
+                    if(flag1&&flag2&&flag3){
+                        $("#signupSub").attr('disabled',false);}
+                });
+            });
+
+        });
+    </script>
 </head>
-
 <body>
+    <nav class="navbar navbar-default header">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color:#fff">Six-Shooter</a>
+            </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" style="color:white">六发左轮</a>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search"></div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">
+                            Pull requests
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Issues</a>
+                    </li>
+                    <li>
+                        <a href="#">Marketplace</a>
+                    </li>
+                    <li>
+                        <a href="#">Explore</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"> <i class="glyphicon glyphicon-bell"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <!-- <i class="glyphicon glyphicon-plus"></i>
+                        -->
+                            +
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/loginout">退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-                <a href='/loginout'>退出登录</a>
-            </form>
-        </div><!--/.navbar-collapse -->
-    </div>
+        <!-- /.navbar-collapse --> </div>
+    <!-- /.container-fluid -->
 </nav>
+<div class="container-fluid"  id="lgcontainer-fluid" style="height:628px;">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+        <div class="" id="signin">
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+            <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                <h2 class="form-signin-heading">请登录</h2>
+                <span th:text="${login_error}" style="color:red"></span>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me">Remember me</label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+                <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
+            </form>
+
+        </div>
+
+        <div class="myhide" id="signup">
+            <div class="">
+                <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                    <h2 class="form-signin-heading">请注册</h2>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <div id="ok">
+                        <h6 id="emailmsg"></h6>
+                    </div>
+                    <label for="inputPassword" class="sr-only">Username</label>
+                    <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
+
+                    <div id="fxck">
+                        <h6 id="namemsg"></h6>
+                    </div>
+
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                    <div id="pass">
+                        <h6 id="passmsg"></h6>
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+                    <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+                </form>
+            </div>
+        </div>
     </div>
+
 </div>
-
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-    </div>
-
-    <hr>
-
-    <footer>
-        <p>&copy; 2016 Company, Inc.</p>
-    </footer>
-</div> <!-- /container -->
-
 </body>
-
 </html>
