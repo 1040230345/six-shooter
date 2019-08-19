@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 主页控制器
@@ -38,26 +37,6 @@ public class IndexController {
     }
 
 
-    /**
-     * 退出登陆的逻辑页面
-     * @param request
-     * @param response
-     * @return
-     */
-    @GetMapping("/loginout")
-    public String login_out(HttpServletRequest request, HttpServletResponse response){
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("TOKEN")){
-                    cookie.setValue(null);
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                }
-            }
-        }
 
-        return "index";
-    }
 
 }
