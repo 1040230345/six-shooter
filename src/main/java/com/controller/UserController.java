@@ -28,23 +28,15 @@ public class UserController {
     @Autowired
     private GetTime_util getTime_util;
 
-    @GetMapping("/login")
-    public String login(HttpServletRequest request) {
-        //如果页面存在cookie，而且用户一定要登陆的话,只能让他滚了
-        Cookie[] cookies = request.getCookies();
-        //防止空指针异常
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                //假如用户的状态还是登陆着的
-                if(cookie.getName().equals("TOKEN")){
-                    //请回主页谢谢
-                    return "redirect:/";
-                }
-            }
-        }
-        return "login";
-    }
 
+    /**
+     * 登陆逻辑
+     * @param email_or_name
+     * @param password
+     * @param model
+     * @param response
+     * @return
+     */
     @PostMapping("/login")
     public String login(String email_or_name ,String password,Model model,HttpServletResponse response) {
 
@@ -66,18 +58,12 @@ public class UserController {
                 Cookie cookie = new Cookie("TOKEN",token);
                 //发送给浏览器
                 response.addCookie(cookie);
-                return "redirect:/";
+                return "redirect:/home";
             }
         }
         model.addAttribute("login_error","账号或密码错误");
-        return "login";
+        return "index";
     }
-
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
-
 
     /**
      * 注册逻辑
@@ -115,21 +101,26 @@ public class UserController {
                 Cookie cookie = new Cookie("TOKEN",token);
                 //发送给浏览器
                 httpServletResponse.addCookie(cookie);
-                return "redirect:/";
+                return "redirect:/home";
             }
 
-            return  "register";
+            return  "index";
 
         }
 
         model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
 
-        return  "register";
+        return  "index";
 
 
     }
 
-    //异步验证
+    /**
+     * 异步验证
+     * @param email
+     * @param name
+     * @return.
+     */
     @RequestMapping(value = "/verification", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> verification(@RequestParam(required = false) String email,

@@ -20,15 +20,33 @@ public class IndexController {
         return "test";
     }
 
-    @GetMapping("/index")
-    public String index(){
+    @GetMapping("/")
+    public String index(HttpServletRequest request){
+        //如果页面存在cookie，而且用户一定要登陆的话,只能让他滚了
+        Cookie[] cookies = request.getCookies();
+        //防止空指针异常
+        if(cookies!=null){
+            for(Cookie cookie:cookies){
+                //假如用户的状态还是登陆着的
+                if(cookie.getName().equals("TOKEN")){
+                    //请回主页谢谢
+                    return "redirect:/home";
+                }
+            }
+        }
         return "index";
     }
 
+
+    /**
+     * 退出登陆的逻辑页面
+     * @param request
+     * @param response
+     * @return
+     */
     @GetMapping("/loginout")
     public String login_out(HttpServletRequest request, HttpServletResponse response){
         Cookie[] cookies = request.getCookies();
-
         if(cookies!=null){
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("TOKEN")){
