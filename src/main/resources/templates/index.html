@@ -80,6 +80,17 @@ footer p{
 }
 
     </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown-toggle").focusin(function () {
+                $(this).css("background-color","#24292e");
+            }).focusout(function () {
+                $(this).css("background-color","transparent");
+            });
+        });
+    </script>
 </head>
 
 <body>
