@@ -81,6 +81,14 @@ public class UserController {
                 Cookie cookie = new Cookie("TOKEN",token);
                 //发送给浏览器
                 response.addCookie(cookie);
+                //删除验证码记录
+                if(!ifmail) {
+                    //获取邮箱
+                    String mail = userService.findEmailByName(email_or_name);
+                    mailMapper.delCodeByEmail(mail);
+                }else {
+                    mailMapper.delCodeByEmail(email_or_name);
+                }
                 return "redirect:/home";
             }
         }
