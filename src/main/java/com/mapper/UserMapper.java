@@ -53,4 +53,10 @@ public interface UserMapper {
     @Select("select * from cookies_table where cookie=#{cookie}")
     CookieDto findUserIdByCookie(@Param("cookie") String cookie);
 
+    /**
+     * 依靠用户名查找邮箱
+     */
+    @Select("select email form user_table where name = #{name}")
+    String findEmailByName(@Param("name") String name);
+
 }

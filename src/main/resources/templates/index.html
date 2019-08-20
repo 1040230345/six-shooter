@@ -263,21 +263,21 @@
                         clearInterval(timer);
                     };
                 }, 1000)
-                // $.ajax({
-                //     url: '/vcodeSend',
-                //     type: 'POST',
-                //     dataType: 'JSON',
-                //     data: {mail:email},
-                // })
-                // .done(function() {
-                //     console.log("success");
-                // })
-                // .fail(function() {
-                //     console.log("error");
-                // })
-                // .always(function() {
-                //     console.log("complete");
-                // });
+                $.ajax({
+                    url: '/vcodeSend',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {mail:email},
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
                 
             });
 
@@ -296,21 +296,21 @@
                         clearInterval(timer);
                     };
                 }, 1000)
-                // $.ajax({
-                //     url: '/vcodeSend',
-                //     type: 'POST',
-                //     dataType: 'JSON',
-                //     data: {mail: email},
-                // })
-                // .done(function() {
-                //     console.log("success");
-                // })
-                // .fail(function() {
-                //     console.log("error");
-                // })
-                // .always(function() {
-                //     console.log("complete");
-                // });
+                $.ajax({
+                    url: '/vcodeSend',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {mail: email},
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
                 
             });
             

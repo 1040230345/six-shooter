@@ -2,6 +2,7 @@ package com.controller;
 
 import com.dto.CookieDto;
 import com.dto.UserDto;
+import com.mapper.MailMapper;
 import com.my_util.GetTime_util;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private GetTime_util getTime_util;
+    @Autowired
+    private MailMapper mailMapper;
 
 
     /**
@@ -37,7 +40,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String email_or_name ,String password,Model model,HttpServletResponse response) {
+    public String login(String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response) {
+        //优先判断验证码是否正确
 
         //查询数据库
         UserDto userDto = userService.findUser_login(email_or_name,password);

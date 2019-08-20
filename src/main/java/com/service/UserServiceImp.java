@@ -90,5 +90,11 @@ public class UserServiceImp implements UserService {
         return 0;
     }
 
+    @Override
+    public String findEmailByName(String name) {
+        String email = userMapper.findEmailByName(name);
+        return email;
+    }
+
 
 }

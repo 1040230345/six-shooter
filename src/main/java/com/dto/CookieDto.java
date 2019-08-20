@@ -1,8 +1,5 @@
 package com.dto;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * 存放cookies
  * 时间：2019年8月16日14:57:14

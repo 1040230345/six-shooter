@@ -1,5 +1,6 @@
 package com.service;
 
+import com.mapper.MailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,6 +14,7 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    //发送邮箱
     public void sendSimpleMail(String to,String title,String content){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
