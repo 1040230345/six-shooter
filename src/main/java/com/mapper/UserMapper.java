@@ -56,7 +56,7 @@ public interface UserMapper {
     /**
      * 依靠用户名查找邮箱
      */
-    @Select("select email form user_table where name = #{name}")
+    @Select("select email from user_table where name = #{name}")
     String findEmailByName(@Param("name") String name);
 
 }

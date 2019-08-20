@@ -13,8 +13,8 @@ public interface MailMapper {
     /**
      * 依靠邮箱查找是否有信息
      */
-    @Select("Select * from code_table where email = #{email}")
-    CodeDto findCodeByEmail(@Param("email") String email);
+    @Select("Select code from code_table where email = #{email}")
+    String findCodeByEmail(@Param("email") String email);
 
     /**
      * 删除数据库验证码信息

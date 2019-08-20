@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dto.CodeDto;
 import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.MailMapper;
@@ -41,8 +42,28 @@ public class UserController {
      */
     @PostMapping("/login")
     public String login(String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response) {
-        //优先判断验证码是否正确
 
+        //优先判断验证码是否正确
+        boolean ifmail = email_or_name.contains("@");
+        if(!ifmail){
+            //获取邮箱
+            String mail = userService.findEmailByName(email_or_name);
+            //进行比对
+            String code = mailMapper.findCodeByEmail(mail);
+            //不正确
+            if(!Vcode.equals(code)){
+                model.addAttribute("login_error","验证码错误");
+                return "index";
+            }
+        }else{
+            //进行比对
+            String code = mailMapper.findCodeByEmail(email_or_name);
+            //不正确
+            if(!Vcode.equals(code)){
+                model.addAttribute("login_error","验证码错误");
+                return "index";
+            }
+        }
         //查询数据库
         UserDto userDto = userService.findUser_login(email_or_name,password);
         //System.out.println(userDto.getName());
@@ -54,7 +75,6 @@ public class UserController {
             cookieDto.setUser_id(userDto.getId());
             //更新cookie
             int num = userService.updateCookie(cookieDto);
-
             if(num>0){
                 model.addAttribute("USER",userDto);
                 //创建新cookie
