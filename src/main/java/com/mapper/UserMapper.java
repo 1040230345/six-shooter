@@ -47,4 +47,10 @@ public interface UserMapper {
     @Update("UPDATE cookie_table SET cookie=#{cookie}, updated_at=#{updated_at} where user_id = #{user_id}")
     int updateCookie(CookieDto cookieDto);
 
+    /**
+     * 依靠cookie查找user_id
+     */
+    @Select("select * from cookies_table where cookie=#{cookie}")
+    CookieDto findUserIdByCookie(@Param("cookie") String cookie);
+
 }
