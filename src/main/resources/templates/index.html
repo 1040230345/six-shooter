@@ -203,6 +203,14 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#search").click(function(event) {
+                $("#search").animate({width: "300px"}, 500);
+            });
+            // $("#search").focusout(function(event) {
+            //     $("#search").animate({width: "auto"}, 500);
+            // });
+
+
             $(".dropdown-toggle").focusin(function () {
                 $(this).css("background-color","#24292e");
             }).focusout(function () {
@@ -239,21 +247,21 @@
                         clearInterval(timer);
                     };
                 }, 1000)
-                $.ajax({
-                    url: '/vcodeSend',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {mail:email},
-                })
-                .done(function() {
-                    console.log("success");
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
+                // $.ajax({
+                //     url: '/vcodeSend',
+                //     type: 'POST',
+                //     dataType: 'JSON',
+                //     data: {mail:email},
+                // })
+                // .done(function() {
+                //     console.log("success");
+                // })
+                // .fail(function() {
+                //     console.log("error");
+                // })
+                // .always(function() {
+                //     console.log("complete");
+                // });
                 
             });
 
@@ -272,21 +280,21 @@
                         clearInterval(timer);
                     };
                 }, 1000)
-                $.ajax({
-                    url: '/vcodeSend',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {mail: email},
-                })
-                .done(function() {
-                    console.log("success");
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
+                // $.ajax({
+                //     url: '/vcodeSend',
+                //     type: 'POST',
+                //     dataType: 'JSON',
+                //     data: {mail: email},
+                // })
+                // .done(function() {
+                //     console.log("success");
+                // })
+                // .fail(function() {
+                //     console.log("error");
+                // })
+                // .always(function() {
+                //     console.log("complete");
+                // });
                 
             });
             
@@ -425,7 +433,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search"></div>
+                        <input type="text" class="form-control" id="search" placeholder="Search"></div>
                 </form>
                 <ul class="nav navbar-nav">
                     <li>
@@ -570,7 +578,7 @@
     <p>左轮-致力于中小型团队项目管理</p>
     <p>打造最属于你的项目管理</p>
     <p>专业</p>
-    <p>Use less,Do more</p>
+    <p>Write less,Do more</p>
 </div>
 
 <div class="container mycenter">

@@ -84,6 +84,9 @@ footer p{
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#search").click(function(event) {
+                $("#search").animate({width: "300px"}, 500);
+            });
             $(".dropdown-toggle").focusin(function () {
                 $(this).css("background-color","#24292e");
             }).focusout(function () {
@@ -112,7 +115,7 @@ footer p{
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search"></div>
+                        <input type="text" class="form-control" id="search" placeholder="Search"></div>
                 </form>
                 <ul class="nav navbar-nav">
                     <li>
