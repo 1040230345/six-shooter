@@ -23,7 +23,7 @@ public class HomeController {
             for(Cookie cookie:cookies){
                 //假如用户的状态还是登陆着的
                 if(cookie.getName().equals("TOKEN")){
-
+                    return "home";
                 }
             }
         }
