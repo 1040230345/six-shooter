@@ -140,25 +140,25 @@
         .container {
             width: 1519px;
         }}*/
-/*小三角*/
-.dropdown-menu-sw:after {
-    left: auto;
-    right: 10px;
-    top: -14px;
-}
+        /*小三角*/
+        .dropdown-menu-sw:after {
+            left: auto;
+            right: 10px;
+            top: -14px;
+        }
 
-.dropdown-menu:after {
-    border: 7px solid transparent;
-    border-bottom-color: #fff;
-}
-.dropdown-menu:after, .dropdown-menu:before {
-    content: "";
-    display: inline-block;
-    position: absolute;
-}
-.navbar-nav>li>.dropdown-menu{
-    border-radius: 4px!important;
-}
+        .dropdown-menu:after {
+            border: 7px solid transparent;
+            border-bottom-color: #fff;
+        }
+        .dropdown-menu:after, .dropdown-menu:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+        }
+        .navbar-nav>li>.dropdown-menu{
+            border-radius: 4px!important;
+        }
         /*navend*/
 
 
@@ -177,7 +177,7 @@
         }
         .mycenter2{
             margin: 90px auto;
-            max-width: 1400px;
+            max-width: 1500px;
             text-align: center;
             padding: 0 24px;
             height: 800px;
@@ -185,11 +185,23 @@
        .mycenter2 .col-md-3{
             height: 422px;
             max-width: 500px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 15px;
+            margin-top: 24px;
+       }
+       .mycard{
             padding: 15px;
             background-color: white;
-            margin-top: 24px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+       }
+       .mycenter2 .col-md-3 .mycard img{
+            width: 200px;
+            height: 200px;
+       }
+       .mycenter2 .col-md-3 .mycard:hover{
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
        }
        .mycenter2 .col-md-3 button{
         /*颜色*/
@@ -200,6 +212,7 @@
         overflow: hidden;
         background-color: #e5e5e5;
        }
+       
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -415,6 +428,7 @@
                 });
             });
 
+
         });
     </script>
 </head>
@@ -589,33 +603,41 @@
 
 <div class="container mycenter2">
     <h1>这是四个有梦想的青年</h1>
-    <div class="col-md-3">
-        <img src="/images/superengineer.jpg" alt="" width="250" height="250">
-        <h2>Jackson</h2>
-        <p>全栈工程师</p>
-        <div class="divider"></div>
-        <button class="btn btn-default" id="">watch more</button>
+    <div class="col-md-3" id="en1">
+        <div class="mycard">
+            <img src="/images/superengineer.jpg" alt="" width="" height="">
+            <h2>Jackson</h2>
+            <p>全栈工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
     </div>
-    <div class="col-md-3">
-        <img src="/images/superengineer.jpg" alt="" width="250" height="250">
-        <h2>明哥</h2>
-        <p>前端工程师</p>
-        <div class="divider"></div>
-        <button class="btn btn-default" id="">watch more</button>
+    <div class="col-md-3" id="en2">
+        <div class="mycard">
+            <img src="/images/superstar.jpg" alt="" width="" height="">
+            <h2>明哥</h2>
+            <p>前端工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
     </div>
-    <div class="col-md-3">
-        <img src="/images/superengineer.jpg" alt="" width="250" height="250">
-        <h2>林锴</h2>
-        <p>系统架构师</p>
-        <div class="divider"></div>
-        <button class="btn btn-default" id="">watch more</button>
+    <div class="col-md-3" id="en3">
+        <div class="mycard">
+            <img src="/images/superengineer.jpg" alt="" width="" height="">
+            <h2>林锴</h2>
+            <p>系统架构师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
     </div>
-    <div class="col-md-3">
-        <img src="/images/superengineer.jpg" alt="" width="250" height="250">
-        <h2>小涛</h2>
-        <p>开发工程师</p>
-        <div class="divider"></div>
-        <button class="btn btn-default" id="">watch more</button>
+    <div class="col-md-3" id="en4">
+        <div class="mycard">
+            <img src="/images/superengineer.jpg" alt="" width="" height="">
+            <h2>小涛</h2>
+            <p>开发工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
     </div>
 </div>
 </body>
