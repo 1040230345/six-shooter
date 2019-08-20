@@ -18,6 +18,9 @@
             padding-bottom: 40px;
             background-color: #eee;
         }
+        /*.container-fluid .col-md-4{*/
+        /*    width:24%;*/
+        /*}*/
         #lgcontainer-fluid{
             padding:0px;
             background: url(/images/bg.svg) center 10%;
@@ -30,6 +33,7 @@
             margin-top: 75px;
             border-radius: 4px;
             background-color: white;
+            height: 441px;
         }
         .form-signin h2{
             margin-top: 10px;
@@ -63,8 +67,28 @@
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
+        .myhide .vcode{
+            margin-bottom: 12px;
+            margin-top: -4px;
+        }
+        .vcode{
+            max-width:300px;
+            height: 44px;
+            clear: both; 
+        }
+        .mycontrol{
+            width:55%;
+            float: left;
+        }
+        .myVcodebtn{
+            float: left;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        .checkboxmartop{
+            margin-top: 12px;
+        }
         /*分割*/
-
 
         .myhide{
             display: none;
@@ -199,6 +223,73 @@
             var flag3;
             var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/||/\s/;
             var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
+            
+            //登录发送验证码按钮
+            $("#signinvcodebtn").click(function(){
+                var email=$("#inputEmail").val();
+                console.log(email);
+                $("#signinvcodebtn").attr('disabled', true);
+                var second=60;
+                var timer=setInterval(function(){
+                    second--;
+                    $("#signinvcodebtn").text(second+"s");
+                    if (second==0) {
+                        $("#signinvcodebtn").text("重新发送");
+                        $("#signinvcodebtn").attr('disabled', false);
+                        clearInterval(timer);
+                    };
+                }, 1000)
+                $.ajax({
+                    url: '/vcodeSend',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {mail:email},
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+                
+            });
+
+            //注册发送验证码按钮
+            $("#signupvcodebtn").click(function(){
+                var email=$("#signupEmail").val();
+                console.log(email);
+                $("#signupvcodebtn").attr('disabled', true);
+                var second=60;
+                var timer=setInterval(function(){
+                    second--;
+                    $("#signupvcodebtn").text(second+"s");
+                    if (second==0) {
+                        $("#signupvcodebtn").text("重新发送");
+                        $("#signupvcodebtn").attr('disabled', false);
+                        clearInterval(timer);
+                    };
+                }, 1000)
+                $.ajax({
+                    url: '/vcodeSend',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {mail: email},
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+                
+            });
+            
             $("#signupEmail").focus(function(){
 
                 $(this).keyup(function(event) {
@@ -421,7 +512,12 @@
                 <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-                <div class="checkbox">
+                <div class="vcode">
+                    <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
+                    <input type="text"  name="Vcode" id="Vcodesignin" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                    <button class="btn btn-default myVcodebtn" id="signinvcodebtn">发送邮箱验证码</button>
+                </div>
+                <div class="checkbox checkboxmartop">
                     <label>
                         <input type="checkbox" value="remember-me">Remember me</label>
                 </div>
@@ -435,22 +531,28 @@
             <div class="">
                 <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
                     <h2 class="form-signin-heading">请注册</h2>
-                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <label for="signupEmail" class="sr-only">Email address</label>
                     <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
                     <div id="ok">
                         <h6 id="emailmsg"></h6>
                     </div>
-                    <label for="inputPassword" class="sr-only">Username</label>
+                    <label for="signupEmail" class="sr-only">Username</label>
                     <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
 
                     <div id="fxck">
                         <h6 id="namemsg"></h6>
                     </div>
 
-                    <label for="inputPassword" class="sr-only">Password</label>
+                    <label for="signupPassword" class="sr-only">Password</label>
                     <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
                     <div id="pass">
                         <h6 id="passmsg"></h6>
+                    </div>
+
+                    <div class="vcode">
+                        <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
+                        <input type="text"  name="Vcode" id="Vcodesignup" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                        <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
                     </div>
 
                     <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
