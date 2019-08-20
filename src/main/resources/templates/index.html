@@ -30,7 +30,7 @@
             max-width: 330px;
             padding: 45px 15px;
             margin: 0 auto;
-            margin-top: 75px;
+            margin-top: 0px;
             border-radius: 4px;
             background-color: white;
             height: 441px;
@@ -203,6 +203,9 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
+           $(".form-signin").animate({marginTop:"75px"}, 500);
+
+
             $("#search").click(function(event) {
                 $("#search").animate({width: "300px"}, 500);
             });
@@ -510,7 +513,7 @@
 </nav>
 <div class="container-fluid"  id="lgcontainer-fluid" style="height:628px;">
     <div class="col-md-8"></div>
-    <div class="col-md-4">
+    <div class="col-md-4" id="indexright">
         <div class="" id="signin">
 
             <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
