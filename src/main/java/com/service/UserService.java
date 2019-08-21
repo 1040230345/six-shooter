@@ -15,7 +15,8 @@ public interface UserService {
     int inserCookie(CookieDto cookieDto);
     UserDto findUser_login(String email_or_name,String password);
     int updateCookie(CookieDto cookieDto);
-
     String findEmailByName(String name);
+    int findUserIdByCookie(String cookie);
+    UserDto findUserByid(int id);
 
 }

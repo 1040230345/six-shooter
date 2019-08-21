@@ -4,6 +4,7 @@ import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.UserMapper;
 import com.my_util.GetTime_util;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,6 +95,19 @@ public class UserServiceImp implements UserService {
     public String findEmailByName(String name) {
         String email = userMapper.findEmailByName(name);
         return email;
+    }
+
+    //依靠cookie查找用户id
+    @Override
+    public int findUserIdByCookie(String cookie) {
+        int user_id = userMapper.findUserIdByCookie(cookie);
+        return user_id;
+    }
+
+    @Override
+    public UserDto findUserByid(int id) {
+        UserDto userDto = userMapper.findUserByid(id);
+        return userDto;
     }
 
 
