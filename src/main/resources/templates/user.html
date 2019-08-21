@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>六发左轮-面向小型开发团队的项目协作开发系统</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-fileinput.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-fileinput.js"></script>
+    <!-- 触屏缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 禁止缩放
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    -->
+    <style type="text/css">
+        body {
+            padding-bottom: 20px;
+        }
+        .header{
+            background-color: #24292e;
+            color: hsla(0,0%,100%,.7);
+            font-size: 14px;
+            padding: 6px;
+            z-index: 32;
+        }
+        .navbar{
+            /*导航栏下间距在这↓*/
+            margin-bottom: 0px;
+            border-radius: 0;
+            border: 0px;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: #fff;
+        }
+        .navbar-default .navbar-nav>li>a:hover {
+            color: hsla(0,0%,100%,.7);
+        }
+        .container .row{
+            width: 100%;
+        }
+        .nav li .open>a,.nav li .open>a:focus,.nav li .open>a:hover{
+            background-color: #080808;
+        }
+        /* @media (width: 1200px){
+         .container {
+             width: 1519px;
+         }}*/
+        /*小三角*/
+        .dropdown-menu-sw:after {
+            left: auto;
+            right: 10px;
+            top: -14px;
+        }
+
+        .dropdown-menu:after {
+            border: 7px solid transparent;
+            border-bottom-color: #fff;
+        }
+        .dropdown-menu:after, .dropdown-menu:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+        }
+        .navbar-nav>li>.dropdown-menu{
+            border-radius: 4px!important;
+        }
+        .col-md-3 .box1{
+            width: 100%;
+            overflow: hidden;
+            border-right: 1px solid black;
+            padding: 0 15px;
+            height: 573px;
+        }
+        .menu {
+            background-color: #fff;
+            border: 1px solid #d1d5da;
+            border-radius: 3px;
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        .menu-heading {
+            background-color: #f3f5f8;
+            border-bottom: 1px solid #e1e4e8;
+            color: #586069;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 20px;
+            margin-bottom: 0;
+            margin-top: 0;
+            padding: 8px 10px;
+        }
+        .menu-item {
+            border-bottom: 1px solid #e1e4e8;
+            display: block;
+            padding: 0px 10px;
+            position: relative;
+        }
+        .Subhead-heading {
+            flex: 1 1 auto;
+            font-size: 24px;
+            font-weight: 400;
+            margin-top: 0px;
+        }
+        .Subhead {
+            border-bottom: 1px solid #e1e4e8;
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+        }
+        .mb-0 {
+            margin-bottom: 0!important;
+        }
+        .mt-0 {
+            margin-top: 0!important;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+            color: #fff;
+        }
+        .d-block {
+            display: block!important;
+        }
+        .mb-2 {
+            margin-bottom: 8px!important;
+        }
+        /*底部*/
+        footer p{
+            text-align: center;
+        }
+
+    </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown-toggle").focusin(function () {
+                $(this).css("background-color","#24292e");
+            }).focusout(function () {
+                $(this).css("background-color","transparent");
+            });
+        });
+    </script>
+</head>
+
+<body>
+<!--/头部 -->
+<nav class="navbar navbar-default header">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color:#fff">Six-Shooter</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search"></div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">
+                        Pull requests
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Issues</a>
+                </li>
+                <li>
+                    <a href="#">Marketplace</a>
+                </li>
+                <li>
+                    <a href="#">Explore</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-bell"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <!-- <i class="glyphicon glyphicon-plus"></i> -->
+                        +
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/loginout">退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse --> </div>
+    <!-- /.container-fluid --> </nav>
+<!-- /主体-->
+<br/>
+<div class="container">
+    <div class="row">
+    <div class="col-md-2 col-md-push-1">
+        <ul class="nav nav-tabs nav-stacked menu ">
+            <li role="presentation" class="menu-heading">个人设置</li>
+            <li role="presentation" class="menu-item"><a href="#">资料信息</a></li>
+            <li role="presentation" class="menu-item"><a href="#">账户</a></li>
+            <li role="presentation" class="menu-item"><a href="#">安全性</a></li>
+            <li role="presentation" class="menu-item"><a href="#">电子邮件</a></li>
+            <li role="presentation" class="menu-item"><a href="#">通知</a></li>
+
+        </ul>
+    </div>
+    <div class="col-md-8 col-md-push-1">
+        <div class="Subhead mb-0 mt-0">
+        <h2 class="Subhead-heading">公开资料</h2>
+        </div>
+        <div class="row">
+            <br/>
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputName">名称</label>
+                        <input type="email" class="form-control" id="exampleInputName" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">邮箱</label>
+                        <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Email1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputBio">自我描述</label>
+                        <input type="password" class="form-control" id="exampleInputBio" placeholder="Bio">
+                    </div>
+                    <p><button type="submit" class="btn btn-primary">完成修改</button></p>
+                </form>
+            </div>
+            <div class="col-md-5 col-md-push-1">
+                <dl>
+                    <dt><label class="d-block mb-2">个人资料图片</label></dt>
+                    <dd>
+                        <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px; border: none;">
+                                <img src="/images/superengineer.jpg" alt="" />
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                            <div>
+                        <span class="btn default btn-file"> <span class="fileinput-new btn btn-primary" >选择图片</span>
+                            <span class="fileinput-exists btn btn-primary">更改</span> <input type="file" name="uploadImage" id="uploadImage" /></span>
+                                <a href="#" class="btn default fileinput-exists btn btn-primary " data-dismiss="fileinput">移除</a>
+                            </div>
+                        </div>
+                        <div id="titleImageError" style="color: #a94442"></div>
+                    </dd>
+
+                </dl>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer>
+        <!-- <span th:text="${USER.name}" style="color:red"></span> -->
+        <!-- <p>${USER.name}</p> -->
+        <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
+    </footer>
+</div>
+
+<!-- /container -->
+
+</body>
+<script>
+    var url = '';
+    $("#uploadImage").fileupload({
+        url : ROOT + "/security/company/uploadFile",
+        dataType : 'json',
+        autoUpload : false,
+        acceptFileTypes : /(gif|jpe?g|png)$/i,
+        maxFileSize : 1000000, // 1 MB
+        imageMaxWidth : 100,
+        imageMaxHeight : 100,
+        messages : {
+            acceptFileTypes : '文件类型不匹配',
+            maxFileSize : '文件过大',
+            minFileSize : '文件过小'
+        }
+    }).on("fileuploadadd", function(e, data) {
+        // 当文件添加上去时候调用
+        $("#titleImageError").html("");
+        data.submit()
+    }).on("fileuploaddone", function(e, data) {
+        // 上传完成时调用
+        if (data.result.returnState == "ERROR") {
+            alert("上传失败")
+            return;
+        }
+        url = data.result.returnData.url;
+    });
+
+    function updateMsg() {
+        $.ajax({
+            url : ROOT + "/security/company/updateInfo",
+            data : {
+                id : $("#companyId").val(),
+                image : url,
+                companyName : $("#companyName").val(),
+                companySite : $("#companySite").val(),
+                companyLinker : $("#companyLinker").val(),
+                companyTel : $("#companyTel").val()
+            },
+            type : "post",
+            success : function(data) {
+                if (data.returnState == "OK") {
+                    layer.msg('操作成功', {
+                        icon : 6,
+                        shade : 0.01,
+                        offset : [ '57px', '1100px' ]
+                    });
+                    $table.bootstrapTable('refresh');
+                } else {
+                    layer.msg('操作失败', {
+                        icon : 5,
+                        shade : 0.01,
+                        offset : [ '90px', '900px' ]
+                    });
+                }
+            }
+        });
+    }
+
+    var formData = new FormData();
+    formData.append('file', $('#input_file')[0].files[0]);  //添加图片信息的参数
+    formData.append('sizeid',123);  //添加其他参数
+    $.ajax({
+        url: '/material/uploadFile',
+        type: 'POST',
+        cache: false, //上传文件不需要缓存
+        dataType : 'json',
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        success: function (data) {
+            var rs = eval("("+data+")");
+            if(rs.state==1){
+                tipTopShow('上传成功！');
+            }else{
+                tipTopShow(rs.msg);
+            }
+        },
+        error: function (data) {
+            tipTopShow("上传失败");
+        }
+    })
+</script>
+</html>
