@@ -104,7 +104,13 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    public String register(UserDto userDto, Model model, HttpServletResponse httpServletResponse) {
+    public String register(UserDto userDto, Model model,String Vcode, HttpServletResponse httpServletResponse) {
+        //优先判断验证码是否正确
+        String code = mailMapper.findCodeByEmail(userDto.getEmail());
+        if(!code.equals(Vcode)){
+            model.addAttribute("regisrer_error","验证码错误");
+            return  "index";
+        }
 
         // 赋值创建时间和修改时间
         userDto.setCreated_at(getTime_util.GetNowTime_util());
@@ -132,18 +138,14 @@ public class UserController {
                 Cookie cookie = new Cookie("TOKEN",token);
                 //发送给浏览器
                 httpServletResponse.addCookie(cookie);
+                //删除
+                mailMapper.delCodeByEmail(userDto.getEmail());
                 return "redirect:/home";
             }
-
             return  "index";
-
         }
-
         model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
-
         return  "index";
-
-
     }
 
     /**
