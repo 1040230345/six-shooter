@@ -13,6 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     -->
     <style type="text/css">
+        .of{
+            overflow: hidden;
+        }
         body {
             padding-bottom: 20px;
         }
@@ -64,14 +67,65 @@
 .navbar-nav>li>.dropdown-menu{
     border-radius: 4px!important;
 }
+.col-md-3{
+    background-color: #fff;
+}
 .col-md-3 .box1{
     width: 100%;
     overflow: hidden;
-    border-right: 1px solid black;
-    padding: 0 15px;
+    border-right: 1px solid #e1e4e8;
+    padding:15px;
     height: 573px;
+    margin-left: -365px;
 }
-
+.row1{
+    width: 100%;
+    overflow: hidden;
+}
+.row1title{
+    float: left;
+    color: #24292e;
+    width: 40%;
+    line-height: 40.6px;
+}
+.row1btn1{
+    float: right;
+    width: auto;
+    height: auto;
+    margin-right: 20px;
+    margin-top: 0px;
+    color: white;
+    background-color: #269f42;
+}
+.row1btn1:hover{
+    background-color:#29AE48;
+}
+.row1search{
+    margin-bottom: 10px;
+}
+.row1project ul{
+    list-style: none;
+}
+.row1project ul li{
+    color: #0366d6;
+    font-weight: 600!important;
+    line-height: 2;
+}
+.row1project ul li a:hover{
+    text-decoration: underline;
+}
+.box2{
+    width: 100%;
+    padding:15px;
+    height: 573px;
+    margin-top: -655px;
+}
+.box3{
+    width: 100%;
+    padding:15px;
+    height: 573px;
+    margin-left: 555px;
+}
 
 
 /*底部*/
@@ -81,9 +135,13 @@ footer p{
 
     </style>
 
-
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#box1").animate({marginLeft:0}, 1000);
+            $("#box2").animate({marginTop:0}, 1000);
+            $("#box3").animate({marginLeft:0}, 1000);
+
+
             $("#search").click(function(event) {
                 $("#search").animate({width: "300px"}, 500);
             });
@@ -137,75 +195,87 @@ footer p{
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#"><i class="glyphicon glyphicon-bell"></i></a>
+                        <a href="#"> <i class="glyphicon glyphicon-bell"></i>
+                        </a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <!-- <i class="glyphicon glyphicon-plus"></i> -->
+                            <!-- <i class="glyphicon glyphicon-plus"></i>
+                        -->
                             +
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-sw">
-                            <li>
-                                <a href="#">Action</a>
-                            </li>
-                            <li>
-                                <a href="#">Another action</a>
-                            </li>
-                            <li>
-                                <a href="#">Something else here</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="#">Something else here</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-sw">
-                            <li>
-                                <a href="#">Action</a>
-                            </li>
-                            <li>
-                                <a href="#">Another action</a>
-                            </li>
-                            <li>
-                                <a href="#">Something else here</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="/loginout">退出登录</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse --> </div>
-        <!-- /.container-fluid --> </nav>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
 
-   
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sw">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/loginout">退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse --> </div>
+    <!-- /.container-fluid -->
+</nav>
 
-    <div class="container-fluid">
-        <!-- Example row of columns -->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="box1">
-                <h2>Heading</h2>
-                <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
+<div class="container-fluid">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-3 of">
+            <div class="box1" id="box1">
+                <div class="row1">
+                    <span class="row1title">Repositories</span>
+                    <button class="btn btn-default row1btn1">NEW+</button>
+                </div>
+                <div class="row1search">
+                    <input type="text" class="form-control" id="search" placeholder="Search"></div>
+                <div class="row1project">
+                    <ul>
+                        <li><i class="glyphicon glyphicon-tasks" style="color:gray;"></i>&nbsp;<a href="#">项目1：数据库调取</a></li>
+                        <li><i class="glyphicon glyphicon-tasks" style="color:gray;"></i>&nbsp;<a href="#">项目2：数据库调取</a></li>
+                        <li><i class="glyphicon glyphicon-tasks" style="color:gray;"></i>&nbsp;<a href="#">项目3：数据库调取</a></li>
+                        <li><i class="glyphicon glyphicon-tasks" style="color:gray;"></i>&nbsp;<a href="#">项目4：数据库调取</a></li>
+                    </ul>
+                    <p>
+                        <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
+                    </p>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-6">
+        <div class="col-md-6 of" id="homemain">
+            <div class="box2" id="box2">
                 <h2>Heading</h2>
                 <p>
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
@@ -214,7 +284,9 @@ footer p{
                     <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
                 </p>
             </div>
-            <div class="col-md-3">
+        </div>
+        <div class="col-md-3 of">
+            <div class="box3" id="box3">
                 <h2>Heading</h2>
                 <p>
                     Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
@@ -225,15 +297,19 @@ footer p{
             </div>
         </div>
 
-        <hr>
-
-        <footer>
-            <!-- <span th:text="${USER.name}" style="color:red"></span> -->
-            <!-- <p>${USER.name}</p> -->
-            <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
-        </footer>
     </div>
-    <!-- /container -->
+
+    <hr>
+
+    <footer>
+        <!-- <span th:text="${USER.name}" style="color:red"></span>
+    -->
+    <!-- <p>${USER.name}</p>
+-->
+<p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
+</footer>
+</div>
+<!-- /container -->
 
 </body>
 
