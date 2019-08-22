@@ -58,14 +58,15 @@ public class UserController {
                     Cookie cookie = new Cookie("TOKEN",token);
                     //发送给浏览器
                     response.addCookie(cookie);
-                    //删除验证码记录
-                    userService.delCode(email_or_name);
+
                 }
             }
             //获取Session
             HttpSession session=request.getSession();
             //添加到session里面
             session.setAttribute("User_id",userDto.getId());
+            //删除验证码记录
+            userService.delCode(email_or_name);
             return "redirect:/home";
         }
         model.addAttribute("login_error","账号或密码错误");
@@ -160,6 +161,9 @@ public class UserController {
                 }
             }
         }
+        //销毁session
+        HttpSession session = request.getSession();
+        session.invalidate();
 
         return "redirect:/";
     }

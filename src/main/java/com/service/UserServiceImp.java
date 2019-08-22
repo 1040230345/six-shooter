@@ -157,8 +157,9 @@ public class UserServiceImp implements UserService {
     public boolean delCode(String email) {
         //判断传进来的是用户名还是邮箱
         boolean ifmail = email.contains("@");
-        if(ifmail){
-            userMapper.findEmailByName(email);
+        if(!ifmail){
+            //System.out.println("我进来了");
+            email = userMapper.findEmailByName(email);
             mailMapper.delCodeByEmail(email);
         }else {
             mailMapper.delCodeByEmail(email);

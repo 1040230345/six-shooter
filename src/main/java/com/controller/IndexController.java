@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * 主页控制器
@@ -32,6 +33,12 @@ public class IndexController {
                     return "redirect:/home";
                 }
             }
+        }
+        //判断session中是否有值，如果有一起滚
+        HttpSession session = request.getSession();
+        if(session.getAttribute("User_id")!=null){
+            //请回主页谢谢
+            return "redirect:/home";
         }
         return "index";
     }
