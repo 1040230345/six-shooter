@@ -31,7 +31,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             //依靠user_id返回用户资料
             UserDto userDto = userService.findUserByid((int) session.getAttribute("User_id"));
             if (userDto.getAvatar_url() == null) {
-                userDto.setAvatar_url("/static/images/superengineer.jpg");
+                userDto.setAvatar_url("/static/images/default.jpg");
             }
             session.setAttribute("User",userDto);
             //如果session存在，放行
@@ -55,7 +55,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                         //依靠user_id返回用户资料
                         UserDto userDto = userService.findUserByid(user_id);
                         if (userDto.getAvatar_url() == null) {
-                            userDto.setAvatar_url("/static/images/superengineer.jpg");
+                            userDto.setAvatar_url("/static/images/default.jpg");
                         }
                         session.setAttribute("User",userDto);
                         //放行
