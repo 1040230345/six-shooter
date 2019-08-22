@@ -173,23 +173,9 @@ public class UserController {
      */
     @GetMapping("/user")
     public String Personal_information(HttpServletRequest request,Model model){
-//        Cookie[] cookies = request.getCookies();
-//        //防止空指针异常
-//        if(cookies!=null){
-//            for(Cookie cookie:cookies){
-//                //假如用户的状态还是登陆着的
-//                if(cookie.getName().equals("TOKEN")){
-//                    //获取页面用户id
-//                    HttpSession session=request.getSession();
-//                    int user_id = (int)session.getAttribute("user_id");
-//                    //判断是否和数据库的一致
-//                    boolean bl = userService.checkCookieAndChange(user_id, cookie.getValue());
-//                    //请回主页谢谢
-//                    return "redirect:/user";
-//                }
-//            }
-//        }
-//        return "index";
+        HttpSession session = request.getSession();
+        UserDto userDto = (UserDto) session.getAttribute("User");
+        model.addAttribute("USER",userDto);
         return "/user";
     }
 }
