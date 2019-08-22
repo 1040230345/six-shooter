@@ -50,7 +50,7 @@ public interface UserMapper {
     /**
      * 依靠cookie查找user_id
      */
-    @Select("select user_id from cookie_table where cookie=#{cookie}")
+    @Select("select IFFULL(MAX(user_id),0) AS  user_id from cookie_table where cookie=#{cookie}")
     int findUserIdByCookie(@Param("cookie") String cookie);
 
     /**

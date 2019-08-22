@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * 家的控制器
@@ -32,14 +30,15 @@ public class HomeController {
                 if(cookie.getName().equals("TOKEN")){
                     //依靠cookie查找用户资料，返回前端
                     int user_id = userService.findUserIdByCookie(cookie.getValue());
+                    //如果找不到这个用户
+                    if(user_id==0){
+                        return "home";
+                    }
                     //依靠user_id返回用户资料
                     UserDto userDto = userService.findUserByid(user_id);
-                    //获取Session
-                    HttpSession session=request.getSession();
                     if(userDto.getAvatar_url()==null){
                         userDto.setAvatar_url("/images/superengineer.jpg");
                     }
-                    session.setAttribute("user_id",user_id);
                     model.addAttribute("USER",userDto);
                     return "home";
                 }

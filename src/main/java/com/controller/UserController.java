@@ -1,9 +1,7 @@
 package com.controller;
 
-import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.MailMapper;
-import com.my_util.GetTime_util;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,19 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
 
 /**
  * 用户控制器
  * 时间：2019年8月16日15:01:02
+ * 修改时间:2019年8月22日16:34:16
  */
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private GetTime_util getTime_util;
     @Autowired
     private MailMapper mailMapper;
 
@@ -41,60 +38,35 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response) {
-
-        //优先判断验证码是否正确
-        boolean ifmail = email_or_name.contains("@");
-        if(!ifmail){
-            //获取邮箱
-            String mail = userService.findEmailByName(email_or_name);
-            //进行比对
-            String code = mailMapper.findCodeByEmail(mail);
-            //不正确
-            if(!Vcode.equals(code)){
-                model.addAttribute("login_error","验证码错误");
-                return "index";
-            }
-        }else{
-            //进行比对
-            String code = mailMapper.findCodeByEmail(email_or_name);
-            //不正确
-            if(!Vcode.equals(code)){
-                model.addAttribute("login_error","验证码错误");
-                return "index";
-            }
+    public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
+        //优先验证验证码是是否正确
+        boolean bl = userService.checkCode(email_or_name,Vcode);
+        if(bl){ }else {
+            model.addAttribute("login_error","验证码错误");
+            return "index";
         }
-        //查询数据库
-        UserDto userDto = userService.findUser_login(email_or_name,password);
-        //System.out.println(userDto.getName());
+        //验证登录账号密码
+        UserDto userDto = userService.checkLogin(email_or_name,password);
         if(userDto != null){
             //如果用户选择记住自己
             if(remember!=null){
-                //创建cookie
-                CookieDto cookieDto = new CookieDto();
-                //获取UUID
-                String token = UUID.randomUUID().toString();
-                cookieDto.setCookie(token);
-                cookieDto.setUser_id(userDto.getId());
-                //更新cookie
-                int num = userService.updateCookie(cookieDto);
-                if(num>0){
+                //创建cookie并且保存在数据库
+                String token = userService.updateCookie(userDto);
+                if(token!=null){
                     model.addAttribute("USER",userDto);
                     //创建新cookie
                     Cookie cookie = new Cookie("TOKEN",token);
                     //发送给浏览器
                     response.addCookie(cookie);
                     //删除验证码记录
-                    if(!ifmail) {
-                        //获取邮箱
-                        String mail = userService.findEmailByName(email_or_name);
-                        mailMapper.delCodeByEmail(mail);
-                    }else {
-                        mailMapper.delCodeByEmail(email_or_name);
-                    }
+                    userService.delCode(email_or_name);
+                }
             }
-                return "redirect:/home";
-            }
+            //获取Session
+            HttpSession session=request.getSession();
+            //添加到session里面
+            session.setAttribute("User_id",userDto.getId());
+            return "redirect:/home";
         }
         model.addAttribute("login_error","账号或密码错误");
         return "index";
@@ -104,52 +76,33 @@ public class UserController {
      * 注册逻辑
      * @param userDto
      * @param model
-     * @param httpServletResponse
      * @return
      */
     @PostMapping("/register")
-    public String register(UserDto userDto, Model model,String Vcode, HttpServletResponse httpServletResponse) {
+    public String register(UserDto userDto, Model model,String Vcode,HttpServletRequest request) {
         //优先判断验证码是否正确
-        String code = mailMapper.findCodeByEmail(userDto.getEmail());
-        if(!code.equals(Vcode)){
+        boolean bl = userService.checkCode(userDto.getEmail(),Vcode);
+        if(bl){
+            //获取用户信息
+            userDto = userService.register(userDto);
+            if(userDto!=null){
+                //返回用户信息
+                model.addAttribute("USER",userDto);
+                //删除验证码
+                mailMapper.delCodeByEmail(userDto.getEmail());
+                //获取Session
+                HttpSession session=request.getSession();
+                //添加到session里面
+                session.setAttribute("User_id",userDto.getId());
+                return "redirect:/home";
+            }else {
+                model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
+                return  "index";
+            }
+        }else {
             model.addAttribute("regisrer_error","验证码错误");
             return  "index";
         }
-
-        // 赋值创建时间和修改时间
-        userDto.setCreated_at(getTime_util.GetNowTime_util());
-        userDto.setUpdated_at(getTime_util.GetNowTime_util());
-
-        //插入数据库
-        int num = userService.insertUser(userDto);
-
-        //插入成功
-        if(num>0){
-            //获取用户信息
-            userDto = userService.findByName(userDto.getName());
-            model.addAttribute("USER",userDto);
-            //获取UUID
-            String token = UUID.randomUUID().toString();
-            //插入cookies数据库
-            CookieDto cookieDto = new CookieDto();
-            cookieDto.setCookie(token);
-            cookieDto.setUser_id(userDto.getId());
-            cookieDto.setCreated_at(getTime_util.GetNowTime_util());
-            cookieDto.setUpdated_at(getTime_util.GetNowTime_util());
-            int inser = userService.inserCookie(cookieDto);
-            if(inser>0){
-                //创建新cookie
-                Cookie cookie = new Cookie("TOKEN",token);
-                //发送给浏览器
-                httpServletResponse.addCookie(cookie);
-                //删除
-                mailMapper.delCodeByEmail(userDto.getEmail());
-                return "redirect:/home";
-            }
-            return  "index";
-        }
-        model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
-        return  "index";
     }
 
     /**

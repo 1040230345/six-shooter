@@ -11,10 +11,6 @@ public interface UserService {
 
     UserDto findByEmail(String email);
     UserDto findByName(String name);
-    int insertUser(UserDto userDto);
-    int inserCookie(CookieDto cookieDto);
-    UserDto findUser_login(String email_or_name,String password);
-    int updateCookie(CookieDto cookieDto);
     String findEmailByName(String name);
     int findUserIdByCookie(String cookie);
     UserDto findUserByid(int id);
@@ -24,5 +20,35 @@ public interface UserService {
      * @return
      */
     Boolean checkCookieAndChange(int user_id, String cookie);
+
+    /**
+     * 验证验证码是否正确
+     */
+    Boolean checkCode(String email,String Vcode);
+
+    /**
+     * 登录验证
+     */
+    UserDto checkLogin(String email_or_name, String password);
+
+    /**
+     * 更新cookie
+     */
+    String updateCookie(UserDto userDto);
+
+    /**
+     * 删除验证码记录
+     */
+    boolean delCode(String email);
+
+    /**
+     * 注册事务
+     */
+    UserDto register(UserDto userDto);
+
+    /**
+     * 创建cookie
+     */
+    Boolean mkdirCookie(int id );
 
 }
