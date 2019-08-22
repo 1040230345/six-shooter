@@ -119,15 +119,20 @@
 
         /*nav*/
         .header{
-        background-color: #24292e;
-        color: hsla(0,0%,100%,.7);
-        font-size: 14px;
-        z-index: 32;
+            background-color: #24292e;
+            color: hsla(0,0%,100%,.7);
+            font-size: 14px;
+            z-index: 32;
+            padding:6px 0;
         }
-        .navbar{
+         .navbar{
+            /*导航栏下间距在这↓*/
             margin-bottom: 0px;
             border-radius: 0;
             border: 0px;
+        }
+        .navbar .navcontrol{
+            margin:0!important;
         }
         .navbar-default .navbar-nav>li>a {
             color: #fff;
@@ -491,14 +496,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" style="color:#fff">Six-Shooter</a>
+                <a class="navbar-brand" href="/home" style="color:#fff">Six-Shooter</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search"></div>
+                        <input type="text" class="form-control navcontrol" id="search" placeholder="Search"></div>
                 </form>
                 <ul class="nav navbar-nav">
                     <li>
@@ -517,124 +522,123 @@
                         <a href="#">Explore</a>
                     </li>
                 </ul>
-        </div>
-        <!-- /.navbar-collapse --> </div>
-    <!-- /.container-fluid -->
-</nav>
-<div class="container-fluid"  id="lgcontainer-fluid" style="height:661px;">
-    <div class="col-md-8"></div>
-    <div class="col-md-4" id="indexright">
-        <div class="" id="signin">
+            </div>
+            <!-- /.navbar-collapse --> </div>
+        <!-- /.container-fluid --> </nav>
+    <div class="container-fluid"  id="lgcontainer-fluid" style="height:661px;">
+        <div class="col-md-8"></div>
+        <div class="col-md-4" id="indexright">
+            <div class="" id="signin">
 
-            <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-                <h2 class="form-signin-heading">请登录</h2>
-                <span th:text="${login_error}" style="color:red"></span>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-                <div class="vcode">
-                    <label for="Vcodesignin" class="sr-only">请输入邮箱验证码</label>
-                    <input type="text"  name="Vcode" id="Vcodesignin" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
-                    <button class="btn btn-default myVcodebtn" id="signinvcodebtn">发送邮箱验证码</button>
-                </div>
-                <div class="checkbox checkboxmartop">
-                    <label>
-                        <input type="checkbox" value="remember-me" name="remember">Remember me</label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-                <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
-            </form>
-
-        </div>
-
-        <div class="myhide" id="signup">
-            <div class="">
-                <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-                    <h2 class="form-signin-heading">请注册</h2>
-                    <label for="signupEmail" class="sr-only">Email address</label>
-                    <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                    <div id="ok">
-                        <h6 id="emailmsg"></h6>
-                    </div>
-                    <label for="signupEmail" class="sr-only">Username</label>
-                    <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
-
-                    <div id="fxck">
-                        <h6 id="namemsg"></h6>
-                    </div>
-
-                    <label for="signupPassword" class="sr-only">Password</label>
-                    <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
-                    <div id="pass">
-                        <h6 id="passmsg"></h6>
-                    </div>
-
+                <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                    <h2 class="form-signin-heading">请登录</h2>
+                    <span th:text="${login_error}" style="color:red"></span>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
                     <div class="vcode">
-                        <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
-                        <input type="text"  name="Vcode" id="Vcodesignup" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
-                        <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
+                        <label for="Vcodesignin" class="sr-only">请输入邮箱验证码</label>
+                        <input type="text"  name="Vcode" id="Vcodesignin" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                        <button class="btn btn-default myVcodebtn" id="signinvcodebtn">发送邮箱验证码</button>
                     </div>
-
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
-
-                    <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+                    <div class="checkbox checkboxmartop">
+                        <label>
+                            <input type="checkbox" value="remember-me" name="remember">Remember me</label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+                    <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
                 </form>
+
+            </div>
+
+            <div class="myhide" id="signup">
+                <div class="">
+                    <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                        <h2 class="form-signin-heading">请注册</h2>
+                        <label for="signupEmail" class="sr-only">Email address</label>
+                        <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                        <div id="ok">
+                            <h6 id="emailmsg"></h6>
+                        </div>
+                        <label for="signupEmail" class="sr-only">Username</label>
+                        <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
+
+                        <div id="fxck">
+                            <h6 id="namemsg"></h6>
+                        </div>
+
+                        <label for="signupPassword" class="sr-only">Password</label>
+                        <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                        <div id="pass">
+                            <h6 id="passmsg"></h6>
+                        </div>
+
+                        <div class="vcode">
+                            <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
+                            <input type="text"  name="Vcode" id="Vcodesignup" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                            <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+                        <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mycenter">
+        <h1>Hello World！</h1>
+        <p>左轮-致力于中小型团队项目管理</p>
+        <p>打造最属于你的项目管理</p>
+        <p>专业</p>
+        <p>Write less,Do more</p>
+    </div>
+
+    <div class="container mycenter">
+        <img src="/static/images/ima1.jpg" alt="图片" width="600" height="370"></div>
+
+    <div class="container mycenter2">
+        <h1>这是四个有梦想的青年</h1>
+        <div class="col-md-3" id="en1">
+            <div class="mycard">
+                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+                <h2>Jackson</h2>
+                <p>全栈工程师</p>
+                <div class="divider"></div>
+                <button class="btn btn-default" id="">watch more</button>
+            </div>
+        </div>
+        <div class="col-md-3" id="en2">
+            <div class="mycard">
+                <img src="/static/images/superstar.jpg" alt="" width="" height="">
+                <h2>明哥</h2>
+                <p>前端工程师</p>
+                <div class="divider"></div>
+                <button class="btn btn-default" id="">watch more</button>
+            </div>
+        </div>
+        <div class="col-md-3" id="en3">
+            <div class="mycard">
+                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+                <h2>林锴</h2>
+                <p>系统架构师</p>
+                <div class="divider"></div>
+                <button class="btn btn-default" id="">watch more</button>
+            </div>
+        </div>
+        <div class="col-md-3" id="en4">
+            <div class="mycard">
+                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+                <h2>小涛</h2>
+                <p>开发工程师</p>
+                <div class="divider"></div>
+                <button class="btn btn-default" id="">watch more</button>
             </div>
         </div>
     </div>
-
-</div>
-
-<div class="container mycenter">
-    <h1>Hello World！</h1>
-    <p>左轮-致力于中小型团队项目管理</p>
-    <p>打造最属于你的项目管理</p>
-    <p>专业</p>
-    <p>Write less,Do more</p>
-</div>
-
-<div class="container mycenter">
-    <img src="/static/images/ima1.jpg" alt="图片" width="600" height="370"></div>
-
-<div class="container mycenter2">
-    <h1>这是四个有梦想的青年</h1>
-    <div class="col-md-3" id="en1">
-        <div class="mycard">
-            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-            <h2>Jackson</h2>
-            <p>全栈工程师</p>
-            <div class="divider"></div>
-            <button class="btn btn-default" id="">watch more</button>
-        </div>
-    </div>
-    <div class="col-md-3" id="en2">
-        <div class="mycard">
-            <img src="/static/images/superstar.jpg" alt="" width="" height="">
-            <h2>明哥</h2>
-            <p>前端工程师</p>
-            <div class="divider"></div>
-            <button class="btn btn-default" id="">watch more</button>
-        </div>
-    </div>
-    <div class="col-md-3" id="en3">
-        <div class="mycard">
-            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-            <h2>林锴</h2>
-            <p>系统架构师</p>
-            <div class="divider"></div>
-            <button class="btn btn-default" id="">watch more</button>
-        </div>
-    </div>
-    <div class="col-md-3" id="en4">
-        <div class="mycard">
-            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-            <h2>小涛</h2>
-            <p>开发工程师</p>
-            <div class="divider"></div>
-            <button class="btn btn-default" id="">watch more</button>
-        </div>
-    </div>
-</div>
 </body>
 </html>
