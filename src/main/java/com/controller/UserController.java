@@ -41,7 +41,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response) {
+    public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response) {
 
         //优先判断验证码是否正确
         boolean ifmail = email_or_name.contains("@");
@@ -68,27 +68,31 @@ public class UserController {
         UserDto userDto = userService.findUser_login(email_or_name,password);
         //System.out.println(userDto.getName());
         if(userDto != null){
-            CookieDto cookieDto = new CookieDto();
-            //获取UUID
-            String token = UUID.randomUUID().toString();
-            cookieDto.setCookie(token);
-            cookieDto.setUser_id(userDto.getId());
-            //更新cookie
-            int num = userService.updateCookie(cookieDto);
-            if(num>0){
-                model.addAttribute("USER",userDto);
-                //创建新cookie
-                Cookie cookie = new Cookie("TOKEN",token);
-                //发送给浏览器
-                response.addCookie(cookie);
-                //删除验证码记录
-                if(!ifmail) {
-                    //获取邮箱
-                    String mail = userService.findEmailByName(email_or_name);
-                    mailMapper.delCodeByEmail(mail);
-                }else {
-                    mailMapper.delCodeByEmail(email_or_name);
-                }
+            //如果用户选择记住自己
+            if(remember!=null){
+                //创建cookie
+                CookieDto cookieDto = new CookieDto();
+                //获取UUID
+                String token = UUID.randomUUID().toString();
+                cookieDto.setCookie(token);
+                cookieDto.setUser_id(userDto.getId());
+                //更新cookie
+                int num = userService.updateCookie(cookieDto);
+                if(num>0){
+                    model.addAttribute("USER",userDto);
+                    //创建新cookie
+                    Cookie cookie = new Cookie("TOKEN",token);
+                    //发送给浏览器
+                    response.addCookie(cookie);
+                    //删除验证码记录
+                    if(!ifmail) {
+                        //获取邮箱
+                        String mail = userService.findEmailByName(email_or_name);
+                        mailMapper.delCodeByEmail(mail);
+                    }else {
+                        mailMapper.delCodeByEmail(email_or_name);
+                    }
+            }
                 return "redirect:/home";
             }
         }
@@ -213,23 +217,24 @@ public class UserController {
      */
     @GetMapping("/user")
     public String Personal_information(HttpServletRequest request,Model model){
-        Cookie[] cookies = request.getCookies();
-        //防止空指针异常
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                //假如用户的状态还是登陆着的
-                if(cookie.getName().equals("TOKEN")){
-                    //获取页面用户id
-                    HttpSession session=request.getSession();
-                    int user_id = (int)session.getAttribute("user_id");
-                    //判断是否和数据库的一致
-                    boolean bl = userService.checkCookieAndChange(user_id, cookie.getValue());
-                    //请回主页谢谢
-                    return "redirect:/user";
-                }
-            }
-        }
-        return "index";
+//        Cookie[] cookies = request.getCookies();
+//        //防止空指针异常
+//        if(cookies!=null){
+//            for(Cookie cookie:cookies){
+//                //假如用户的状态还是登陆着的
+//                if(cookie.getName().equals("TOKEN")){
+//                    //获取页面用户id
+//                    HttpSession session=request.getSession();
+//                    int user_id = (int)session.getAttribute("user_id");
+//                    //判断是否和数据库的一致
+//                    boolean bl = userService.checkCookieAndChange(user_id, cookie.getValue());
+//                    //请回主页谢谢
+//                    return "redirect:/user";
+//                }
+//            }
+//        }
+//        return "index";
+        return "/user";
     }
 }
 
