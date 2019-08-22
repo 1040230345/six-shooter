@@ -58,7 +58,6 @@ public class UserController {
                     Cookie cookie = new Cookie("TOKEN",token);
                     //发送给浏览器
                     response.addCookie(cookie);
-
                 }
             }
             //获取Session

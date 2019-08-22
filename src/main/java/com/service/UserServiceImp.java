@@ -141,6 +141,7 @@ public class UserServiceImp implements UserService {
         String token = UUID.randomUUID().toString();
         cookieDto.setCookie(token);
         cookieDto.setUser_id(userDto.getId());
+        cookieDto.setUpdated_at(getTime_util.GetNowTime_util());
         //更新cookie
         int num = userMapper.updateCookie(cookieDto);
         if(num>0){
