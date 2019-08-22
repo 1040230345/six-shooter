@@ -391,7 +391,7 @@
                     var text=$(this).val();
                     if(!checkname.test(text)||text==null||text==""){
                         console.log("用户名格式错误");
-                        $("#namemsg").html("<div id='sjx2'></div>用户名包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                        $("#namemsg").html("<div id='sjx2'></div>包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
                         $("#namemsg").css({
                             width:'93px',color:'red','background-color':"#FFC1C1",border:'1px red solid'
                         });
@@ -517,58 +517,6 @@
                         <a href="#">Explore</a>
                     </li>
                 </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#"> <i class="glyphicon glyphicon-bell"></i>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <!-- <i class="glyphicon glyphicon-plus"></i>
-                        -->
-                            +
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-sw">
-                        <li>
-                            <a href="#">Action</a>
-                        </li>
-                        <li>
-                            <a href="#">Another action</a>
-                        </li>
-                        <li>
-                            <a href="#">Something else here</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#">Something else here</a>
-                        </li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="glyphicon glyphicon-user"></i>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-sw">
-                        <li>
-                            <a href="#">Action</a>
-                        </li>
-                        <li>
-                            <a href="#">Another action</a>
-                        </li>
-                        <li>
-                            <a href="#">Something else here</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="/loginout">退出登录</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </div>
         <!-- /.navbar-collapse --> </div>
     <!-- /.container-fluid -->
