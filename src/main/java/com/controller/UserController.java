@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.dto.CodeDto;
 import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.MailMapper;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -219,8 +219,11 @@ public class UserController {
             for(Cookie cookie:cookies){
                 //假如用户的状态还是登陆着的
                 if(cookie.getName().equals("TOKEN")){
+                    //获取页面用户id
+                    HttpSession session=request.getSession();
+                    int user_id = (int)session.getAttribute("user_id");
                     //判断是否和数据库的一致
-                    boolean bl = userService.checkCookieAndChange(cookie.getValue());
+                    boolean bl = userService.checkCookieAndChange(user_id, cookie.getValue());
                     //请回主页谢谢
                     return "redirect:/user";
                 }

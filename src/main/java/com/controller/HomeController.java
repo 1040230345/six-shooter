@@ -39,7 +39,7 @@ public class HomeController {
                     if(userDto.getAvatar_url()==null){
                         userDto.setAvatar_url("/images/superengineer.jpg");
                     }
-                    session.setAttribute("USER",userDto);
+                    session.setAttribute("user_id",user_id);
                     model.addAttribute("USER",userDto);
                     return "home";
                 }

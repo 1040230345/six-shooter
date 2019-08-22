@@ -23,6 +23,6 @@ public interface UserService {
      * 校验cookie并且修改cookie
      * @return
      */
-    Boolean checkCookieAndChange(String cookie);
+    Boolean checkCookieAndChange(int user_id, String cookie);
 
 }

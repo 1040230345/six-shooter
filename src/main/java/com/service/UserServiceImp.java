@@ -116,9 +116,12 @@ public class UserServiceImp implements UserService {
      * @return
      */
     @Override
-    public Boolean checkCookieAndChange(String cookie) {
-        //获取用户id
-        int id = userMapper.findUserIdByCookie(cookie);
+    public Boolean checkCookieAndChange(int user_id ,String cookie) {
+        //对比cookie是否一致
+        String find_cookie = userMapper.findCookieById(user_id);
+        if(find_cookie.equals(cookie)){
+
+        }
 
         return null;
     }
