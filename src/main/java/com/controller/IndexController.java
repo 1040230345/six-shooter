@@ -35,10 +35,6 @@ public class IndexController {
         }
         return "index";
     }
-    @GetMapping("/user")
-    public String user(){
-        return "user";
-    }
 
 
 

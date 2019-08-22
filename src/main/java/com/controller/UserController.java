@@ -206,5 +206,27 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    /**
+     * 个人页面访问
+     * @return
+     */
+    @GetMapping("/user")
+    public String Personal_information(HttpServletRequest request,Model model){
+        Cookie[] cookies = request.getCookies();
+        //防止空指针异常
+        if(cookies!=null){
+            for(Cookie cookie:cookies){
+                //假如用户的状态还是登陆着的
+                if(cookie.getName().equals("TOKEN")){
+                    //判断是否和数据库的一致
+                    boolean bl = userService.checkCookieAndChange(cookie.getValue());
+                    //请回主页谢谢
+                    return "redirect:/user";
+                }
+            }
+        }
+        return "index";
+    }
 }
 

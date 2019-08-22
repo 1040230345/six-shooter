@@ -19,4 +19,10 @@ public interface UserService {
     int findUserIdByCookie(String cookie);
     UserDto findUserByid(int id);
 
+    /**
+     * 校验cookie并且修改cookie
+     * @return
+     */
+    Boolean checkCookieAndChange(String cookie);
+
 }

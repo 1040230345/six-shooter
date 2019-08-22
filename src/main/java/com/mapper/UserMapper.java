@@ -65,4 +65,10 @@ public interface UserMapper {
     @Select("select * from user_table where id = #{id}")
     UserDto findUserByid(@Param("id") int id);
 
+    /**
+     * 依靠id查找cookie
+     */
+    @Select("select cookie from cookie_table where id = #{id}")
+    String findCookieById(@Param("id") int id);
+
 }

@@ -110,5 +110,18 @@ public class UserServiceImp implements UserService {
         return userDto;
     }
 
+    /**
+     * 校验cookie并且修改
+     * @param cookie
+     * @return
+     */
+    @Override
+    public Boolean checkCookieAndChange(String cookie) {
+        //获取用户id
+        int id = userMapper.findUserIdByCookie(cookie);
+
+        return null;
+    }
+
 
 }
