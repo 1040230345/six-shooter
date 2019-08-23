@@ -5,8 +5,6 @@ import com.mapper.MailMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import sun.plugin2.main.client.MozillaServiceDelegate;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
