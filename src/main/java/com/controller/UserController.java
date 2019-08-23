@@ -171,7 +171,7 @@ public class UserController {
      * 个人页面访问
      * @return
      */
-    @GetMapping("/{user_name}")
+    @GetMapping("/{user_name}/setting")
     public String Personal_information(@PathVariable("user_name") String  user_name,HttpServletRequest request,Model model){
         HttpSession session = request.getSession();
         UserDto userDto = (UserDto) session.getAttribute("User");
