@@ -77,82 +77,6 @@
 .welcome i{
     font-style: normal;
 }
-.col-md-6{
-    padding: 15px;
-}
-.col-md-3{
-    background-color: #fff;
-}
-.col-md-3 .box1{
-    width: 100%;
-    overflow: hidden;
-    border-right: 1px solid #e1e4e8;
-    padding:15px;
-    height: 573px;
-    margin-left: -365px;
-}
-.row1{
-    width: 100%;
-    overflow: hidden;
-}
-.row1title{
-    float: left;
-    color: #24292e;
-    width: 40%;
-    line-height: 40.6px;
-}
-.row1btn1{
-    float: right;
-    width: auto;
-    height: auto;
-    margin-right: 20px;
-    margin-top: 0px;
-    color: white;
-    background-color: #269f42;
-}
-.row1btn1:hover{
-    background-color:#29AE48;
-}
-.row1search{
-    margin-bottom: 10px;
-}
-.row1project ul{
-    list-style: none;
-}
-.row1project ul li{
-    color: #0366d6;
-    font-weight: 600!important;
-    line-height: 2;
-}
-.row1project ul li a:hover{
-    text-decoration: underline;
-}
-.box2{
-    border: 1px solid #e1e4e8;
-    width: 100%;
-    padding:15px;
-    margin-top: -655px;
-}
-.box3{
-    width: 100%;
-    padding:15px;
-    /*height: 573px;*/
-    margin-left: 555px;
-}
-.box3-li{
-    /*height: 67.2px;*/
-    padding: 8px 0;
-    border-bottom:1px solid #e1e4e8;
-}
-.box3-li h5{
-    font-weight: 600!important;
-    font-size: 12px!important;
-}
-.box3-li h5:hover{
-    color: #0366d6!important;
-}
-
-
 /*底部*/
 footer p{
     text-align: center;
@@ -162,18 +86,7 @@ footer p{
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#box1").animate({marginLeft:0}, 1000);
-            $("#box2").animate({marginTop:0}, 1000);
-            $("#box3").animate({marginLeft:0}, 1000);
-
-            $("#search").click(function(event) {
-                $("#search").animate({width: "300px"}, 500);
-            });
-            $(".dropdown-toggle").focusin(function () {
-                $(this).css("background-color","#24292e");
-            }).focusout(function () {
-                $(this).css("background-color","transparent");
-            });
+            
         });
     </script>
 </head>
@@ -286,106 +199,14 @@ footer p{
     <!-- /.container-fluid -->
 </nav>
 
-<div class="container-fluid">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-3 of">
-            <div class="box1" id="box1">
-                <div class="row1">
-                    <span class="row1title">Repositories</span>
-                    <button class="btn btn-default row1btn1" onclick="location.href='/newRepo'">NEW+</button>
-                </div>
-                <div class="row1search">
-                    <input type="text" class="form-control" id="search" placeholder="Search"></div>
-                <div class="row1project">
-                    <ul>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目1：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目2：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目3：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目4：数据库调取</a>
-                        </li>
-                    </ul>
-                    <p>
-                        <a class="btn btn-default" href="#" role="button">Watch More &raquo;</a>
-                    </p>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-6 of" id="homemain">
-            <div class="box2" id="box2">
-                <h2>探索 · 发现</h2>
-                <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-3 of">
-            <div class="box3" id="box3">
-                <h2>浏览您的存储库</h2>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
-                <p>
-                    简介：肥肠洗净切小块，葱切段，小米椒坏碎， 生姜切丝，泡椒连计一起取出。热锅倒油，倒入姜丝、泡椒炒出香味
-                    倒入肥肠，翻炒片刻倒入少许料酒、生抽、少许盐、一点点糖倒入辣椒碎撒上葱段，翻炒均匀即可一盘重口味的野山椒肥肠，重庆风味，喜欢的朋友赶紧收藏吧！
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
-                </div>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
-                <p>
-                    简介：鸡翅提前解冻，为了入味，我剁成了两至三块，一小勺盐，适量料酒，腌制一小时以上。
-各种配菜洗干净切好。胡萝卜和土豆切块，洋葱和泡椒切片。锅烧热，倒少量油，先下洋葱和青椒炒至断生，然后装盘备用。
-锅里再倒多一点油，下鸡翅煎至两面微焦。开始倒少了点油，火有点大，结果鸡翅有点煎糊了。中火就可以，太大火容易煎糊。接着下胡萝卜和土豆块，也要煎至两面微焦。最后关火，装盘上桌。
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
-                </div>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
-                <p>
-                    简介：
-虾剪去虾足、虾枪，去掉虾袋、虾线
-调酱汁：一小勺糖、少量胡椒粉、一大勺料酒、一大勺生抽
-锅中热油，油热倒入虾，煎至两面变色，加葱姜丝炒香入料汁，加盖煮至汤汁收干即可
-撒上适量葱花，装盘开吃。简单美味，一学就废
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
     <hr>
 
     <footer>
         <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
     </footer>
-</div>
+
 <!-- /container -->
 
 </body>
