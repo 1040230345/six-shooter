@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class HomeController {
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/home")
     public String home(HttpServletRequest request,Model model) {

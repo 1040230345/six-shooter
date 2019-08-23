@@ -43,7 +43,7 @@ public class RepositoriesController {
      * @return
      */
     @PostMapping("/createRepo")
-    public String createRepo(RepositoriesDto repositoriesDto,HttpServletRequest request){
+    public String createRepo(RepositoriesDto repositoriesDto,HttpServletRequest request,Model model){
         //获取session内容返回用户信息
         HttpSession session = request.getSession();
         UserDto userDto = (UserDto) session.getAttribute("User");
@@ -52,6 +52,7 @@ public class RepositoriesController {
         //开始创建
         boolean bl = repositoriesService.mkdirRepositories(repositoriesDto);
         if(bl){
+            model.addAttribute("USER",userDto);
             return "/home";
         }
         return "createRepo";

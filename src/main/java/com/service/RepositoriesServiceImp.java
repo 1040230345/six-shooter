@@ -38,6 +38,7 @@ public class RepositoriesServiceImp implements RepositoriesService {
         repositories_membersDto.setRep_id(repositoriesDto.getRep_id());
         //依靠用户名获取用户id
         UserDto userDto = userMapper.findByName(repositoriesDto.getRep_creator());
+        System.out.println(userDto.getId());
         repositories_membersDto.setUser_id(userDto.getId());
         //设置角色
         repositories_membersDto.setRep_role("创建者");

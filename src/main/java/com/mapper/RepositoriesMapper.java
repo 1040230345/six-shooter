@@ -15,13 +15,13 @@ public interface RepositoriesMapper {
     /**
      * 创建仓库
      */
-    @Insert("INSERT INTO repositories_table (rep_name,rep_creator,rep_bio,githuburl,created_at) VALUES ( #{rep_name},#{rep_creator},#{rep_bio},#{githuburl},#{created_at} )")
+    @Insert("INSERT INTO repositories_table (rep_name,rep_creator,rep_bio,isopen,githuburl,created_at) VALUES ( #{rep_name},#{rep_creator},#{rep_bio},#{isopen},#{githuburl},#{created_at} )")
     @Options(useGeneratedKeys = true, keyProperty = "rep_id",keyColumn="rep_id")
     void insertNewRep(RepositoriesDto repositoriesDto);
 
     /**
      * 仓库成员表
      */
-    @Insert("INSERT INTO repositories_table (rep_id,user_id,rep_role,created_at) VALUES ( #{rep_id},#{user_id},#{rep_role},#{created_at})")
+    @Insert("INSERT INTO repositories_members(rep_id,user_id,rep_role,created_at) VALUES ( #{rep_id},#{user_id},#{rep_role},#{created_at})")
     int insertRepMember(Repositories_membersDto repositories_membersDto);
 }
