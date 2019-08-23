@@ -155,6 +155,13 @@ footer p{
 
 	<script type="text/javascript">
         $(document).ready(function() {
+        	// 导航栏
+        	$(".dropdown-toggle").focusin(function () {
+                $(this).css("background-color","#24292e");
+            }).focusout(function () {
+                $(this).css("background-color","transparent");
+            });
+            //检验存储库名
         	var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
             $("#rep_name").keyup(function(event) {
             	$("#newRepobtn").attr('disabled', false);
@@ -229,7 +236,7 @@ footer p{
 					</a>
 					<ul class="dropdown-menu dropdown-menu-sw">
 						<li>
-							<a href="#">
+							<a href="/newRepo">
 								<i class="glyphicon glyphicon-leaf"></i>
 								&nbsp;新的存储库
 							</a>
@@ -278,7 +285,7 @@ footer p{
 					</li>
 					<li role="separator" class="divider"></li>
 					<li>
-						<a href="#">
+						<a th:href="@{'/'+${USER.name}}">
 							<i class="glyphicon glyphicon-user">&nbsp;个人资料</i>
 						</a>
 					</li>
@@ -299,7 +306,7 @@ footer p{
 					</li>
 					<li role="separator" class="divider"></li>
 					<li>
-						<a href="/user">
+						<a th:href="@{'/'+${USER.name}+'/setting'}">
 							<i class="glyphicon glyphicon-cog">&nbsp;设置</i>
 						</a>
 					</li>
@@ -318,62 +325,62 @@ footer p{
 </nav>
 
 <div class="container newcontainer">
-	<form action="/createRepo"  method="post">
-<div class="main1">
-	<h1>创建一个新的存储库</h1>
-	<p>这个存储库包含所有项目文件，以及更改信息，它可以更好的帮助您进行团队协作</p>
-	<p>
-		已有存储库？
-		<a href="#">导入存储库</a>
-	</p>
-</div>
-<hr>
-<div class="main2">
-	<h4>
-		创建者&nbsp;/&nbsp;存储库名称
-		<i style="color:red;">*</i>
-	</h4>
-	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon1" style="background-color:#eaecef;">
-			<img class="myhead" th:src="${USER.avatar_url}">
-			<i th:text="${USER.name}" class="owner"></i>
-		</span>
-		<input type="text" class="form-control" id="rep_name" name="rep_name" placeholder="存储库名称" aria-describedby="basic-addon1">
-		<span id="isPass"></span>
+<form action="/createRepo"  method="post">
+	<div class="main1">
+		<h1>创建一个新的存储库</h1>
+		<p>这个存储库包含所有项目文件，以及更改信息，它可以更好的帮助您进行团队协作</p>
+		<p>
+			已有存储库？
+			<a href="#">导入存储库</a>
+		</p>
 	</div>
-	<h6>请输入存储库名称</h6>
 	<hr>
-	<h4>仓库图标</h4>
+	<div class="main2">
+		<h4>
+			创建者&nbsp;/&nbsp;存储库名称
+			<i style="color:red;">*</i>
+		</h4>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1" style="background-color:#eaecef;">
+				<img class="myhead" th:src="${USER.avatar_url}">
+				<i th:text="${USER.name}" class="owner"></i>
+			</span>
+			<input type="text" class="form-control" id="rep_name" name="rep_name" placeholder="存储库名称" aria-describedby="basic-addon1">
+			<span id="isPass"></span>
+		</div>
+		<h6>请输入存储库名称</h6>
+		<hr>
+		<h4>仓库图标</h4>
+		<hr>
+		<h4>相关描述（选填）</h4>
+		<input type="text" class="form-control" name="rep_bio" placeholder="描述" aria-describedby="basic-addon1"></div>
 	<hr>
-	<h4>相关描述（选填）</h4>
-	<input type="text" class="form-control" name="rep_bio" placeholder="描述" aria-describedby="basic-addon1"></div>
-<hr>
-<div class="main3">
-	<div class="checkbox">
-		<input type="radio" name="isopen" id="" value="public" checked="checked">
-		<img src="/static/images/public.png" alt="">
-		<div class="mycontent">
-			<h4>Public</h4>
-			<h6>公开您的存储库，让所有人都可见</h6>
+	<div class="main3">
+		<div class="checkbox">
+			<input type="radio" name="isopen" id="" value="public" checked="checked">
+			<img src="/static/images/public.png" alt="">
+			<div class="mycontent">
+				<h4>Public</h4>
+				<h6>公开您的存储库，让所有人都可见</h6>
+			</div>
+		</div>
+		<div class="checkbox">
+			<input type="radio" name="isopen" id="" value="private">
+			<img src="/static/images/private.png" alt="">
+			<div class="mycontent">
+				<h4>Private</h4>
+				<h6>您的存储库仅有您指定的人可以看</h6>
+			</div>
 		</div>
 	</div>
-	<div class="checkbox">
-		<input type="radio" name="isopen" id="" value="private">
-		<img src="/static/images/private.png" alt="">
-		<div class="mycontent">
-			<h4>Private</h4>
-			<h6>您的存储库仅有您指定的人可以看</h6>
-		</div>
+	<hr>
+	<div class="main4">
+		<h4>Github地址（选填）</h4>
+		<input type="text" class="form-control" name="githuburl" placeholder="github仓库地址" aria-describedby="basic-addon1"></div>
+	<hr>
+	<div class="end">
+		<button type="submit" class="btn btn-primary" id="newRepobtn" disabled="true">创建存储库</button>
 	</div>
-</div>
-<hr>
-<div class="main4">
-	<h4>Github地址（选填）</h4>
-	<input type="text" class="form-control" name="githuburl" placeholder="github仓库地址" aria-describedby="basic-addon1"></div>
-<hr>
-<div class="end">
-	<button type="submit" class="btn btn-primary" id="newRepobtn" disabled="true">创建存储库</button>
-</div>
 </form>
 </div>
 

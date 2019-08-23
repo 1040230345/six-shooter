@@ -231,118 +231,151 @@ footer p{
                     </a>
                     <ul class="dropdown-menu dropdown-menu-sw">
                         <li>
-                            <a href="/newRepo"><i class="glyphicon glyphicon-leaf"></i>&nbsp;新的存储库</a>
+                            <a href="/newRepo">
+                                <i class="glyphicon glyphicon-leaf"></i>
+                                &nbsp;新的存储库
+                            </a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-upload"></i>&nbsp;导入存储库</a>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-upload"></i>
+                                &nbsp;导入存储库
+                            </a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;新的项目</a>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-tasks"></i>
+                                &nbsp;新的项目
+                            </a>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-check"></i>&nbsp;新要点</a>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-check"></i>
+                                &nbsp;新要点
+                            </a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-grain"></i>&nbsp;新组织</a>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-grain"></i>
+                                &nbsp;新组织
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <!-- <i class="glyphicon glyphicon-user"></i> -->
-                        <img class="myhead" th:src="${USER.avatar_url}">
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-sw">
-                        <li class="welcome">
-                            <a href="#">您好,&nbsp;<i th:text="${USER.name}"></i>!</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a th:href="${USER.name}"><i class="glyphicon glyphicon-user">&nbsp;个人资料</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-leaf">&nbsp;您的存储库</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-tasks">&nbsp;您的项目</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-star">&nbsp;收藏</i></a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="/user"><i class="glyphicon glyphicon-cog">&nbsp;设置</i></a>
-                        </li>
-                        <li>
-                            <a href="/loginout"><i class="glyphicon glyphicon-log-out">&nbsp;退出登录</i></a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse --> </div>
-    <!-- /.container-fluid -->
+                        <!-- <i class="glyphicon glyphicon-user"></i>
+                    -->
+                    <img class="myhead" th:src="${USER.avatar_url}">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-sw">
+                    <li class="welcome">
+                        <a href="#">
+                            您好,&nbsp;
+                            <i th:text="${USER.name}"></i>
+                            !
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a th:href="@{'/'+${USER.name}}">
+                            <i class="glyphicon glyphicon-user">&nbsp;个人资料</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-leaf">&nbsp;您的存储库</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-tasks">&nbsp;您的项目</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-star">&nbsp;收藏</i>
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a th:href="@{'/'+${USER.name}+'/setting'}">
+                            <i class="glyphicon glyphicon-cog">&nbsp;设置</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/loginout">
+                            <i class="glyphicon glyphicon-log-out">&nbsp;退出登录</i>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</div>
+<!-- /.container-fluid -->
 </nav>
 
 <div class="container-fluid">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-3 of">
-            <div class="box1" id="box1">
-                <div class="row1">
-                    <span class="row1title">Repositories</span>
-                    <button class="btn btn-default row1btn1" onclick="location.href='/newRepo'">NEW+</button>
-                </div>
-                <div class="row1search">
-                    <input type="text" class="form-control" id="search" placeholder="Search"></div>
-                <div class="row1project">
-                    <ul>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目1：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目2：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目3：数据库调取</a>
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
-                            &nbsp;
-                            <a href="#">项目4：数据库调取</a>
-                        </li>
-                    </ul>
-                    <p>
-                        <a class="btn btn-default" href="#" role="button">Watch More &raquo;</a>
-                    </p>
-                </div>
+<!-- Example row of columns -->
+<div class="row">
+    <div class="col-md-3 of">
+        <div class="box1" id="box1">
+            <div class="row1">
+                <span class="row1title">Repositories</span>
+                <button class="btn btn-default row1btn1" onclick="location.href='/newRepo'">NEW+</button>
+            </div>
+            <div class="row1search">
+                <input type="text" class="form-control" id="search" placeholder="Search"></div>
+            <div class="row1project">
+                <ul>
+                    <li>
+                        <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
+                        &nbsp;
+                        <a href="#">项目1：数据库调取</a>
+                    </li>
+                    <li>
+                        <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
+                        &nbsp;
+                        <a href="#">项目2：数据库调取</a>
+                    </li>
+                    <li>
+                        <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
+                        &nbsp;
+                        <a href="#">项目3：数据库调取</a>
+                    </li>
+                    <li>
+                        <i class="glyphicon glyphicon-tasks" style="color:gray;"></i>
+                        &nbsp;
+                        <a href="#">项目4：数据库调取</a>
+                    </li>
+                </ul>
+                <p>
+                    <a class="btn btn-default" href="#" role="button">Watch More &raquo;</a>
+                </p>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-6 of" id="homemain">
-            <div class="box2" id="box2">
-                <h2>探索 · 发现</h2>
-                <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                </p>
-            </div>
+    <div class="col-md-6 of" id="homemain">
+        <div class="box2" id="box2">
+            <h2>探索 · 发现</h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
+            </p>
         </div>
-        <div class="col-md-3 of">
-            <div class="box3" id="box3">
-                <h2>浏览您的存储库</h2>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
+    </div>
+    <div class="col-md-3 of">
+        <div class="box3" id="box3">
+            <h2>浏览您的存储库</h2>
+            <div class="box3-li">
+                <h5>项目标题</h5>
                 <p>
                     简介：肥肠洗净切小块，葱切段，小米椒坏碎， 生姜切丝，泡椒连计一起取出。热锅倒油，倒入姜丝、泡椒炒出香味
                     倒入肥肠，翻炒片刻倒入少许料酒、生抽、少许盐、一点点糖倒入辣椒碎撒上葱段，翻炒均匀即可一盘重口味的野山椒肥肠，重庆风味，喜欢的朋友赶紧收藏吧！
@@ -350,9 +383,9 @@ footer p{
                 <p>
                     <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
                 </p>
-                </div>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
+            </div>
+            <div class="box3-li">
+                <h5>项目标题</h5>
                 <p>
                     简介：鸡翅提前解冻，为了入味，我剁成了两至三块，一小勺盐，适量料酒，腌制一小时以上。
 各种配菜洗干净切好。胡萝卜和土豆切块，洋葱和泡椒切片。锅烧热，倒少量油，先下洋葱和青椒炒至断生，然后装盘备用。
@@ -361,9 +394,9 @@ footer p{
                 <p>
                     <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
                 </p>
-                </div>
-                <div class="box3-li">
-                    <h5>项目标题</h5>
+            </div>
+            <div class="box3-li">
+                <h5>项目标题</h5>
                 <p>
                     简介：
 虾剪去虾足、虾枪，去掉虾袋、虾线
@@ -374,17 +407,17 @@ footer p{
                 <p>
                     <a class="btn btn-default" href="#" role="button">View details &raquo;</a>
                 </p>
-                </div>
             </div>
         </div>
-
     </div>
 
-    <hr>
+</div>
 
-    <footer>
-        <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
-    </footer>
+<hr>
+
+<footer>
+    <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
+</footer>
 </div>
 <!-- /container -->
 
