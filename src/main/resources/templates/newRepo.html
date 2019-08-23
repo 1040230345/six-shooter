@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>六发左轮-面向小型开发团队的项目协作开发系统</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <!-- 触屏缩放 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 禁止缩放
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>六发左轮-面向小型开发团队的项目协作开发系统</title>
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+	<!-- 触屏缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 禁止缩放
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    -->
-    <style type="text/css">
+	-->
+	<style type="text/css">
         .of{
             overflow: hidden;
         }
@@ -77,6 +76,76 @@
 .welcome i{
     font-style: normal;
 }
+/*主要*/
+.newcontainer{
+	max-width: 670px;
+	padding: 15px 0px;
+}
+/*.newcontainer .btn:hover{
+	background-color: #e6ebf1;
+    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
+    background-position: -.5em;
+    border-color: rgba(27,31,35,.35);
+}*/
+.newcontainer input{
+	background-color: #fafbfc;
+}
+.main1{
+	text-align: center;
+}
+.main2 .input-group{
+	position: relative;
+}
+#isPass{
+	position: absolute;
+	top:7px;
+	right:11px;
+	z-index: 9999;
+}
+.red{
+	color: red;
+}
+.green{
+	color: green;
+}
+.main3{
+	height: 92px;
+}
+.main3 .checkbox{
+	width: 100%;
+	clear: both;
+	height: 50px;
+}
+.main3 .checkbox input,.main3 .checkbox img,.main3 .checkbox h4{
+	float: left;
+	margin-right: 10px;
+}
+.main3 .checkbox input{
+	margin-top: 12px;
+	margin-right: 10px;
+}
+.main3 .checkbox img{
+
+}
+.mycontent{
+	float: left;
+	width: 70%;
+	height: 100%;
+}
+.mycontent h4{
+	margin: 3px 240px 0 0!important;
+}
+.mycontent h6{
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.owner{
+	font-style: normal;
+	font-size: 16px;
+	font-weight: 600;
+}
+
 /*底部*/
 footer p{
     text-align: center;
@@ -84,128 +153,234 @@ footer p{
 
     </style>
 
-    <script type="text/javascript">
+	<script type="text/javascript">
         $(document).ready(function() {
-            
+        	var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
+            $("#rep_name").keyup(function(event) {
+            	$("#newRepobtn").attr('disabled', false);
+            	var text=$("#rep_name").val();
+            	if(!checkname.test(text)||text==null){
+            		$("#newRepobtn").attr('disabled', true);
+            		$("#isPass").removeClass('green').addClass('red');
+            		$("#isPass").html("<i class='glyphicon glyphicon-remove'></i>");
+            	}else{
+            		$("#newRepobtn").attr('disabled', false);
+            		$("#isPass").removeClass('red').addClass('green');
+            		$("#isPass").html("<i class='glyphicon glyphicon-ok'></i>");
+            	}
+            	if(text==""){
+            		$("#newRepobtn").attr('disabled', true);
+            		$("#isPass").html("");
+            	}
+            });
         });
     </script>
 </head>
 
 <body>
+	<nav class="navbar navbar-default header">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home" style="color:#fff">Six-Shooter</a>
+			</div>
 
-    <nav class="navbar navbar-default header">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/home" style="color:#fff">Six-Shooter</a>
-            </div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<form class="navbar-form navbar-left">
+					<div class="form-group">
+						<input type="text" class="form-control" id="search" placeholder="Search"></div>
+				</form>
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">
+							Pull requests
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">Issues</a>
+					</li>
+					<li>
+						<a href="#">Marketplace</a>
+					</li>
+					<li>
+						<a href="#">Explore</a>
+					</li>
+				</ul>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search"></div>
-                </form>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">
-                            Pull requests
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Issues</a>
-                    </li>
-                    <li>
-                        <a href="#">Marketplace</a>
-                    </li>
-                    <li>
-                        <a href="#">Explore</a>
-                    </li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#"> <i class="glyphicon glyphicon-bell"></i>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <!-- <i class="glyphicon glyphicon-plus"></i>
-                        -->
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#"> <i class="glyphicon glyphicon-bell"></i>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<!-- <i class="glyphicon glyphicon-plus"></i>
+						-->
                             +
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-sw">
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-leaf"></i>&nbsp;新的存储库</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-upload"></i>&nbsp;导入存储库</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;新的项目</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-check"></i>&nbsp;新要点</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-grain"></i>&nbsp;新组织</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <!-- <i class="glyphicon glyphicon-user"></i> -->
-                        <img class="myhead" th:src="${USER.avatar_url}">
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-sw">
-                        <li class="welcome">
-                            <a href="#">您好,&nbsp;<i th:text="${USER.name}"></i>!</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-user">&nbsp;个人资料</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-leaf">&nbsp;您的存储库</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-tasks">&nbsp;您的项目</i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-star">&nbsp;收藏</i></a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="/user"><i class="glyphicon glyphicon-cog">&nbsp;设置</i></a>
-                        </li>
-                        <li>
-                            <a href="/loginout"><i class="glyphicon glyphicon-log-out">&nbsp;退出登录</i></a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse --> </div>
-    <!-- /.container-fluid -->
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-sw">
+						<li>
+							<a href="#">
+								<i class="glyphicon glyphicon-leaf"></i>
+								&nbsp;新的存储库
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="glyphicon glyphicon-upload"></i>
+								&nbsp;导入存储库
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="glyphicon glyphicon-tasks"></i>
+								&nbsp;新的项目
+							</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>
+							<a href="#">
+								<i class="glyphicon glyphicon-check"></i>
+								&nbsp;新要点
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="glyphicon glyphicon-grain"></i>
+								&nbsp;新组织
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						<!-- <i class="glyphicon glyphicon-user"></i>
+					-->
+					<img class="myhead" th:src="${USER.avatar_url}">
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-sw">
+					<li class="welcome">
+						<a href="#">
+							您好,&nbsp;
+							<i th:text="${USER.name}"></i>
+							!
+						</a>
+					</li>
+					<li role="separator" class="divider"></li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-user">&nbsp;个人资料</i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-leaf">&nbsp;您的存储库</i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-tasks">&nbsp;您的项目</i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-star">&nbsp;收藏</i>
+						</a>
+					</li>
+					<li role="separator" class="divider"></li>
+					<li>
+						<a href="/user">
+							<i class="glyphicon glyphicon-cog">&nbsp;设置</i>
+						</a>
+					</li>
+					<li>
+						<a href="/loginout">
+							<i class="glyphicon glyphicon-log-out">&nbsp;退出登录</i>
+						</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- /.navbar-collapse -->
+</div>
+<!-- /.container-fluid -->
 </nav>
 
+<div class="container newcontainer">
+	<form action="/createRepo" type="post">
+<div class="main1">
+	<h1>创建一个新的存储库</h1>
+	<p>这个存储库包含所有项目文件，以及更改信息，它可以更好的帮助您进行团队协作</p>
+	<p>
+		已有存储库？
+		<a href="#">导入存储库</a>
+	</p>
+</div>
+<hr>
+<div class="main2">
+	<h4>
+		创建者&nbsp;/&nbsp;存储库名称
+		<i style="color:red;">*</i>
+	</h4>
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1" style="background-color:#eaecef;">
+			<img class="myhead" th:src="${USER.avatar_url}">
+			<i th:text="${USER.name}" class="owner"></i>
+		</span>
+		<input type="text" class="form-control" id="rep_name" name="rep_name" placeholder="存储库名称" aria-describedby="basic-addon1">
+		<span id="isPass"></span>
+	</div>
+	<h6>请输入存储库名称</h6>
+	<hr>
+	<h4>仓库图标</h4>
+	<hr>
+	<h4>相关描述（选填）</h4>
+	<input type="text" class="form-control" name="rep_bio" placeholder="描述" aria-describedby="basic-addon1"></div>
+<hr>
+<div class="main3">
+	<div class="checkbox">
+		<input type="radio" name="isopen" id="" value="public" checked="checked">
+		<img src="/static/images/public.png" alt="">
+		<div class="mycontent">
+			<h4>Public</h4>
+			<h6>公开您的存储库，让所有人都可见</h6>
+		</div>
+	</div>
+	<div class="checkbox">
+		<input type="radio" name="isopen" id="" value="private">
+		<img src="/static/images/private.png" alt="">
+		<div class="mycontent">
+			<h4>Private</h4>
+			<h6>您的存储库仅有您指定的人可以看</h6>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="main4">
+	<h4>Github地址（选填）</h4>
+	<input type="text" class="form-control" name="githuburl" placeholder="github仓库地址" aria-describedby="basic-addon1"></div>
+<hr>
+<div class="end">
+	<button type="submit" class="btn btn-primary" id="newRepobtn" disabled="true">创建存储库</button>
+</div>
+</form>
+</div>
 
-
-    <hr>
-
-    <footer>
-        <p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
-    </footer>
+<hr>
+<footer>
+<p>&copy; 2019 用梦想发电的左轮团队, Inc.</p>
+</footer>
 
 <!-- /container -->
 
