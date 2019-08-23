@@ -61,9 +61,9 @@ public class RepositoriesController {
      * 仓库页面
      */
     @GetMapping("/{user_id}/{rep_id}")
-    public String rep_index(@PathVariable int user_id, @PathVariable int rep_id){
-
-        return "/thisRepo";
+    public String rep_index(@PathVariable("user_id") String  user_id, @PathVariable("rep_id") String rep_id){
+        System.out.println(user_id);
+        return "/home";
     }
 
 
