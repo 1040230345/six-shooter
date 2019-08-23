@@ -175,8 +175,14 @@ public class UserController {
     public String Personal_information(@PathVariable("user_name") String  user_name,HttpServletRequest request,Model model){
         HttpSession session = request.getSession();
         UserDto userDto = (UserDto) session.getAttribute("User");
+        //判断下是不是自己咯
+        if(userDto.getName().equals(user_name)){
+            model.addAttribute("USER",userDto);
+            return "/user";
+        }
         model.addAttribute("USER",userDto);
-        return "/user";
+        return "redirect:/home";
+
     }
 }
 
