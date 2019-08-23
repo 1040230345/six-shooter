@@ -78,7 +78,8 @@
 }
 /*主要*/
 .newcontainer{
-	padding: 15px 250px;
+	max-width: 670px;
+	padding: 15px 0px;
 }
 /*.newcontainer .btn:hover{
 	background-color: #e6ebf1;
@@ -92,6 +93,58 @@
 .main1{
 	text-align: center;
 }
+.main2 .input-group{
+	position: relative;
+}
+#isPass{
+	position: absolute;
+	top:7px;
+	right:11px;
+	z-index: 9999;
+}
+.red{
+	color: red;
+}
+.green{
+	color: green;
+}
+.main3{
+	height: 92px;
+}
+.main3 .checkbox{
+	width: 100%;
+	clear: both;
+	height: 50px;
+}
+.main3 .checkbox input,.main3 .checkbox img,.main3 .checkbox h4{
+	float: left;
+	margin-right: 10px;
+}
+.main3 .checkbox input{
+	margin-top: 12px;
+	margin-right: 10px;
+}
+.main3 .checkbox img{
+
+}
+.mycontent{
+	float: left;
+	width: 70%;
+	height: 100%;
+}
+.mycontent h4{
+	margin: 3px 240px 0 0!important;
+}
+.mycontent h6{
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.owner{
+	font-style: normal;
+	font-size: 16px;
+	font-weight: 600;
+}
 
 /*底部*/
 footer p{
@@ -102,13 +155,29 @@ footer p{
 
 	<script type="text/javascript">
         $(document).ready(function() {
-            
+        	var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
+            $("#rep_name").keyup(function(event) {
+            	$("#newRepobtn").attr('disabled', false);
+            	var text=$("#rep_name").val();
+            	if(!checkname.test(text)||text==null){
+            		$("#newRepobtn").attr('disabled', true);
+            		$("#isPass").removeClass('green').addClass('red');
+            		$("#isPass").html("<i class='glyphicon glyphicon-remove'></i>");
+            	}else{
+            		$("#newRepobtn").attr('disabled', false);
+            		$("#isPass").removeClass('red').addClass('green');
+            		$("#isPass").html("<i class='glyphicon glyphicon-ok'></i>");
+            	}
+            	if(text==""){
+            		$("#newRepobtn").attr('disabled', true);
+            		$("#isPass").html("");
+            	}
+            });
         });
     </script>
 </head>
 
 <body>
-
 	<nav class="navbar navbar-default header">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -249,51 +318,63 @@ footer p{
 </nav>
 
 <div class="container newcontainer">
-	<div class="main1">
-		<h1>创建一个新的存储库</h1>
-		<p>这个存储库包含所有项目文件，以及更改信息，它可以更好的帮助您进行团队协作</p>
-		<p>
-			已有存储库？
-			<a href="#">导入存储库</a>
-		</p>
+	<form action="/createRepo" type="post">
+<div class="main1">
+	<h1>创建一个新的存储库</h1>
+	<p>这个存储库包含所有项目文件，以及更改信息，它可以更好的帮助您进行团队协作</p>
+	<p>
+		已有存储库？
+		<a href="#">导入存储库</a>
+	</p>
+</div>
+<hr>
+<div class="main2">
+	<h4>
+		创建者&nbsp;/&nbsp;存储库名称
+		<i style="color:red;">*</i>
+	</h4>
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1" style="background-color:#eaecef;">
+			<img class="myhead" th:src="${USER.avatar_url}">
+			<i th:text="${USER.name}" class="owner"></i>
+		</span>
+		<input type="text" class="form-control" id="rep_name" name="rep_name" placeholder="存储库名称" aria-describedby="basic-addon1">
+		<span id="isPass"></span>
 	</div>
+	<h6>请输入存储库名称</h6>
 	<hr>
-	<div class="main2">
-		<h4>创建者/存储库名称*</h4>
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1" style="background-color:#F5F7F9;">
-				<img class="myhead" th:src="${USER.avatar_url}">
-				<i th:text="${USER.name}"></i>
-			</span>
-			<input type="text" class="form-control" placeholder="存储库名称" aria-describedby="basic-addon1">
+	<h4>仓库图标</h4>
+	<hr>
+	<h4>相关描述（选填）</h4>
+	<input type="text" class="form-control" name="rep_bio" placeholder="描述" aria-describedby="basic-addon1"></div>
+<hr>
+<div class="main3">
+	<div class="checkbox">
+		<input type="radio" name="isopen" id="" value="public" checked="checked">
+		<img src="/static/images/public.png" alt="">
+		<div class="mycontent">
+			<h4>Public</h4>
+			<h6>公开您的存储库，让所有人都可见</h6>
 		</div>
-		<h6>请输入存储库名称</h6>
-		<hr>
-		<h4>仓库图标</h4>
-		<hr>
-		<h4>相关描述（选填）</h4>
-		<input type="text" class="form-control" placeholder="描述" aria-describedby="basic-addon1">
 	</div>
-	<hr>
-	<div class="main3">
-		<div class="checkbox">
-			<input type="radio">
-			<img src="/static/images/public.png" alt="">
-		</div>
-		<div class="checkbox">
-			<input type="radio">
-			<img src="/static/images/private.png" alt="">
+	<div class="checkbox">
+		<input type="radio" name="isopen" id="" value="private">
+		<img src="/static/images/private.png" alt="">
+		<div class="mycontent">
+			<h4>Private</h4>
+			<h6>您的存储库仅有您指定的人可以看</h6>
 		</div>
 	</div>
-	<hr>
-	<div class="main4">
-		<h4>Github地址（选填）</h4>
-		<input type="text" class="form-control" placeholder="github仓库地址" aria-describedby="basic-addon1">
-	</div>
-	<hr>
-	<div class="end">
-		<button class="btn btn-primary">创建存储库</button>
-	</div>
+</div>
+<hr>
+<div class="main4">
+	<h4>Github地址（选填）</h4>
+	<input type="text" class="form-control" name="githuburl" placeholder="github仓库地址" aria-describedby="basic-addon1"></div>
+<hr>
+<div class="end">
+	<button type="submit" class="btn btn-primary" id="newRepobtn" disabled="true">创建存储库</button>
+</div>
+</form>
 </div>
 
 <hr>
