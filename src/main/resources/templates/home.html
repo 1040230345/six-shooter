@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -28,18 +28,15 @@
         }
         .navbar{
             /*导航栏下间距在这↓*/
-            margin-bottom: 0px;
+            margin-bottom: 0;
             border-radius: 0;
-            border: 0px;
+            border: 0;
         }
         .navbar-default .navbar-nav>li>a {
             color: #fff;
         }
         .navbar-default .navbar-nav>li>a:hover {
             color: hsla(0,0%,100%,.7);
-        }
-        .container .row{
-            width: 100%;
         }
         .nav li .open>a,.nav li .open>a:focus,.nav li .open>a:hover{
            background-color: #080808;
@@ -99,14 +96,14 @@
     float: left;
     color: #24292e;
     width: 40%;
-    line-height: 40.6px;
+    line-height: 41px;
 }
 .row1btn1{
     float: right;
     width: auto;
     height: auto;
     margin-right: 20px;
-    margin-top: 0px;
+    margin-top: 0;
     color: white;
     background-color: #269f42;
 }
@@ -166,8 +163,8 @@ footer p{
             $("#box2").animate({marginTop:0}, 1000);
             $("#box3").animate({marginLeft:0}, 1000);
 
-            $("#search").click(function(event) {
-                $("#search").animate({width: "300px"}, 500);
+            $("#navsearch").click(function(event) {
+                $("#navsearch").animate({width: "300px"}, 500);
             });
             $(".dropdown-toggle").focusin(function () {
                 $(this).css("background-color","#24292e");
@@ -197,7 +194,7 @@ footer p{
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search"></div>
+                        <input type="text" class="form-control" id="navsearch" placeholder="Search"></div>
                 </form>
                 <ul class="nav navbar-nav">
                     <li>
@@ -329,7 +326,7 @@ footer p{
                 <button class="btn btn-default row1btn1" onclick="location.href='/newRepo'">NEW+</button>
             </div>
             <div class="row1search">
-                <input type="text" class="form-control" id="search" placeholder="Search"></div>
+                <input type="text" class="form-control" id="box1search" placeholder="Search"></div>
             <div class="row1project">
                 <ul>
                     <li>
