@@ -184,5 +184,13 @@ public class UserController {
         return "redirect:/home";
 
     }
+
+    /**
+     * 个人页面选项卡索引
+     */
+    @GetMapping("/nav")
+    public String getUrl(String index){
+        return index;
+    }
 }
 
