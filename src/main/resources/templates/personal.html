@@ -152,6 +152,7 @@
     font-weight: 600;
 }
 .mycontent{
+    margin-top: 25px;
     width: 100%;
     border: 1px solid #eef;
 }
@@ -173,13 +174,36 @@ footer p{
                 $(this).css("background-color","transparent");
             });
 
-            $("#mynavul>li").click(function(){
+            $("#mynavul>li").click(function totarget(){
+                var target;
+
+                switch ($(this).index()) {
+                case 0:
+                    target = "overview";
+                    break;
+                case 1:
+                    target = "repositories";
+                     break;
+                case 2:
+                    target = "projects";
+                     break;
+                case 3:
+                    target = "stars";
+                     break;
+                case 4:
+                    target = "followers";
+                     break;
+                case 5:
+                    target = "following";
+                     break;
+                }
+
                 $(this).addClass('selected').siblings().removeClass('selected');
                 $.ajax({
-                    url: '/overview',
+                    url: '/nav',
                     type: 'GET',
                     dataType: 'html',
-                    data: {say: 'heyman'},
+                    data: {index: target},
                 })
                 .done(function(data) {
                     $("#mycontent").html(data);
@@ -192,8 +216,6 @@ footer p{
                 });
                 
             });
-
-
         });
     </script>
 </head>
