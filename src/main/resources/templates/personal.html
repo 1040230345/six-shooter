@@ -173,6 +173,8 @@ footer p{
             }).focusout(function () {
                 $(this).css("background-color","transparent");
             });
+            
+
 
             $("#mynavul>li").click(function totarget(){
                 var target;
@@ -216,6 +218,8 @@ footer p{
                 });
                 
             });
+
+            $("#firstli").trigger('click');
         });
     </script>
 </head>
@@ -237,7 +241,7 @@ footer p{
         <div class="col-md-8">
             <div class="mynav">
                 <ul id="mynavul">
-                    <li class="selected"><a href="#">概述</a></li>
+                    <li class="selected" id="firstli"><a href="#">概述</a></li>
                     <li><a href="#">存储库</a></li>
                     <li><a href="#">项目</a></li>
                     <li><a href="#">star</a></li>
