@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>overview</title>
+   	<style type="text/css">
+		.box1{
+			width: 100%;
+		}
+		.myshow{
+			width: 456px;
+			min-height: 114px;
+			padding:0 16px 5px 16px;
+			border: 1px solid #eee;
+		}
+		.myshowcontent{
+			min-height: 45px;
+		}
+		.myshow h5{
+			color: #0366d6;
+		}
+		.myshow h5 i{
+			color: gray;
+		}
+		.myshow h6{
+			margin: 0;
+			padding: 0;
+		}
+		.box2{
+			width: 100%;
+			margin-top: 25px;
+		}
+		.box2 .myshow{
+			width: 100%;
+		}
+		.box3{
+			width: 100%;
+			margin-top: 25px;
+		}
+		.box3 .myshow{
+			width: 100%;
+		}
+   	</style>
 </head>
 <body>
-    <h1>hey man</h1>
+    <div class="box1">
+    	<h4>最受欢迎的存储库</h4>
+    	<div class="show">
+    		<div class="myshow">
+    			<h5><i class="glyphicon glyphicon-tasks"></i>&nbsp;标题</h5>
+    			<p class="myshowcontent">简介</p>
+    			<h6>类型</h6>
+    		</div>
+    	</div>
+    </div>
+    <div class="box2">
+    	<h4>最近贡献</h4>
+    	<div class="show">
+    		<div class="myshow">
+    			
+    		</div>
+    	</div>
+    </div>
+    <div class="box3">
+    	<h4>贡献历程</h4>
+    	<div class="show">
+    		<div class="myshow">
+    			
+    		</div>
+    	</div>
+    </div>
 </body>
 </html>
