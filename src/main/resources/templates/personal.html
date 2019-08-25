@@ -151,6 +151,10 @@
     color: #24292e!important;
     font-weight: 600;
 }
+.mycontent{
+    width: 100%;
+    border: 1px solid #eef;
+}
 /*底部*/
 footer p{
     text-align: center;
@@ -171,7 +175,25 @@ footer p{
 
             $("#mynavul>li").click(function(){
                 $(this).addClass('selected').siblings().removeClass('selected');
+                $.ajax({
+                    url: '/overview',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {say: 'heyman'},
+                })
+                .done(function(data) {
+                    $("#mycontent").html(data);
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+                
             });
+
+
         });
     </script>
 </head>
@@ -200,6 +222,9 @@ footer p{
                     <li><a href="#">粉丝</a></li>
                     <li><a href="#">关注</a></li>
                 </ul>
+            </div>
+            <div class="mycontent" id="mycontent">
+                
             </div>
         </div>
     </div>
