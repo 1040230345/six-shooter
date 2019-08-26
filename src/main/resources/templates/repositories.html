@@ -3,8 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>repositories</title>
+    <style type="text/css">
+		.box1{
+			width: 100%;
+			height: 67px;
+			padding: 16px;
+			border-bottom: 1px solid #eee;
+		}
+		.box1 .form-control{
+			margin-left: -16px;
+			width: 67%;
+			float: left;
+			margin-right: 15px;
+		}
+		.box1 .btn-group{
+			float: left;
+			margin-right: 18px;
+		}
+		.box1 .rebtn{
+			margin-right: -16px;
+		}
+		.box1 .redropdown-menu{
+			left: -9px;
+		}
+		.box2{
+			margin-top: 32px;
+			padding: 32px;
+			min-height: 88px;
+			width: 100%;
+			overflow: hidden;
+			text-align: center;
+		}
+    </style>
 </head>
 <body>
-    <h1>repositories</h1>
+    <div class="box1">
+    	<input type="search" class="form-control" placeholder="查找一个存储库">
+    	<!-- 按钮式下拉 -->
+    	<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Action <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="#">Action</a></li>
+		    <li><a href="#">Another action</a></li>
+		    <li><a href="#">Something else here</a></li>
+		    <li role="separator" class="divider"></li>
+		    <li><a href="#">Separated link</a></li>
+		  </ul>
+		</div>
+		<!-- 按钮式下拉 -->
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Action <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu redropdown-menu">
+		    <li><a href="#">Action</a></li>
+		    <li><a href="#">Another action</a></li>
+		    <li><a href="#">Something else here</a></li>
+		    <li role="separator" class="divider"></li>
+		    <li><a href="#">Separated link</a></li>
+		  </ul>
+		</div>
+
+		<button class="btn btn-default rebtn" onclick="location.href='/newRepo'">NEW+</button>
+    </div>
+    <div class="box2">
+    	<h4>您还没有存储库（判断有或无，无则显示文字有就显示存储库）</h4>
+    </div>
 </body>
 </html>
