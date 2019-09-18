@@ -21,7 +21,8 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(HttpServletRequest request){
+    public  String index(HttpServletRequest request){
+
         //如果页面存在cookie，而且用户一定要登陆的话,只能让他滚了
         Cookie[] cookies = request.getCookies();
         //防止空指针异常
