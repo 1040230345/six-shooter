@@ -34,6 +34,11 @@ public class MailService {
 
     //获取邮箱验证码
     public boolean getCheckCode(String mail) {
+        //优先判断是否为邮箱
+        boolean ifmail = mail.contains("@");
+        if(!ifmail){
+            mail = stringRedisTemplate.opsForValue().get(mail);
+        }
         //先检查缓存中是否存在值
         boolean bl = stringRedisTemplate.hasKey(mail);
         if (bl) {
@@ -45,9 +50,9 @@ public class MailService {
         String message = "您的注册验证码为：" + checkCode;
         //发送邮件
         sendSimpleMail(mail, "注册验证码", message);
-        System.out.println(mail);
-        //存入缓存
-        stringRedisTemplate.opsForValue().set(mail, checkCode, 60 * 2, TimeUnit.SECONDS);//向redis里存入数据和设置缓存时间
+        //System.out.println(mail);
+        //存入缓存,设置缓存时间为2分钟有效
+        stringRedisTemplate.opsForValue().set(mail, checkCode, 60 * 2, TimeUnit.SECONDS);
         return true;
     }
 }

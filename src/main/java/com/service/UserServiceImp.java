@@ -6,9 +6,11 @@ import com.mapper.MailMapper;
 import com.mapper.UserMapper;
 import com.my_util.GetTime_util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -21,6 +23,8 @@ public class UserServiceImp implements UserService {
     private GetTime_util getTime_util;
     @Autowired
     private MailMapper mailMapper;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public UserDto findByEmail(String email) {
@@ -71,30 +75,39 @@ public class UserServiceImp implements UserService {
      * @return
      */
     @Override
-    public Boolean checkCode(String email,String Vcode) {
-
+    public Boolean checkCode(String emailOrName,String Vcode) {
         //判断传进来的是用户名还是邮箱
-        boolean ifmail = email.contains("@");
-        if(!ifmail){
-            //获取邮箱
-            String mail = userMapper.findEmailByName(email);
-            //进行比对
-            String code = mailMapper.findCodeByEmail(mail);
-            //不正确
-            if(!Vcode.equals(code)){
-               return false;
-            }else{
-                return true;
-            }
-        }else{//是邮箱，直接对比
-            String code = mailMapper.findCodeByEmail(email);
-            //不正确
-            if(!Vcode.equals(code)){
+        boolean ifmail = emailOrName.contains("@");
+        if (!ifmail) {
+            //缓存中获取邮箱
+            String email = stringRedisTemplate.opsForValue().get(emailOrName);
+            if(email==null){
+                //往数据库中获取邮箱
+                email = userMapper.findEmailByName(emailOrName);
+                if(email!=null){
+                    //将获取到的数据存在缓存中
+                    stringRedisTemplate.opsForValue().set(emailOrName, email, 60 * 2, TimeUnit.SECONDS);
+                    //验证码是否存在
+                    if(stringRedisTemplate.hasKey(email)){
+                        //验证验证码是否正确
+                        if(Vcode.equals(stringRedisTemplate.opsForValue().get(email))){
+                            return true;
+                        }
+                    }
+                }
                 return false;
-            }else {
+            }
+            //验证验证码是否正确
+            if(Vcode.equals(stringRedisTemplate.opsForValue().get(email))){
                 return true;
             }
+            return false;
         }
+        //验证验证码是否正确
+        if(Vcode.equals(stringRedisTemplate.opsForValue().get(emailOrName))){
+            return true;
+        }
+        return false;
     }
 
     /**

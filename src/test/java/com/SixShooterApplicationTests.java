@@ -1,10 +1,10 @@
 package com;
 
-import com.dto.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -12,12 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SixShooterApplicationTests {
 
     @Autowired
-    private Jackson_Mapper_test jackson_mapper_test;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Test
     public void contextLoads() {
-        UserDto userDto = jackson_mapper_test.findById(1);
-        System.out.println(userDto.getName());
+        boolean bl = stringRedisTemplate.hasKey("1040230345@qq.com");
+        System.out.println(bl);
+        String st = stringRedisTemplate.opsForValue().get("asdasd");
+        System.out.println(st);
     }
 
 }
