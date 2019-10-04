@@ -74,7 +74,7 @@
         .vcode{
             max-width:300px;
             height: 44px;
-            clear: both; 
+            clear: both;
         }
         .mycontrol{
             width:55%;
@@ -134,7 +134,7 @@
             z-index: 32;
             padding:6px 0;
         }
-         .navbar{
+        .navbar{
             /*导航栏下间距在这↓*/
             margin-bottom: 0px;
             border-radius: 0;
@@ -153,12 +153,12 @@
             width: 100%;
         }
         .nav li .open>a,.nav li .open>a:focus,.nav li .open>a:hover{
-           background-color: #080808;
+            background-color: #080808;
         }
-       /* @media (width: 1200px){
-        .container {
-            width: 1519px;
-        }}*/
+        /* @media (width: 1200px){
+         .container {
+             width: 1519px;
+         }}*/
         /*小三角*/
         .dropdown-menu-sw:after {
             left: auto;
@@ -201,41 +201,41 @@
             padding: 0 24px;
             height: 800px;
         }
-       .mycenter2 .col-md-3{
+        .mycenter2 .col-md-3{
             height: 422px;
             max-width: 500px;
             padding: 15px;
             margin-top: 24px;
-       }
-       .mycard{
+        }
+        .mycard{
             padding: 15px;
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 4px;
             width: 100%;
             height: 100%;
-       }
-       .mycenter2 .col-md-3 .mycard img{
+        }
+        .mycenter2 .col-md-3 .mycard img{
             width: 200px;
             height: 200px;
-       }
-       .mycenter2 .col-md-3 .mycard:hover{
+        }
+        .mycenter2 .col-md-3 .mycard:hover{
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-       }
-       .mycenter2 .col-md-3 button{
-        /*颜色*/
-       }
-       .divider{
-        height: 1px;
-        margin: 9px 0;
-        overflow: hidden;
-        background-color: #e5e5e5;
-       }
-       
+        }
+        .mycenter2 .col-md-3 button{
+            /*颜色*/
+        }
+        .divider{
+            height: 1px;
+            margin: 9px 0;
+            overflow: hidden;
+            background-color: #e5e5e5;
+        }
+
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
-           $(".form-signin").animate({marginTop:"75px"}, 1000);
+            $(".form-signin").animate({marginTop:"75px"}, 1000);
 
 
             $("#search").click(function(event) {
@@ -266,7 +266,7 @@
             var flag3;
             var checkemail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/||/\s/;
             var checkname=/^[\u4e00-\u9fa5A-Za-z0-9-_]*$/||/\s/;
-            
+
             //登录发送验证码按钮
             $("#signinvcodebtn").click(function(){
                 var email=$("#inputEmail").val();
@@ -288,16 +288,16 @@
                     dataType: 'JSON',
                     data: {mail:email},
                 })
-                .done(function() {
-                    console.log("success");
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-                
+                    .done(function() {
+                        console.log("success");
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
             });
 
             //注册发送验证码按钮
@@ -321,125 +321,130 @@
                     dataType: 'JSON',
                     data: {mail: email},
                 })
-                .done(function() {
-                    console.log("success");
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-                
+                    .done(function() {
+                        console.log("success");
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
             });
-            
+//防抖
+            var emailDebounceClock=null;
+            function emailDebounce(func,time){
+                emailDebounceClock=setTimeout(func,time);
+            }
             $("#signupEmail").focus(function(){
-
-                $(this).keyup(function(event) {
-                    flag1=null;
-                    var text=$(this).val();
-                    if(!checkemail.test(text)||text==null){
-
-
-                        $("#emailmsg").html("<div id='sjx1'></div>邮箱格式错误"+
-                            "<span class='glyphicon glyphicon-remove' id='icon1'></span>");
-                        flag1=false;
-                        $("#emailmsg").css({
-                            width:'93px'
-                        });
-                        $("#signupSub").attr('disabled',true);
-                        $("#icon1").attr('class', 'glyphicon glyphicon-remove');
-
-                    }else{
-                        $.ajax({
-                            url: '/verification',
-                            type: 'post',
-                            dataType: 'JSON',
-                            data: {email: text},
-                        })
-                            .done(function(data) {
-                                if(data.email=="0"){
-                                    $("#signupSub").attr('disabled',true);
-                                    $("#emailmsg").html("<div id='sjx1'></div>此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
-                                    $("#emailmsg").css({
-                                        width:'90px'
-                                    });
-                                    flag1=false;
-                                    $("#icon1").attr('class', 'glyphicon glyphicon-remove');
-                                }else{
-                                    flag1=true;
-                                    $("#emailmsg").html("<div id='sjx1'></div><span class='glyphicon glyphicon-remove' id='icon1'></span>");
-                                    $("#emailmsg").css({
-                                        width:'25px'
-                                    });
-                                    $("#icon1").attr('class', 'glyphicon glyphicon-ok');
-                                }
-                                if(flag1&&flag2&&flag3){
-                                    $("#signupSub").attr('disabled',false);}
-                            })
-                            .fail(function() {
-                                console.log("error");
-                            })
-                            .always(function() {
-                                console.log("complete");
+                document.getElementById('signupEmail').addEventListener('keyup',function(event){
+                    clearTimeout(emailDebounceClock);
+                    emailDebounce(function(){
+                        flag1=null;
+                        var text=$("#signupEmail").val();
+                        if(!checkemail.test(text)||text==null){
+                            $("#emailmsg").html("<div id='sjx1'></div>邮箱格式错误"+
+                                "<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                            flag1=false;
+                            $("#emailmsg").css({
+                                width:'93px'
                             });
+                            $("#signupSub").attr('disabled',true);
+                            $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
-                    }
-
+                        }else{
+                            $.ajax({
+                                url: '/verification',
+                                type: 'post',
+                                dataType: 'JSON',
+                                data: {email: text},
+                            })
+                                .done(function(data) {
+                                    if(data.email=="0"){
+                                        $("#signupSub").attr('disabled',true);
+                                        $("#emailmsg").html("<div id='sjx1'></div>此邮箱存在"+"<span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                        $("#emailmsg").css({
+                                            width:'90px'
+                                        });
+                                        flag1=false;
+                                        $("#icon1").attr('class', 'glyphicon glyphicon-remove');
+                                    }else{
+                                        flag1=true;
+                                        $("#emailmsg").html("<div id='sjx1'></div><span class='glyphicon glyphicon-remove' id='icon1'></span>");
+                                        $("#emailmsg").css({
+                                            width:'25px'
+                                        });
+                                        $("#icon1").attr('class', 'glyphicon glyphicon-ok');
+                                    }
+                                    if(flag1&&flag2&&flag3){
+                                        $("#signupSub").attr('disabled',false);}
+                                })
+                                .fail(function() {
+                                    console.log("error");
+                                })
+                                .always(function() {
+                                    console.log("complete");
+                                });
+                        }
+                    }, 300);
                 });
 
             });
+//防抖
+            var userNameDebounceClock=null;
+            function userNameDebounce(func,time){
+                userNameDebounceClock=setTimeout(func,time);
+            }
             $("#signupUsername").focus(function(){
-                $(this).keyup(function(event) {
-                    flag2=null;
-                    var text=$(this).val();
-                    if(!checkname.test(text)||text==null||text==""){
-                        console.log("用户名格式错误");
-                        $("#namemsg").html("<div id='sjx2'></div>包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
-                        $("#namemsg").css({
-                            width:'93px'
-                        });
-                        flag2=false;
-                        $("#signupSub").attr('disabled',true);
-                    }else{
-                        $.ajax({
-                            url: '/verification',
-                            type: 'post',
-                            dataType: 'JSON',
-                            data: {name: text},
-                        })
-                            .done(function(data) {
-                                if(data.name=="0"){
-                                    $("#signupSub").attr('disabled',true);
-                                    $("#namemsg").html("<div id='sjx2'></div>此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
-                                    $("#namemsg").css({
-                                        width:'93px'
-                                    });
-
-                                    flag2=false;
-                                    $("#icon2").attr('class', 'glyphicon glyphicon-remove');
-                                }else{
-                                    flag2=true;
-                                    $("#namemsg").html("<div id='sjx2'></div><span class='glyphicon glyphicon-remove' id='icon2'></span>");
-                                    $("#namemsg").css({
-                                        width:'25px'
-                                    });
-                                    $("#icon2").attr('class', 'glyphicon glyphicon-ok');
-                                }
-                                if(flag1&&flag2&&flag3){
-                                    $("#signupSub").attr('disabled',false);}
-                            })
-                            .fail(function() {
-                                console.log("error");
-                            })
-                            .always(function() {
-                                console.log("complete");
+                document.getElementById("signupUsername").addEventListener("keyup",function(event){
+                    clearTimeout(userNameDebounceClock);
+                    userNameDebounce(function(){ flag2=null;
+                        var text=$("#signupUsername").val();
+                        if(!checkname.test(text)||text==null||text==""){
+                            console.log("用户名格式错误");
+                            $("#namemsg").html("<div id='sjx2'></div>包含非法字符"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                            $("#namemsg").css({
+                                width:'93px'
                             });
+                            flag2=false;
+                            $("#signupSub").attr('disabled',true);
+                        }else{
+                            $.ajax({
+                                url: '/verification',
+                                type: 'post',
+                                dataType: 'JSON',
+                                data: {name: text},
+                            })
+                                .done(function(data) {
+                                    if(data.name=="0"){
+                                        $("#signupSub").attr('disabled',true);
+                                        $("#namemsg").html("<div id='sjx2'></div>此用户名存在"+"<span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                        $("#namemsg").css({
+                                            width:'93px'
+                                        });
 
-                    }
-
+                                        flag2=false;
+                                        $("#icon2").attr('class', 'glyphicon glyphicon-remove');
+                                    }else{
+                                        flag2=true;
+                                        $("#namemsg").html("<div id='sjx2'></div><span class='glyphicon glyphicon-remove' id='icon2'></span>");
+                                        $("#namemsg").css({
+                                            width:'25px'
+                                        });
+                                        $("#icon2").attr('class', 'glyphicon glyphicon-ok');
+                                    }
+                                    if(flag1&&flag2&&flag3){
+                                        $("#signupSub").attr('disabled',false);}
+                                })
+                                .fail(function() {
+                                    console.log("error");
+                                })
+                                .always(function() {
+                                    console.log("complete");
+                                });
+                        }},300)
                 });
-
             });
             $("#signupPassword").focus(function(){
                 $(this).keyup(function(event) {
@@ -470,164 +475,164 @@
     </script>
 </head>
 <body>
-    <nav class="navbar navbar-default header">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/home" style="color:#fff">Six-Shooter</a>
-            </div>
+<nav class="navbar navbar-default header">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home" style="color:#fff">Six-Shooter</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control navcontrol" id="search" placeholder="Search"></div>
-                </form>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">
-                            Pull requests
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Issues</a>
-                    </li>
-                    <li>
-                        <a href="#">Marketplace</a>
-                    </li>
-                    <li>
-                        <a href="#">Explore</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse --> </div>
-        <!-- /.container-fluid --> </nav>
-    <div class="container-fluid"  id="lgcontainer-fluid" style="height:661px;">
-        <div class="col-md-8"></div>
-        <div class="col-md-4" id="indexright">
-            <div class="" id="signin">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control navcontrol" id="search" placeholder="Search"></div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">
+                        Pull requests
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Issues</a>
+                </li>
+                <li>
+                    <a href="#">Marketplace</a>
+                </li>
+                <li>
+                    <a href="#">Explore</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse --> </div>
+    <!-- /.container-fluid --> </nav>
+<div class="container-fluid"  id="lgcontainer-fluid" style="height:661px;">
+    <div class="col-md-8"></div>
+    <div class="col-md-4" id="indexright">
+        <div class="" id="signin">
 
-                <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-                    <h2 class="form-signin-heading">请登录</h2>
-                    <span th:text="${login_error}" style="color:red"></span>
-                    <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-                    <div class="vcode">
-                        <label for="Vcodesignin" class="sr-only">请输入邮箱验证码</label>
-                        <input type="text"  name="Vcode" id="Vcodesignin" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
-                        <button class="btn btn-default myVcodebtn" id="signinvcodebtn">发送邮箱验证码</button>
-                    </div>
-                    <div class="checkbox checkboxmartop">
-                        <label>
-                            <input type="checkbox" value="remember-me" name="remember">Remember me</label>
-                    </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-                    <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
-                </form>
-
-            </div>
-
-            <div class="myhide" id="signup">
-                <div class="">
-                    <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
-                        <h2 class="form-signin-heading">请注册</h2>
-                        <label for="signupEmail" class="sr-only">Email address</label>
-                        <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                        <div id="ok">
-                            <h6 id="emailmsg"></h6>
-                        </div>
-                        <label for="signupEmail" class="sr-only">Username</label>
-                        <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
-
-                        <div id="fxck">
-                            <h6 id="namemsg"></h6>
-                        </div>
-
-                        <label for="signupPassword" class="sr-only">Password</label>
-                        <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
-                        <div id="pass">
-                            <h6 id="passmsg"></h6>
-                        </div>
-
-                        <div class="vcode">
-                            <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
-                            <input type="text"  name="Vcode" id="Vcodesignup" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
-                            <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
-                        </div>
-
-                        <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
-
-                        <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
-                    </form>
+            <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                <h2 class="form-signin-heading">请登录</h2>
+                <span th:text="${login_error}" style="color:red"></span>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password"  name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <div class="vcode">
+                    <label for="Vcodesignin" class="sr-only">请输入邮箱验证码</label>
+                    <input type="text"  name="Vcode" id="Vcodesignin" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                    <button class="btn btn-default myVcodebtn" id="signinvcodebtn">发送邮箱验证码</button>
                 </div>
-            </div>
+                <div class="checkbox checkboxmartop">
+                    <label>
+                        <input type="checkbox" value="remember-me" name="remember">Remember me</label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+                <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
+            </form>
+
         </div>
 
-    </div>
+        <div class="myhide" id="signup">
+            <div class="">
+                <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                    <h2 class="form-signin-heading">请注册</h2>
+                    <label for="signupEmail" class="sr-only">Email address</label>
+                    <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <div id="ok">
+                        <h6 id="emailmsg"></h6>
+                    </div>
+                    <label for="signupEmail" class="sr-only">Username</label>
+                    <input type="text" name = "name" id="signupUsername" class="form-control" placeholder="Username" required="">
 
-    <div class="container mycenter">
-        <h1>Hello World！</h1>
-        <p>左轮-致力于中小型团队项目管理</p>
-        <p>打造最属于你的项目管理</p>
-        <p>专业</p>
-        <p>Write less,Do more</p>
-    </div>
+                    <div id="fxck">
+                        <h6 id="namemsg"></h6>
+                    </div>
 
-    <div class="container mycenter">
-        <img src="/static/images/ima1.jpg" alt="图片" width="600" height="370"></div>
+                    <label for="signupPassword" class="sr-only">Password</label>
+                    <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                    <div id="pass">
+                        <h6 id="passmsg"></h6>
+                    </div>
 
-    <div class="container mycenter2">
-        <h1>这是四个有梦想的青年</h1>
-        <div class="col-md-3" id="en1">
-            <div class="mycard">
-                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-                <h2>Jackson</h2>
-                <p>全栈工程师</p>
-                <div class="divider"></div>
-                <button class="btn btn-default" id="">watch more</button>
-            </div>
-        </div>
-        <div class="col-md-3" id="en2">
-            <div class="mycard">
-                <img src="/static/images/superstar.jpg" alt="" width="" height="">
-                <h2>明哥</h2>
-                <p>前端工程师</p>
-                <div class="divider"></div>
-                <button class="btn btn-default" id="">watch more</button>
-            </div>
-        </div>
-        <div class="col-md-3" id="en3">
-            <div class="mycard">
-                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-                <h2>林锴</h2>
-                <p>系统架构师</p>
-                <div class="divider"></div>
-                <button class="btn btn-default" id="">watch more</button>
-            </div>
-        </div>
-        <div class="col-md-3" id="en4">
-            <div class="mycard">
-                <img src="/static/images/superengineer.jpg" alt="" width="" height="">
-                <h2>小涛</h2>
-                <p>开发工程师</p>
-                <div class="divider"></div>
-                <button class="btn btn-default" id="">watch more</button>
+                    <div class="vcode">
+                        <label for="Vcode" class="sr-only">请输入邮箱验证码</label>
+                        <input type="text"  name="Vcode" id="Vcodesignup" class="form-control mycontrol" placeholder="请输入邮箱验证码" required="">
+                        <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+
+                    <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
+                </form>
             </div>
         </div>
     </div>
-    <div class="container" style="text-align:center;">
-   
-        <hr>
-        <div th:replace="footer :: footer"></div>
+
+</div>
+
+<div class="container mycenter">
+    <h1>Hello World！</h1>
+    <p>左轮-致力于中小型团队项目管理</p>
+    <p>打造最属于你的项目管理</p>
+    <p>专业</p>
+    <p>Write less,Do more</p>
+</div>
+
+<div class="container mycenter">
+    <img src="/static/images/ima1.jpg" alt="图片" width="600" height="370"></div>
+
+<div class="container mycenter2">
+    <h1>这是四个有梦想的青年</h1>
+    <div class="col-md-3" id="en1">
+        <div class="mycard">
+            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+            <h2>Jackson</h2>
+            <p>全栈工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
     </div>
+    <div class="col-md-3" id="en2">
+        <div class="mycard">
+            <img src="/static/images/superstar.jpg" alt="" width="" height="">
+            <h2>明哥</h2>
+            <p>前端工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
+    </div>
+    <div class="col-md-3" id="en3">
+        <div class="mycard">
+            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+            <h2>林锴</h2>
+            <p>系统架构师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
+    </div>
+    <div class="col-md-3" id="en4">
+        <div class="mycard">
+            <img src="/static/images/superengineer.jpg" alt="" width="" height="">
+            <h2>小涛</h2>
+            <p>开发工程师</p>
+            <div class="divider"></div>
+            <button class="btn btn-default" id="">watch more</button>
+        </div>
+    </div>
+</div>
+<div class="container" style="text-align:center;">
+
+    <hr>
+    <div th:replace="footer :: footer"></div>
+</div>
 </body>
 </html>
