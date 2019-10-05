@@ -90,6 +90,7 @@ public class UserController {
                 System.out.println("测试测试测试:"+userDto.getPassword());
                 //缓存用户信息
                 stringRedisTemplate.opsForValue().set(userDto.getName(),userDto.getEmail());
+                stringRedisTemplate.opsForSet().add("ALL_EMAIL",userDto.getEmail());
                 //创建令牌
                 String token = userService.updateCookie(userDto);
                 //创建新cookie
@@ -127,10 +128,11 @@ public class UserController {
         Map<String, String> map = new HashMap<>();
 
         if (email != null) {
-            //
-            UserDto userDto = userService.findByEmail(email);
+            //缓存中判断
+            boolean bl = stringRedisTemplate.opsForSet().isMember("ALL_EMAIL",email);
+            //UserDto userDto = userService.findByEmail(email);
 
-            if (userDto!=null) {
+            if (bl) {
                 map.put("email", "0");
                 return map;
             }
@@ -139,9 +141,11 @@ public class UserController {
         }
 
         if (name != null) {
-            UserDto userDto = userService.findByName(name);
+            //缓存中查找
+            boolean bl = stringRedisTemplate.hasKey(name);
+            //UserDto userDto = userService.findByName(name);
 
-            if (userDto!=null) {
+            if (bl) {
                 map.put("name", "0");
                 return map;
             }
