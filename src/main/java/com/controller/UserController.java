@@ -4,9 +4,12 @@ import com.dto.UserDto;
 import com.mapper.MailMapper;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +30,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MailMapper mailMapper;
+    @Resource(name = "userRedisTemplate")
+    private RedisTemplate redisTemplate;
 
 
     /**
@@ -48,27 +53,20 @@ public class UserController {
         //验证登录账号密码
         UserDto userDto = userService.checkLogin(email_or_name,password);
         if(userDto != null){
-            //如果用户选择记住自己
-            if(remember!=null){
-                //创建cookie并且保存在数据库
-                String token = userService.updateCookie(userDto);
-                if(token!=null){
-                    model.addAttribute("USER",userDto);
-                    //创建新cookie
-                    Cookie cookie = new Cookie("TOKEN",token);
-                    //发送给浏览器
-                    response.addCookie(cookie);
-                }
-            }
+            //创建token，缓存用户数据
+            String token = userService.updateCookie(userDto);
+            model.addAttribute("USER",userDto);
+            //创建新cookie
+            Cookie cookie = new Cookie("TOKEN",token);
+            //发送给浏览器
+            response.addCookie(cookie);
             //获取Session
             HttpSession session=request.getSession();
             //添加到session里面
             session.setAttribute("User_id",userDto.getId());
-            //删除验证码记录
-            userService.delCode(email_or_name);
             return "redirect:/home";
         }
-        model.addAttribute("login_error","你的密码错误");
+        model.addAttribute("login_error","请检查密码后再次尝试登陆，谢谢");
         return "index";
     }
 
@@ -154,6 +152,8 @@ public class UserController {
         if(cookies!=null){
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("TOKEN")){
+                    //删除缓存
+                    redisTemplate.delete(cookie.getValue());
                     cookie.setValue(null);
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
