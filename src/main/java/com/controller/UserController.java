@@ -5,6 +5,7 @@ import com.mapper.MailMapper;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,8 @@ public class UserController {
     private MailMapper mailMapper;
     @Resource(name = "userRedisTemplate")
     private RedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
 
     /**
@@ -77,21 +80,28 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    public String register(UserDto userDto, Model model,String Vcode,HttpServletRequest request) {
+    public String register(UserDto userDto, Model model,String Vcode,HttpServletResponse response) {
         //优先判断验证码是否正确
         boolean bl = userService.checkCode(userDto.getEmail(),Vcode);
         if(bl){
-            //获取用户信息
+            //持久化用户信息
             userDto = userService.register(userDto);
             if(userDto!=null){
-                //返回用户信息
-                model.addAttribute("USER",userDto);
+                System.out.println("测试测试测试:"+userDto.getPassword());
+                //缓存用户信息
+                stringRedisTemplate.opsForValue().set(userDto.getName(),userDto.getEmail());
+                //创建令牌
+                String token = userService.updateCookie(userDto);
+                //创建新cookie
+                Cookie cookie = new Cookie("TOKEN",token);
+                //发送给浏览器
+                response.addCookie(cookie);
                 //删除验证码
-                mailMapper.delCodeByEmail(userDto.getEmail());
+                //mailMapper.delCodeByEmail(userDto.getEmail());
                 //获取Session
-                HttpSession session=request.getSession();
+                //HttpSession session=request.getSession();
                 //添加到session里面
-                session.setAttribute("User_id",userDto.getId());
+                //session.setAttribute("User_id",userDto.getId());
                 return "redirect:/home";
             }else {
                 model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
@@ -117,6 +127,7 @@ public class UserController {
         Map<String, String> map = new HashMap<>();
 
         if (email != null) {
+            //
             UserDto userDto = userService.findByEmail(email);
 
             if (userDto!=null) {

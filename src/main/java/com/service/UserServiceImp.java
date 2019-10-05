@@ -4,6 +4,7 @@ import com.dto.CookieDto;
 import com.dto.UserDto;
 import com.mapper.MailMapper;
 import com.mapper.UserMapper;
+import com.my_util.Encryption;
 import com.my_util.GetTime_util;
 import com.my_util.PlayFair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class UserServiceImp implements UserService {
     private RedisTemplate redisTemplate;
     @Autowired
     private PlayFair playFair;
+    @Autowired
+    private Encryption encryption;
 
     @Override
     public UserDto findByEmail(String email) {
@@ -126,7 +129,7 @@ public class UserServiceImp implements UserService {
      */
     @Override
     public UserDto checkLogin(String email_or_name, String password) {
-        UserDto userDto = userMapper.findUser_login(email_or_name,password);
+        UserDto userDto = userMapper.findUser_login(email_or_name,encryption.Input(password));
         if(userDto!=null){
             return userDto;
         }
@@ -155,6 +158,10 @@ public class UserServiceImp implements UserService {
 //        }
         //创建令牌
         String token = playFair.begin_Play();
+        //设置默认头像
+        if (userDto.getAvatar_url() == null) {
+            userDto.setAvatar_url("/static/images/default.jpg");
+        }
         //将用户信息存放在缓存中,存在时间30分钟
         redisTemplate.opsForValue().set(token,userDto,60 * 60 * 30, TimeUnit.SECONDS);
         return token;
@@ -189,17 +196,16 @@ public class UserServiceImp implements UserService {
         // 赋值创建时间和修改时间
         userDto.setCreated_at(getTime_util.GetNowTime_util());
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
+        // 密码加密
+        userDto.setPassword(encryption.Input(userDto.getPassword()));
         //插入数据库
         int num = userMapper.insertUser(userDto);
         if(num>0){
             //获取用户信息
             userDto = userMapper.findByName(userDto.getName());
             if(userDto!=null){
-                boolean bl = mkdirCookie(userDto.getId());
-                if(bl){
-                    return userDto;
-                }
-                return null;
+                //boolean bl = mkdirCookie(userDto.getId());
+                return userDto;
             }
         }
         return null;
