@@ -55,15 +55,15 @@ public class UserController {
         if(userDto != null){
             //创建token，缓存用户数据
             String token = userService.updateCookie(userDto);
-            model.addAttribute("USER",userDto);
+            //model.addAttribute("USER",userDto);
             //创建新cookie
             Cookie cookie = new Cookie("TOKEN",token);
             //发送给浏览器
             response.addCookie(cookie);
-            //获取Session
-            HttpSession session=request.getSession();
-            //添加到session里面
-            session.setAttribute("User_id",userDto.getId());
+//            //获取Session
+//            HttpSession session=request.getSession();
+//            //添加到session里面
+//            session.setAttribute("User_id",userDto.getId());
             return "redirect:/home";
         }
         model.addAttribute("login_error","请检查密码后再次尝试登陆，谢谢");
