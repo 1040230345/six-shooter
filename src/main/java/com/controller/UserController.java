@@ -68,7 +68,7 @@ public class UserController {
             userService.delCode(email_or_name);
             return "redirect:/home";
         }
-        model.addAttribute("login_error","账号或密码错误");
+        model.addAttribute("login_error","你的密码错误");
         return "index";
     }
 

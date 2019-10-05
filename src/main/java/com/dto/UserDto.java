@@ -1,10 +1,12 @@
 package com.dto;
 
 
+import java.io.Serializable;
+
 /**
  * 时间：2019年8月16日14:21:16
  */
-public class UserDto {
+public class UserDto implements Serializable {
 
     private int id;  //用户id，唯一
     private String email;  // 用户邮箱，唯一
@@ -80,5 +82,19 @@ public class UserDto {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar_url='" + avatar_url + '\'' +
+                ", bio='" + bio + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                '}';
     }
 }
