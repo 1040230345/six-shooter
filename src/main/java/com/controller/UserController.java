@@ -84,10 +84,12 @@ public class UserController {
         //优先判断验证码是否正确
         boolean bl = userService.checkCode(userDto.getEmail(),Vcode);
         if(bl){
+            //解密
+
             //持久化用户信息
             userDto = userService.register(userDto);
             if(userDto!=null){
-                System.out.println("测试测试测试:"+userDto.getPassword());
+                //System.out.println("测试测试测试:"+userDto.getPassword());
                 //缓存用户信息
                 stringRedisTemplate.opsForValue().set(userDto.getName(),userDto.getEmail());
                 stringRedisTemplate.opsForSet().add("ALL_EMAIL",userDto.getEmail());

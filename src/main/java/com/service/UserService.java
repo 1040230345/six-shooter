@@ -7,12 +7,6 @@ import com.dto.UserDto;
  */
 public interface UserService {
 
-    UserDto findByEmail(String email);
-    UserDto findByName(String name);
-    String findEmailByName(String name);
-    int findUserIdByCookie(String cookie);
-    UserDto findUserByid(int id);
-
     /**
      * 验证验证码是否正确
      */

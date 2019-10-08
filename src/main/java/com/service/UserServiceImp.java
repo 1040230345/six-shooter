@@ -37,49 +37,6 @@ public class UserServiceImp implements UserService {
     @Autowired
     private Encryption encryption;
 
-    @Override
-    public UserDto findByEmail(String email) {
-
-        UserDto userDto = userMapper.findByEmail(email);
-
-        if(userDto!=null){
-            return userDto;
-        }else {
-            return null;
-        }
-
-    }
-
-    @Override
-    public UserDto findByName(String name) {
-
-        UserDto userDto  = userMapper.findByName(name);
-
-        if(userDto!=null){
-            return userDto;
-        }else {
-            return null;
-        }
-    }
-
-    @Override
-    public String findEmailByName(String name) {
-        String email = userMapper.findEmailByName(name);
-        return email;
-    }
-
-    //依靠cookie查找用户id
-    @Override
-    public int findUserIdByCookie(String cookie) {
-        int user_id = userMapper.findUserIdByCookie(cookie);
-        return user_id;
-    }
-
-    @Override
-    public UserDto findUserByid(int id) {
-        UserDto userDto = userMapper.findUserByid(id);
-        return userDto;
-    }
 
     /**
      * 验证验证码是否正确
