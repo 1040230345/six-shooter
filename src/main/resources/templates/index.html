@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <script src="/static/js/jquery-3.4.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/BigInteger.min.js"></script>
+
     <!-- 触屏缩放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 禁止缩放
@@ -235,6 +237,30 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
+            // 加密
+            // 定义p,q,pq为互素
+            // const p=53;
+            // const q=61;
+            // n=p*q n为3233
+
+            // const n=bigInt(p*q+"");
+            // const e=bigInt("17");
+            function encryption(input){
+                let s="";
+                let x;
+                // let k=bigInt("");
+                let k;
+                for(let i=0;i<input.length;i++){
+                    x=input.charCodeAt(i);
+                    k = bigInt(x).modPow(17,3233);
+                    c=String.fromCharCode(k);
+                    s=s+c;
+                }
+                return s;
+            }
+
+            // 加密结束
+
             $(".form-signin").animate({marginTop:"75px"}, 1000);
 
 
@@ -258,6 +284,32 @@
             $("#returnbtn").click(function(){
                 $("#signin").fadeIn();
                 $("#signup").hide();
+            });
+
+//数据处理加密
+            $("#signinbtn").click(function(event) {
+                let inputEmailv=$("#inputEmail").val();
+                console.log(inputEmailv);
+                $("#inputEmail").val(encryption(inputEmailv));
+
+                let inputPasswordv=$("#inputPassword").val();
+                console.log(inputPasswordv);
+                $("#inputPassword").val(encryption(inputPasswordv));
+            });
+
+            $("#signupSub").click(function(event) {
+                let signupEmailv=$("#signupEmail").val();
+                console.log(signupEmailv);
+                $("#signupEmail").val(encryption(signupEmailv));
+
+                let signupUsernamev=$("#signupUsername").val();
+                console.log(signupUsernamev);
+                $("#signupUsername").val(encryption(signupUsernamev));
+
+                let signupPasswordv=$("#signupPassword").val();
+                console.log(signupPasswordv);
+                $("#signupPassword").val(encryption(signupPasswordv));
+
             });
 
 
@@ -337,6 +389,7 @@
             function emailDebounce(func,time){
                 emailDebounceClock=setTimeout(func,time);
             }
+//注册邮箱
             $("#signupEmail").focus(function(){
                 document.getElementById('signupEmail').addEventListener('keyup',function(event){
                     clearTimeout(emailDebounceClock);
@@ -354,6 +407,7 @@
                             $("#icon1").attr('class', 'glyphicon glyphicon-remove');
 
                         }else{
+                            text=encryption(text);
                             $.ajax({
                                 url: '/verification',
                                 type: 'post',
@@ -396,6 +450,7 @@
             function userNameDebounce(func,time){
                 userNameDebounceClock=setTimeout(func,time);
             }
+//注册用户名
             $("#signupUsername").focus(function(){
                 document.getElementById("signupUsername").addEventListener("keyup",function(event){
                     clearTimeout(userNameDebounceClock);
@@ -410,6 +465,7 @@
                             flag2=false;
                             $("#signupSub").attr('disabled',true);
                         }else{
+                            text=encryption(text);
                             $.ajax({
                                 url: '/verification',
                                 type: 'post',
@@ -446,6 +502,7 @@
                         }},300)
                 });
             });
+//注册密码
             $("#signupPassword").focus(function(){
                 $(this).keyup(function(event) {
                     flag3=null;
@@ -535,7 +592,7 @@
                     <label>
                         <input type="checkbox" value="remember-me" name="remember">Remember me</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinbtn">登录</button>
                 <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
             </form>
 
