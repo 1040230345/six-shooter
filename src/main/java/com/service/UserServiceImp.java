@@ -86,7 +86,7 @@ public class UserServiceImp implements UserService {
      */
     @Override
     public UserDto checkLogin(String email_or_name, String password) {
-        UserDto userDto = userMapper.findUser_login(email_or_name,encryption.Input(password));
+        UserDto userDto = userMapper.findUser_login(email_or_name,password);
         if(userDto!=null){
             return userDto;
         }
@@ -134,7 +134,6 @@ public class UserServiceImp implements UserService {
         //判断传进来的是用户名还是邮箱
         boolean ifmail = email.contains("@");
         if(!ifmail){
-            //System.out.println("我进来了");
             email = userMapper.findEmailByName(email);
             mailMapper.delCodeByEmail(email);
         }else {
@@ -153,8 +152,6 @@ public class UserServiceImp implements UserService {
         // 赋值创建时间和修改时间
         userDto.setCreated_at(getTime_util.GetNowTime_util());
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
-        // 密码加密
-        userDto.setPassword(encryption.Input(userDto.getPassword()));
         //插入数据库
         int num = userMapper.insertUser(userDto);
         if(num>0){
@@ -188,6 +185,18 @@ public class UserServiceImp implements UserService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 解密
+     * 时间：2019年10月8日17:24:43
+     * @param ciphertext
+     * @return
+     */
+    @Override
+    public String decrypt(String ciphertext) {
+        ciphertext = encryption.Out(ciphertext);
+        return ciphertext;
     }
 
 
