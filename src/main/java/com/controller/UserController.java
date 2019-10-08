@@ -47,14 +47,15 @@ public class UserController {
      */
     @PostMapping("/login")
     public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
+        //用户名或者邮箱进行解密
+        email_or_name = userService.decrypt(email_or_name);
+        System.out.println(email_or_name);
         //优先验证验证码是是否正确
         boolean bl = userService.checkCode(email_or_name,Vcode);
         if(bl){ }else {
             model.addAttribute("login_error","验证码错误");
             return "index";
         }
-        //用户名或者邮箱进行解密
-        email_or_name = userService.decrypt(email_or_name);
         //验证登录账号密码
         UserDto userDto = userService.checkLogin(email_or_name,password);
         if(userDto != null){
