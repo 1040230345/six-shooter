@@ -37,4 +37,10 @@ public interface UserService {
      */
     Boolean mkdirCookie(int id );
 
+    /**
+     * 密文解密
+     * 时间：2019年10月8日17:15:15
+     */
+    String decrypt(String ciphertext);
+
 }
