@@ -49,7 +49,7 @@ public class UserController {
     public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
         //用户名或者邮箱进行解密
         //email_or_name = userService.decrypt(email_or_name);
-        System.out.println(email_or_name);
+        //System.out.println(email_or_name);
         //优先验证验证码是是否正确
         boolean bl = userService.checkCode(email_or_name,Vcode);
         if(bl){ }else {
@@ -84,11 +84,14 @@ public class UserController {
      */
     @PostMapping("/register")
     public String register(UserDto userDto, Model model,String Vcode,HttpServletResponse response) {
+        //解密
+        userDto.setEmail(userService.decrypt(userDto.getEmail()));
+        //System.out.println(userDto.toString());
         //优先判断验证码是否正确
         boolean bl = userService.checkCode(userDto.getEmail(),Vcode);
         if(bl){
-            //解密
-            userDto.setEmail(userService.decrypt(userDto.getEmail()));
+
+
             //userDto.setName(userService.decrypt(userDto.getName()));
             //持久化用户信息
             userDto = userService.register(userDto);
@@ -135,7 +138,7 @@ public class UserController {
         if (email != null) {
             //解密
             email = userService.decrypt(email);
-            System.out.println(email);
+//            System.out.println(email);
             //缓存中判断
             boolean bl = stringRedisTemplate.opsForSet().isMember("ALL_EMAIL",email);
             //UserDto userDto = userService.findByEmail(email);

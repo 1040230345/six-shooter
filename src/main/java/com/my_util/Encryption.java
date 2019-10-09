@@ -21,6 +21,7 @@ public class Encryption {
         //遍历input字符串
         for(int i=0;i<input.length();i++){
             x=new BigInteger((int)input.charAt(i)+"");
+            int lk;
             char c=(char)Integer.parseInt(x.modPow(e,n).toString());
             s=s+c;
         }

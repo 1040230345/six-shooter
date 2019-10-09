@@ -86,6 +86,7 @@ public class UserServiceImp implements UserService {
      */
     @Override
     public UserDto checkLogin(String email_or_name, String password) {
+        System.out.println(password);
         UserDto userDto = userMapper.findUser_login(email_or_name,password);
         if(userDto!=null){
             return userDto;
@@ -154,6 +155,7 @@ public class UserServiceImp implements UserService {
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
         //插入数据库
         int num = userMapper.insertUser(userDto);
+        System.out.println(userDto.toString());
         if(num>0){
             //获取用户信息
             userDto = userMapper.findByName(userDto.getName());
