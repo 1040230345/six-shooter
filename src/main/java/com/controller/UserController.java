@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
         //用户名或者邮箱进行解密
-        email_or_name = userService.decrypt(email_or_name);
+        //email_or_name = userService.decrypt(email_or_name);
         System.out.println(email_or_name);
         //优先验证验证码是是否正确
         boolean bl = userService.checkCode(email_or_name,Vcode);
@@ -89,7 +89,7 @@ public class UserController {
         if(bl){
             //解密
             userDto.setEmail(userService.decrypt(userDto.getEmail()));
-            userDto.setName(userService.decrypt(userDto.getName()));
+            //userDto.setName(userService.decrypt(userDto.getName()));
             //持久化用户信息
             userDto = userService.register(userDto);
             if(userDto!=null){
@@ -133,6 +133,9 @@ public class UserController {
         Map<String, String> map = new HashMap<>();
 
         if (email != null) {
+            //解密
+            email = userService.decrypt(email);
+            System.out.println(email);
             //缓存中判断
             boolean bl = stringRedisTemplate.opsForSet().isMember("ALL_EMAIL",email);
             //UserDto userDto = userService.findByEmail(email);
@@ -146,6 +149,8 @@ public class UserController {
         }
 
         if (name != null) {
+            //解密
+            name = userService.decrypt(name);
             //缓存中查找
             boolean bl = stringRedisTemplate.hasKey(name);
             //UserDto userDto = userService.findByName(name);
