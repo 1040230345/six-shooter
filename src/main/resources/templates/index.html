@@ -64,6 +64,19 @@
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
         }
+        #signupPassword{
+            width: 90%;
+            margin-bottom: 10px!important;
+        }
+        .myeyes{
+            line-height: 50px;
+            cursor: pointer;
+            padding-right: 5px;
+        }
+        .myflex{
+            display: flex;
+            justify-content: space-between;
+        }
         .form-signin input[type="password"] {
             margin-bottom: 10px;
             border-top-left-radius: 0;
@@ -88,7 +101,7 @@
             margin-left: 10px;
         }
         .checkboxmartop{
-            margin-top: 12px;
+            margin-top: 12px;p
         }
         /*分割*/
 
@@ -116,7 +129,7 @@
             border-radius: 3px;
         }
         #passmsg{
-            top:-48px;
+            top:-55px;
         }
         #sjx1,#sjx2,#sjx3{
             margin:4.5px 2px 0 -5px;
@@ -286,6 +299,15 @@
                 $("#signup").hide();
             });
 
+            $("#myeyes").click(function () {
+                if($("#signupPassword").attr("type")=="text"){
+                    $("#signupPassword").attr("type","password");
+                    $("#myeyes").attr("class","glyphicon glyphicon-eye-open myeyes");
+                }else{
+                    $("#signupPassword").attr("type","text");
+                    $("#myeyes").attr("class","glyphicon glyphicon-eye-close myeyes");
+                }
+            });
 //数据处理加密
             $("#signinbtn").click(function(event) {
                 let inputPasswordv=$("#inputPassword").val();
@@ -606,7 +628,10 @@
                     </div>
 
                     <label for="signupPassword" class="sr-only">Password</label>
-                    <input type="text" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                    <div class="myflex">
+                    <input type="password" name = "password" id="signupPassword" class="form-control" placeholder="Password" required="">
+                    <span class="glyphicon glyphicon-eye-open myeyes" id="myeyes"></span>
+                    </div>
                     <div id="pass">
                         <h6 id="passmsg"></h6>
                     </div>
