@@ -288,10 +288,6 @@
 
 //数据处理加密
             $("#signinbtn").click(function(event) {
-                let inputEmailv=$("#inputEmail").val();
-                console.log(inputEmailv);
-                $("#inputEmail").val(encryption(inputEmailv));
-
                 let inputPasswordv=$("#inputPassword").val();
                 console.log(inputPasswordv);
                 $("#inputPassword").val(encryption(inputPasswordv));
@@ -301,10 +297,6 @@
                 let signupEmailv=$("#signupEmail").val();
                 console.log(signupEmailv);
                 $("#signupEmail").val(encryption(signupEmailv));
-
-                let signupUsernamev=$("#signupUsername").val();
-                console.log(signupUsernamev);
-                $("#signupUsername").val(encryption(signupUsernamev));
 
                 let signupPasswordv=$("#signupPassword").val();
                 console.log(signupPasswordv);
@@ -465,7 +457,6 @@
                             flag2=false;
                             $("#signupSub").attr('disabled',true);
                         }else{
-                            text=encryption(text);
                             $.ajax({
                                 url: '/verification',
                                 type: 'post',
