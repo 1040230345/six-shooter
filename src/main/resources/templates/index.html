@@ -310,19 +310,96 @@
             });
 //数据处理加密
             $("#signinbtn").click(function(event) {
+                let inputEmailv=$("#inputEmail").val();
+                let Vcodesigninv=$("#Vcodesignin").val();
+
                 let inputPasswordv=$("#inputPassword").val();
-                console.log(inputPasswordv);
-                $("#inputPassword").val(encryption(inputPasswordv));
+                inputPasswordv=encryption(inputPasswordv);
+
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {email_or_name:inputEmailv,password:inputPasswordv,Vcode:Vcodesigninv},
+                })
+                    .done(function(data) {
+                        if(data.loginSuccess==undefined){
+                            console.log(data.login_error);
+                            $("#login_msg").text(data.login_error);
+                            let loginEmail=$("#inputEmail").val();
+                            let loginPassword=$("#inputPassword").val();
+                            if(data.login_error=="验证码错误"){
+                                $("#inputEmail").val(loginEmail);
+                                $("#inputPassword").val(loginPassword);
+                                $("#Vcodesignin").val("");
+                            }else{
+                                $("#inputEmail").val(loginEmail);
+                                $("#inputPassword").val("");
+                                $("#Vcodesignin").val("");
+                            }
+                        }else{
+                            console.log(data.loginSuccess);
+                             window.location.href="/home";
+                        }
+                    })
+                    .fail(function(data) {
+                        console.log("error"+data);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
             });
 
             $("#signupSub").click(function(event) {
                 let signupEmailv=$("#signupEmail").val();
-                console.log(signupEmailv);
-                $("#signupEmail").val(encryption(signupEmailv));
+                signupEmailv=encryption(signupEmailv);
+
+                let signupUsernamev=$("#signupUsername").val();
 
                 let signupPasswordv=$("#signupPassword").val();
-                console.log(signupPasswordv);
-                $("#signupPassword").val(encryption(signupPasswordv));
+                signupPasswordv=encryption(signupPasswordv);
+
+                let Vcodesignupv=$("#Vcodesignup").val();
+
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {email:signupEmailv,name:signupUsernamev,password:signupPasswordv,Vcode:Vcodesignupv},
+                })
+                    .done(function(data) {
+                        if (data.registerSuccess==undefined){
+                            // window.location.href="/index";
+                            let signupEmail=$("#signupEmail").val();
+                            let signupUsername=$("#signupUsername").val();
+                            let signupPassword=$("#signupPassword").val();
+                            if(data.register_error=="验证码错误"){
+                                $("#signupEmail").val(signupEmail);
+                                $("#signupUsername").val(signupUsername);
+                                $("#signupPassword").val(signupPassword);
+                                $("#Vcodesignup").val("");
+
+                            }else{
+                                $("#signupEmail").val(signupEmail);
+                                $("#signupUsername").val(signupUsername);
+                                $("#signupPassword").val(signupPassword);
+                            }
+                            console.log(data.register_error);
+                            $("#register_msg").text(data.register_error);
+                        } else{
+                            console.log(data.registerSuccess+"成功");
+                            window.location.href="/home";
+                        }
+                    })
+                    .fail(function(data) {
+                        console.log("error");
+
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
+
 
             });
 
@@ -591,7 +668,7 @@
 
             <form class="form-signin" id="signinform" action="/login" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
                 <h2 class="form-signin-heading">请登录</h2>
-                <span th:text="${login_error}" style="color:red"></span>
+                <span style="color:red" id="login_msg"></span>
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="text" name="email_or_name" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
                 <label for="inputPassword" class="sr-only">Password</label>
@@ -605,7 +682,7 @@
                     <label>
                         <input type="checkbox" value="remember-me" name="remember">Remember me</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinbtn">登录</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="signinbtn">登录</button>
                 <button class="btn btn-lg btn-primary btn-block" id="signupbtn">注册</button>
             </form>
 
@@ -615,6 +692,8 @@
             <div class="">
                 <form class="form-signin" id="signupform" action="/register" method="post" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
                     <h2 class="form-signin-heading">请注册</h2>
+                    <span style="color:red" id="register_msg"></span>
+
                     <label for="signupEmail" class="sr-only">Email address</label>
                     <input type="text" name = "email" id="signupEmail" class="form-control" placeholder="Email address" required="" autofocus="">
                     <div id="ok">
@@ -642,7 +721,7 @@
                         <button class="btn btn-default myVcodebtn" id="signupvcodebtn">发送邮箱验证码</button>
                     </div>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="true" id="signupSub">提交</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" disabled="true" id="signupSub">提交</button>
 
                     <button class="btn btn-lg btn-primary btn-block" id="returnbtn">返回</button>
                 </form>

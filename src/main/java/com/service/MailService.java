@@ -47,7 +47,7 @@ public class MailService {
         }
         //生成验证码
         String checkCode = String.valueOf(new Random().nextInt(899999) + 100000);
-        String message = "您的注册验证码为：" + checkCode;
+        String message = "您的注册验证码为：" + checkCode+"(两分钟内有效)";
         //发送邮件
         sendSimpleMail(mail, "注册验证码", message);
         //System.out.println(mail);

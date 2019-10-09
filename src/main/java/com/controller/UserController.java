@@ -45,16 +45,19 @@ public class UserController {
      * @param response
      * @return
      */
-    @PostMapping("/login")
-    public String login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
+    @RequestMapping("/login")
+    @ResponseBody
+    public Map<String, String> login(@RequestParam(required = false) String remember, String email_or_name ,String password,String Vcode,Model model,HttpServletResponse response,HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
         //用户名或者邮箱进行解密
         //email_or_name = userService.decrypt(email_or_name);
         //System.out.println(email_or_name);
         //优先验证验证码是是否正确
         boolean bl = userService.checkCode(email_or_name,Vcode);
         if(bl){ }else {
-            model.addAttribute("login_error","验证码错误");
-            return "index";
+//            model.addAttribute("login_error","验证码错误");
+            map.put("login_error","验证码错误");
+            return map;
         }
         //验证登录账号密码
         UserDto userDto = userService.checkLogin(email_or_name,password);
@@ -70,10 +73,12 @@ public class UserController {
 //            HttpSession session=request.getSession();
 //            //添加到session里面
 //            session.setAttribute("User_id",userDto.getId());
-            return "redirect:/home";
+            map.put("loginSuccess","success");
+            return map;
         }
-        model.addAttribute("login_error","请检查密码后再次尝试登陆，谢谢");
-        return "index";
+//        model.addAttribute("login_error","请检查密码后再次尝试登陆，谢谢");
+        map.put("login_error","请检查密码后再次尝试登陆，谢谢");
+        return map;
     }
 
     /**
@@ -82,16 +87,16 @@ public class UserController {
      * @param model
      * @return
      */
-    @PostMapping("/register")
-    public String register(UserDto userDto, Model model,String Vcode,HttpServletResponse response) {
+    @RequestMapping("/register")
+    @ResponseBody
+    public Map<String, String> register(UserDto userDto, Model model,String Vcode,HttpServletResponse response) {
+        Map<String, String> map = new HashMap<>();
         //解密
         userDto.setEmail(userService.decrypt(userDto.getEmail()));
         //System.out.println(userDto.toString());
         //优先判断验证码是否正确
         boolean bl = userService.checkCode(userDto.getEmail(),Vcode);
         if(bl){
-
-
             //userDto.setName(userService.decrypt(userDto.getName()));
             //持久化用户信息
             userDto = userService.register(userDto);
@@ -111,14 +116,17 @@ public class UserController {
                 //HttpSession session=request.getSession();
                 //添加到session里面
                 //session.setAttribute("User_id",userDto.getId());
-                return "redirect:/home";
+                map.put("registerSuccess","success");
+                return map;
             }else {
-                model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
-                return  "index";
+//                model.addAttribute("regisrer_error","服务器繁忙,稍后再注册");
+                map.put("register_error","服务器繁忙,稍后再注册");
+                return  map;
             }
         }else {
-            model.addAttribute("regisrer_error","验证码错误");
-            return  "index";
+//            model.addAttribute("regisrer_error","验证码错误");
+            map.put("register_error","验证码错误");
+            return  map;
         }
     }
 
@@ -152,8 +160,10 @@ public class UserController {
         }
 
         if (name != null) {
+
             //解密
-            name = userService.decrypt(name);
+            //name = userService.decrypt(name);
+            //System.out.println(name);
             //缓存中查找
             boolean bl = stringRedisTemplate.hasKey(name);
             //UserDto userDto = userService.findByName(name);
